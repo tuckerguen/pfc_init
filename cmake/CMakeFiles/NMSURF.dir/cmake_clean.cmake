@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/NMSURF.dir/home/tucker/research/pfc_init/src/NMSURF.cpp.o"
-  "NMSURF"
   "NMSURF.pdb"
+  "NMSURF"
 )
 
 # Per-language clean rules from dependency scanning.

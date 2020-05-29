@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/solve_lin_sys.dir/home/tucker/research/pfc_init/src/solve_lin_sys.cpp.o"
-  "solve_lin_sys"
   "solve_lin_sys.pdb"
+  "solve_lin_sys"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -10,7 +10,7 @@
 using namespace std;
 using namespace cv;
 
-const string template_img_path = "../imgs/vessel_l_b.png";
+const string template_img_path = "../imgs/raw_l_b.png";
 
 //Canny edge detection parameters
 int lowThreshold = 8;
@@ -20,8 +20,8 @@ const int kernel_size = 3;
 const double max_rotation = 360; //Max number of degrees to rotate template
 const double angle_increment = 10; //Number of degrees to rotate template each iteration
 
-const int min_scale = 90; //minimum template scale to try to match (in %)
-const int max_scale = 110; //maximum template scale to try to match (in %)
+const int min_scale = 50; //minimum template scale to try to match (in %)
+const int max_scale = 150; //maximum template scale to try to match (in %)
 const double scale_increment = 1; //% scale to increase by on each iteration
 
 struct match {
@@ -36,7 +36,8 @@ struct match {
 int PFCInit(string left_image_path, string right_image_path);
 Point3d DeProjectPoints(const Mat& img_l, const Mat& img_r, const match* match_l, const match* match_r);
 void DrawMatch(Mat& src, match* match);
-int LoadNeedleImg(string path, Mat& img);
+int LoadAndPreprocessNeedleImg(string path, Mat& img);
+int LoadAndPreprocessTemplate(string path, Mat& templ);
 void PrintResultsForImage(match *match, string side);
 void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch);
 void Match(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale);
@@ -86,15 +87,15 @@ int PFCInit(string left_image_path, string right_image_path){
     Mat img_l, img_r, templ;
 
     //load images
-    if( !LoadNeedleImg(left_image_path, img_l)
-        || !LoadNeedleImg(right_image_path, img_r)
-        || !LoadNeedleImg(template_img_path, templ))
+    if( !LoadAndPreprocessNeedleImg(left_image_path, img_l)
+        || !LoadAndPreprocessNeedleImg(right_image_path, img_r)
+        || !LoadAndPreprocessTemplate(template_img_path, templ))
     {
        return -1;
     } 
     
     //Crop template image to just needle
-    Rect r(320, 175, 115, 70);
+    Rect r(168, 92, 58, 35);
     templ = templ(r);
 
     Mat result;
@@ -139,8 +140,8 @@ int PFCInit(string left_image_path, string right_image_path){
     PrintResultsForImage(&bestMatch_l, "left");
     PrintResultsForImage(&bestMatch_r, "right");
 
-    Point3d location = DeProjectPoints(img_l, img_r, &bestMatch_l, &bestMatch_r);
-    cout << "location: (" << location.x << ", " << location.y << ", " << location.z << endl;
+    // Point3d location = DeProjectPoints(img_l, img_r, &bestMatch_l, &bestMatch_r);
+    // cout << "location: (" << location.x << ", " << location.y << ", " << location.z << endl;
 
     //Display images
     imshow( left_image_path, img_l );
@@ -194,6 +195,7 @@ Point3d DeProjectPoints(const Mat& img_l, const Mat& img_r, const match* match_l
     return result;
 }
 
+
 void DrawMatch(Mat& src, match* match){
     rectangle( src, match->maxLoc,
             Point(
@@ -202,18 +204,41 @@ void DrawMatch(Mat& src, match* match){
                     Scalar::all(180), 2, 8, 0 );
 }
 
-int LoadNeedleImg(string path, Mat& img){
+//Un-abstract the loading or something
+int LoadAndPreprocessNeedleImg(string path, Mat& img){
     //Load camera image to match
-    Mat raw;
+    Mat raw, filtered;
     raw = imread(path, IMREAD_COLOR);
     if(!raw.data){
         cerr << "Loading image failed" << endl;
         return 0;
     }
-    // Do edge detection on raw image
-    DetectEdges(raw, img);
+
+    // Filter by color for needle
+    inRange(raw, Scalar(40, 40, 40), Scalar(115, 115, 115), filtered);
+
+    // Do edge detection on filtered image
+    DetectEdges(filtered, img);
     return 1;
 }
+
+int LoadAndPreprocessTemplate(string path, Mat& templ){
+    //Load camera image to match
+    Mat raw, filtered;
+    raw = imread(path, IMREAD_COLOR);
+    if(!raw.data){
+        cerr << "Loading image failed" << endl;
+        return 0;
+    }
+
+    // Filter by color for needle
+    inRange(raw, Scalar(0, 0, 0), Scalar(115, 115, 115), filtered);
+
+    // Do edge detection on filtered image
+    DetectEdges(filtered, templ);
+    return 1;
+}
+
 
 void PrintResultsForImage(match *match, string side){
     cout << side << " image: " << endl;
@@ -260,9 +285,8 @@ void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch){
 
 void DetectEdges(const Mat& img, Mat& dst){
     Mat detected_edges;
-
     //What should the kernel size be?
-    GaussianBlur( img, detected_edges, Size(1,1), 0);
+    GaussianBlur( img, detected_edges, Size(3,3), 0);
     Canny( detected_edges, dst, lowThreshold, lowThreshold * ratio, kernel_size );
 }
 

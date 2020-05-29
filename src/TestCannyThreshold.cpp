@@ -14,7 +14,8 @@ using namespace cv::xfeatures2d;
 Mat src, src_gray;
 Mat dst, detected_edges;
 int lowThreshold = 0;
-const int max_lowThreshold = 100;
+int high_threshold = 115;
+const int max_lowThreshold = 255;
 const int ratio = 3;
 const int kernel_size = 3;
 const char* window_name = "Edge Map";
@@ -25,32 +26,37 @@ int minHessian = 400;
 static void CannyThreshold(int, void*)
 {
     // blur( src_gray, detected_edges, Size(3,3) );
-    GaussianBlur( src_gray, detected_edges, Size(3,3), 1);
-    Canny( detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size );
+    Mat colorFiltered;
+    inRange(src, Scalar(lowThreshold, lowThreshold, lowThreshold), Scalar(high_threshold, high_threshold, high_threshold), colorFiltered);
+    Rect r(168, 92, 58, 35);
+    colorFiltered = colorFiltered(r);
+    GaussianBlur( colorFiltered, detected_edges, Size(3,3), 0);
+    // Canny( detected_edges, detected_edges, 8, 8*3, kernel_size );
 
 
     //Do SURF feature detection
-    Ptr<SURF> detector = SURF::create( minHessian );
-    std::vector<KeyPoint> keypoints;
-    detector->detect( detected_edges, keypoints );
-    //-- Draw keypoints
-    Mat img_keypoints;
-    drawKeypoints( detected_edges, keypoints, img_keypoints );
-    imshow( window_name, img_keypoints );
+    // Ptr<SURF> detector = SURF::create( minHessian );
+    // std::vector<KeyPoint> keypoints;
+    // detector->detect( detected_edges, keypoints );
+    // //-- Draw keypoints
+    // Mat img_keypoints;
+    // drawKeypoints( detected_edges, keypoints, img_keypoints );
+    imshow( window_name, detected_edges );
 }
 
 int main()
 {
-    src = imread( "../imgs/raw_r_marked.png", IMREAD_COLOR ); //00 Load an image
+    src = imread( "../imgs/raw_l_b.png", IMREAD_COLOR ); //00 Load an image
     if( src.empty() )
     {
         std::cout << "Could not open or find the image!\n" << std::endl;
         return -1;
     }
     dst.create( src.size(), src.type() );
-    cvtColor( src, src_gray, COLOR_BGR2GRAY );
+    // cvtColor( src, src_gray, COLOR_BGR2GRAY );
     namedWindow( window_name, WINDOW_AUTOSIZE );
     createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold, CannyThreshold );
+    createTrackbar( "Max Threshold:", window_name, &high_threshold, max_lowThreshold, CannyThreshold );
 
     CannyThreshold(0, 0);
     waitKey(0);

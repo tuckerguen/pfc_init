@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/CreateNeedleTemplate.dir/home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.o"
-  "CreateNeedleTemplate"
   "CreateNeedleTemplate.pdb"
+  "CreateNeedleTemplate"
 )
 
 # Per-language clean rules from dependency scanning.

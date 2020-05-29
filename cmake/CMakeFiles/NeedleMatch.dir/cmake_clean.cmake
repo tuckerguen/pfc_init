@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/NeedleMatch.cpp.o"
-  "NeedleMatch"
   "NeedleMatch.pdb"
+  "NeedleMatch"
 )
 
 # Per-language clean rules from dependency scanning.
