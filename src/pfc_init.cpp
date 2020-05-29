@@ -212,15 +212,9 @@ void InitNeedleImage(string path, Mat& img){
         exit(0);
     }
 
-    try{
-        // Filter by color for needle
-        inRange(raw, Scalar(40, 40, 40), Scalar(115, 115, 115), filtered);
-    } 
-    catch( cv::Exception &e ){
-        const char* err_msg = e.what();
-        std::cout << "exception caught: " << err_msg << std::endl;
-        exit(0);
-    }
+    // Filter by color for needle
+    inRange(raw, Scalar(40, 40, 40), Scalar(115, 115, 115), filtered);
+     
     // Do edge detection on filtered image
     DetectEdges(filtered, img);
 }
@@ -260,20 +254,13 @@ void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch){
         scale += ((double) scale_increment) / 100.0;
         Mat resized;
 
-        try{
-            //If scaling up, use inter-linear interpolation (as recommended by opencv documentation)
-            if(scale > 1){
-                resize(templ, resized, Size(), scale, scale, INTER_LINEAR);
-            }
-            //If scaling down, use inter-area interpolation
-            else {
-                resize(templ, resized, Size(), scale, scale, INTER_AREA);
-            }
+        //If scaling up, use inter-linear interpolation (as recommended by opencv documentation)
+        if(scale > 1){
+            resize(templ, resized, Size(), scale, scale, INTER_LINEAR);
         }
-        catch( cv::Exception &e){
-            const char* err_msg = e.what();
-            std::cout << "exception caught: " << err_msg << std::endl;
-            exit(0);
+        //If scaling down, use inter-area interpolation
+        else {
+            resize(templ, resized, Size(), scale, scale, INTER_AREA);
         }
 
         //Use inter-linear in all cases (is faster than inter_area, similar results)
@@ -331,6 +318,7 @@ void Match(const Mat& img, const Mat& templ, match* bestMatch, double angle, dou
 void RotTemplate(double angle, const Mat &src, Mat &dst){
     /// get rotation matrix for rotating the image around its center in pixel coordinates
     Point2f center((src.cols-1)/2.0, (src.rows-1)/2.0);
+
     Mat rot = getRotationMatrix2D(center, angle, 1.0);
     /// determine bounding rectangle, center not relevant
     Rect2f bbox = RotatedRect(Point2f(), src.size(), angle).boundingRect2f();
