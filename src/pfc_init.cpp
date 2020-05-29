@@ -36,8 +36,8 @@ struct match {
 int PFCInit(string left_image_path, string right_image_path);
 Point3d DeProjectPoints(const Mat& img_l, const Mat& img_r, const match* match_l, const match* match_r);
 void DrawMatch(Mat& src, match* match);
-int LoadAndPreprocessNeedleImg(string path, Mat& img);
-int LoadAndPreprocessTemplate(string path, Mat& templ);
+void InitNeedleImage(string path, Mat& img);
+void InitTemplate(string path, Mat& templ);
 void PrintResultsForImage(match *match, string side);
 void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch);
 void Match(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale);
@@ -87,12 +87,10 @@ int PFCInit(string left_image_path, string right_image_path){
     Mat img_l, img_r, templ;
 
     //load images
-    if( !LoadAndPreprocessNeedleImg(left_image_path, img_l)
-        || !LoadAndPreprocessNeedleImg(right_image_path, img_r)
-        || !LoadAndPreprocessTemplate(template_img_path, templ))
-    {
-       return -1;
-    } 
+    InitNeedleImage(left_image_path, img_l);
+    InitNeedleImage(right_image_path, img_r);
+    InitTemplate(template_img_path, templ);
+     
     
     //Crop template image to just needle
     Rect r(168, 92, 58, 35);
@@ -205,30 +203,35 @@ void DrawMatch(Mat& src, match* match){
 }
 
 //Un-abstract the loading or something
-int LoadAndPreprocessNeedleImg(string path, Mat& img){
+void InitNeedleImage(string path, Mat& img){
     //Load camera image to match
     Mat raw, filtered;
     raw = imread(path, IMREAD_COLOR);
     if(!raw.data){
         cerr << "Loading image failed" << endl;
-        return 0;
+        exit(0);
     }
 
-    // Filter by color for needle
-    inRange(raw, Scalar(40, 40, 40), Scalar(115, 115, 115), filtered);
-
+    try{
+        // Filter by color for needle
+        inRange(raw, Scalar(40, 40, 40), Scalar(115, 115, 115), filtered);
+    } 
+    catch( cv::Exception &e ){
+        const char* err_msg = e.what();
+        std::cout << "exception caught: " << err_msg << std::endl;
+        exit(0);
+    }
     // Do edge detection on filtered image
     DetectEdges(filtered, img);
-    return 1;
 }
 
-int LoadAndPreprocessTemplate(string path, Mat& templ){
+void InitTemplate(string path, Mat& templ){
     //Load camera image to match
     Mat raw, filtered;
     raw = imread(path, IMREAD_COLOR);
     if(!raw.data){
         cerr << "Loading image failed" << endl;
-        return 0;
+        exit(0);
     }
 
     // Filter by color for needle
@@ -236,7 +239,6 @@ int LoadAndPreprocessTemplate(string path, Mat& templ){
 
     // Do edge detection on filtered image
     DetectEdges(filtered, templ);
-    return 1;
 }
 
 
@@ -257,13 +259,21 @@ void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch){
     for(int i = 0; i < ceil((max_scale - min_scale) / scale_increment); ++i){
         scale += ((double) scale_increment) / 100.0;
         Mat resized;
-        //If scaling up, use inter-linear interpolation (as recommended by opencv documentation)
-        if(scale > 1){
-            resize(templ, resized, Size(), scale, scale, INTER_LINEAR);
+
+        try{
+            //If scaling up, use inter-linear interpolation (as recommended by opencv documentation)
+            if(scale > 1){
+                resize(templ, resized, Size(), scale, scale, INTER_LINEAR);
+            }
+            //If scaling down, use inter-area interpolation
+            else {
+                resize(templ, resized, Size(), scale, scale, INTER_AREA);
+            }
         }
-        //If scaling down, use inter-area interpolation
-        else {
-            resize(templ, resized, Size(), scale, scale, INTER_AREA);
+        catch( cv::Exception &e){
+            const char* err_msg = e.what();
+            std::cout << "exception caught: " << err_msg << std::endl;
+            exit(0);
         }
 
         //Use inter-linear in all cases (is faster than inter_area, similar results)
