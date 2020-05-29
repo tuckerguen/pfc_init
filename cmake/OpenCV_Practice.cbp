@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="OpenCV_Practice"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\opt\;CMake Files\..\..\..\..\..\opt\ros\;CMake Files\..\..\..\..\..\opt\ros\kinetic\;CMake Files\..\..\..\..\..\opt\ros\kinetic\share\;CMake Files\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="pfc_init">
+				<Option output="/home/tucker/research/pfc_init/cmake/pfc_init" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 pfc_init"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="pfc_init/fast">
+				<Option output="/home/tucker/research/pfc_init/cmake/pfc_init" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 pfc_init/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="NeedleMatch">
+				<Option output="/home/tucker/research/pfc_init/cmake/NeedleMatch" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 NeedleMatch"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="NeedleMatch/fast">
+				<Option output="/home/tucker/research/pfc_init/cmake/NeedleMatch" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 NeedleMatch/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CreateNeedleTemplate">
+				<Option output="/home/tucker/research/pfc_init/cmake/CreateNeedleTemplate" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 CreateNeedleTemplate"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CreateNeedleTemplate/fast">
+				<Option output="/home/tucker/research/pfc_init/cmake/CreateNeedleTemplate" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 CreateNeedleTemplate/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="solve_lin_sys">
+				<Option output="/home/tucker/research/pfc_init/cmake/solve_lin_sys" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 solve_lin_sys"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="solve_lin_sys/fast">
+				<Option output="/home/tucker/research/pfc_init/cmake/solve_lin_sys" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 solve_lin_sys/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TestCannyThreshold">
+				<Option output="/home/tucker/research/pfc_init/cmake/TestCannyThreshold" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 TestCannyThreshold"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TestCannyThreshold/fast">
+				<Option output="/home/tucker/research/pfc_init/cmake/TestCannyThreshold" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 TestCannyThreshold/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="NMSURF">
+				<Option output="/home/tucker/research/pfc_init/cmake/NMSURF" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 NMSURF"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="NMSURF/fast">
+				<Option output="/home/tucker/research/pfc_init/cmake/NMSURF" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tucker/research/pfc_init/cmake"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev"/>
+					<Add directory="/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 NMSURF/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/tucker/research/pfc_init/cmake/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp">
+			<Option target="CreateNeedleTemplate"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/NMSURF.cpp">
+			<Option target="NMSURF"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/NeedleMatch.cpp">
+			<Option target="NeedleMatch"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp">
+			<Option target="TestCannyThreshold"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/pfc_init.cpp">
+			<Option target="pfc_init"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/solve_lin_sys.cpp">
+			<Option target="solve_lin_sys"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/cmake/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/cmake/../../../../../opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/cmake/../../../../../opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/cmake/../../../../../opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVModules-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/cmake/../../../../../opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\opt\ros\kinetic\share\OpenCV-3.3.1-dev\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

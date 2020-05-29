@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="OpenCV_Practice" targetName="NMSURF" />
+      <config projectName="OpenCV_Practice" targetName="pfc_init" />
+      <config projectName="OpenCV_Practice" targetName="TestCannyThreshold" />
+      <config projectName="OpenCV_Practice" targetName="CreateNeedleTemplate" />
+      <config projectName="OpenCV_Practice" targetName="NeedleMatch" />
+      <config projectName="OpenCV_Practice" targetName="solve_lin_sys" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e6bec14c-c227-4aa5-bea4-6c3deaed288b" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ProjectId" id="1cYAWgbfQ2C5r9NUixfAfURZQbX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmake/CMakeLists.txt" />
+  </component>
+  <component name="RunManager" selected="CMake Application.pfc_init">
+    <configuration name="CreateNeedleTemplate" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="OpenCV_Practice" TARGET_NAME="CreateNeedleTemplate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="OpenCV_Practice" RUN_TARGET_NAME="CreateNeedleTemplate">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NMSURF" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="OpenCV_Practice" TARGET_NAME="NMSURF" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="OpenCV_Practice" RUN_TARGET_NAME="NMSURF">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NeedleMatch" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="OpenCV_Practice" TARGET_NAME="NeedleMatch" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="OpenCV_Practice" RUN_TARGET_NAME="NeedleMatch">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestCannyThreshold" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="OpenCV_Practice" TARGET_NAME="TestCannyThreshold" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="OpenCV_Practice" RUN_TARGET_NAME="TestCannyThreshold">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="pfc_init" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="OpenCV_Practice" TARGET_NAME="pfc_init" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="OpenCV_Practice" RUN_TARGET_NAME="pfc_init">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="solve_lin_sys" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="OpenCV_Practice" TARGET_NAME="solve_lin_sys" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="OpenCV_Practice" RUN_TARGET_NAME="solve_lin_sys">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.CreateNeedleTemplate" />
+      <item itemvalue="CMake Application.NeedleMatch" />
+      <item itemvalue="CMake Application.NMSURF" />
+      <item itemvalue="CMake Application.pfc_init" />
+      <item itemvalue="CMake Application.solve_lin_sys" />
+      <item itemvalue="CMake Application.TestCannyThreshold" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e6bec14c-c227-4aa5-bea4-6c3deaed288b" name="Default Changelist" comment="" />
+      <created>1590695185180</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590695185180</updated>
+      <workItem from="1590695190449" duration="217000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="511" height="506" key="DebuggerActiveHint" timestamp="1590695385176">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="511" height="506" key="DebuggerActiveHint/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695385176" />
+    <state x="1068" y="477" key="FileChooserDialogImpl" timestamp="1590695214074">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state x="1068" y="477" key="FileChooserDialogImpl/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695214074" />
+    <state width="2514" height="509" key="GridCell.Tab.0.bottom" timestamp="1590695425394">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="2514" height="509" key="GridCell.Tab.0.bottom/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695425394" />
+    <state width="2514" height="509" key="GridCell.Tab.0.center" timestamp="1590695425392">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="2514" height="509" key="GridCell.Tab.0.center/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695425392" />
+    <state width="2514" height="509" key="GridCell.Tab.0.left" timestamp="1590695425390">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="2514" height="509" key="GridCell.Tab.0.left/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695425390" />
+    <state width="2514" height="509" key="GridCell.Tab.0.right" timestamp="1590695425393">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="2514" height="509" key="GridCell.Tab.0.right/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695425393" />
+    <state width="2514" height="509" key="GridCell.Tab.1.bottom" timestamp="1590695425399">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="2514" height="509" key="GridCell.Tab.1.bottom/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695425399" />
+    <state width="2514" height="509" key="GridCell.Tab.1.center" timestamp="1590695425396">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="2514" height="509" key="GridCell.Tab.1.center/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695425396" />
+    <state width="2514" height="509" key="GridCell.Tab.1.left" timestamp="1590695425395">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="2514" height="509" key="GridCell.Tab.1.left/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695425395" />
+    <state width="2514" height="509" key="GridCell.Tab.1.right" timestamp="1590695425398">
+      <screen x="0" y="24" width="2560" height="1416" />
+    </state>
+    <state width="2514" height="509" key="GridCell.Tab.1.right/0.24.2560.1416/2560.360.1920.1080@0.24.2560.1416" timestamp="1590695425397" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/pfc_init.cpp</url>
+          <line>43</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/pfc_init.cpp</url>
+          <line>198</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
