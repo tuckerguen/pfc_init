@@ -1,5 +1,6 @@
 /home/tucker/research/pfc_init/cmake/CMakeFiles/edit_cache.dir
 /home/tucker/research/pfc_init/cmake/CMakeFiles/rebuild_cache.dir
+/home/tucker/research/pfc_init/cmake/CMakeFiles/ColorFilterTesting.dir
 /home/tucker/research/pfc_init/cmake/CMakeFiles/solve_lin_sys.dir
 /home/tucker/research/pfc_init/cmake/CMakeFiles/NMSURF.dir
 /home/tucker/research/pfc_init/cmake/CMakeFiles/NeedleMatch.dir

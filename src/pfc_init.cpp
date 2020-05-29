@@ -17,20 +17,28 @@ int lowThreshold = 8;
 const int ratio = 3;
 const int kernel_size = 3;
 
+// Rotation parameters
 const double max_rotation = 360; //Max number of degrees to rotate template
 const double angle_increment = 10; //Number of degrees to rotate template each iteration
 
+// Scaling parameters
 const int min_scale = 50; //minimum template scale to try to match (in %)
 const int max_scale = 150; //maximum template scale to try to match (in %)
 const double scale_increment = 1; //% scale to increase by on each iteration
 
+//HSV Filtering Parameters
+const int low_h = 0, high_h = 5;
+const int low_s = 0, high_s = 0;
+const int low_v = 0, high_v = 140;
+
+//A template match
 struct match {
-    double maxVal;
-    double angle;
-    double scale;
-    Point maxLoc;
-    Mat templ;
-    Mat result;
+    double maxVal; //max matching value assigned by opencv templatematch()
+    double angle; //angle matched at
+    double scale; //scale matched at
+    Point maxLoc; //location of match
+    Mat templ; //template used to match
+    Mat result; //result image from opencv templatematch()
 };
 
 int PFCInit(string left_image_path, string right_image_path);
@@ -40,13 +48,13 @@ void InitNeedleImage(string path, Mat& img);
 void InitTemplate(string path, Mat& templ);
 void PrintResultsForImage(match *match, string side);
 void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch);
-void Match(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale);
-void RotTemplate(double angle, const Mat &src, Mat &dst);
+void MatchImageToTemplate(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale);
+void RotateTemplate(double angle, const Mat &src, Mat &dst);
 void DetectEdges(const Mat& img, Mat& dst);
 
 int main(int argc, char* argv[]){
     string image_id = "a";
-    string image_type = "vessel";
+    string image_type = "raw";
 
     if(argc == 3){
         image_id = argv[1];
@@ -79,6 +87,7 @@ int PFCInit(string left_image_path, string right_image_path){
     namedWindow( right_image_path, WINDOW_AUTOSIZE );
     namedWindow( "best template", WINDOW_AUTOSIZE );
     namedWindow( "result", WINDOW_AUTOSIZE );
+    namedWindow("template", WINDOW_AUTOSIZE);
 
     //Start timer
     double t = (double)getTickCount();
@@ -90,14 +99,12 @@ int PFCInit(string left_image_path, string right_image_path){
     InitNeedleImage(left_image_path, img_l);
     InitNeedleImage(right_image_path, img_r);
     InitTemplate(template_img_path, templ);
-     
-    
-    //Crop template image to just needle
-    Rect r(168, 92, 58, 35);
-    templ = templ(r);
 
-    Mat result;
+    Mat raw_l, raw_r;
+    raw_l = imread(left_image_path, IMREAD_COLOR);
+    raw_r = imread(right_image_path, IMREAD_COLOR);
 
+    Mat init_result;
     //Init best match info for left image
     match bestMatch_l = {
             -DBL_MAX,
@@ -105,7 +112,7 @@ int PFCInit(string left_image_path, string right_image_path){
             0.0,
             Point(0, 0),
             templ,
-            result
+            init_result
     };
 
     //Init best match info for right image
@@ -115,7 +122,7 @@ int PFCInit(string left_image_path, string right_image_path){
             0.0,
             Point(0, 0),
             templ,
-            result
+            init_result
     };
     
 
@@ -124,9 +131,9 @@ int PFCInit(string left_image_path, string right_image_path){
     LocateNeedle(img_r, templ, &bestMatch_r);
 
     //Draw the matches on originals and result images
-    DrawMatch(img_l, &bestMatch_l);
+    DrawMatch(raw_l, &bestMatch_l);
     DrawMatch(bestMatch_l.result, &bestMatch_l);
-    DrawMatch(img_r, &bestMatch_r);
+    DrawMatch(raw_r, &bestMatch_r);
     DrawMatch(bestMatch_r.result, &bestMatch_r);
 
     //Record time
@@ -142,8 +149,8 @@ int PFCInit(string left_image_path, string right_image_path){
     // cout << "location: (" << location.x << ", " << location.y << ", " << location.z << endl;
 
     //Display images
-    imshow( left_image_path, img_l );
-    // imshow(right_image_path, img_r );
+    imshow( left_image_path, raw_l );
+    imshow(right_image_path, raw_r );
     imshow("best template", bestMatch_l.templ);
     imshow("result", bestMatch_l.result);
 
@@ -199,13 +206,12 @@ void DrawMatch(Mat& src, match* match){
             Point(
             match->maxLoc.x + match->templ.cols ,
             match->maxLoc.y + match->templ.rows ),
-                    Scalar::all(180), 2, 8, 0 );
+                    Scalar::all(255), 2, 8, 0 );
 }
 
-//Un-abstract the loading or something
 void InitNeedleImage(string path, Mat& img){
     //Load camera image to match
-    Mat raw, filtered;
+    Mat raw, filtered, img_HSV;
     raw = imread(path, IMREAD_COLOR);
     if(!raw.data){
         cerr << "Loading image failed" << endl;
@@ -213,26 +219,32 @@ void InitNeedleImage(string path, Mat& img){
     }
 
     // Filter by color for needle
-    inRange(raw, Scalar(40, 40, 40), Scalar(115, 115, 115), filtered);
-     
+    cvtColor(raw, img_HSV, COLOR_BGR2HSV);
+    inRange(img_HSV, Scalar(low_h, low_s, low_v), Scalar(high_h, high_s, high_v), img);
+
     // Do edge detection on filtered image
-    DetectEdges(filtered, img);
+    // DetectEdges(filtered, img);
 }
 
 void InitTemplate(string path, Mat& templ){
     //Load camera image to match
-    Mat raw, filtered;
+    Mat raw, filtered, img_HSV;
     raw = imread(path, IMREAD_COLOR);
     if(!raw.data){
         cerr << "Loading image failed" << endl;
         exit(0);
     }
 
-    // Filter by color for needle
-    inRange(raw, Scalar(0, 0, 0), Scalar(115, 115, 115), filtered);
+    // Filter by HSV for needle
+    cvtColor(raw, img_HSV, COLOR_BGR2HSV);
+    inRange(img_HSV, Scalar(low_h, low_s, low_v), Scalar(high_h, high_s, high_v), filtered);
+    
+    //Crop template image to just needle
+    Rect r(168, 92, 58, 35);
+    templ = filtered(r);
 
     // Do edge detection on filtered image
-    DetectEdges(filtered, templ);
+    // DetectEdges(filtered, templ);
 }
 
 
@@ -255,16 +267,16 @@ void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch){
         Mat resized;
 
         //If scaling up, use inter-linear interpolation (as recommended by opencv documentation)
-        if(scale > 1){
-            resize(templ, resized, Size(), scale, scale, INTER_LINEAR);
-        }
-        //If scaling down, use inter-area interpolation
-        else {
-            resize(templ, resized, Size(), scale, scale, INTER_AREA);
-        }
+        // if(scale > 1){
+        //     resize(templ, resized, Size(), scale, scale, INTER_LINEAR);
+        // }
+        // //If scaling down, use inter-area interpolation
+        // else {
+        //     resize(templ, resized, Size(), scale, scale, INTER_AREA);
+        // }
 
         //Use inter-linear in all cases (is faster than inter_area, similar results)
-        // resize(templ, resized, Size(), scale, scale, INTER_LINEAR);
+        resize(templ, resized, Size(), scale, scale, INTER_LINEAR);
         
         ///Loop over all rotations
         double rot_angle = 0;   
@@ -272,14 +284,15 @@ void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch){
             rot_angle += angle_increment;
             //Rotate
             Mat rot_templ;
-            RotTemplate(rot_angle, resized, rot_templ);
+            RotateTemplate(rot_angle, resized, rot_templ);
 
             //Match rotated template to image
-            Match(img, rot_templ, bestMatch, rot_angle, scale);
+            MatchImageToTemplate(img, rot_templ, bestMatch, rot_angle, scale);
         }
     }
 }
 
+//With HSV filtering, no longer seems necessary
 void DetectEdges(const Mat& img, Mat& dst){
     Mat detected_edges;
     //What should the kernel size be?
@@ -287,14 +300,14 @@ void DetectEdges(const Mat& img, Mat& dst){
     Canny( detected_edges, dst, lowThreshold, lowThreshold * ratio, kernel_size );
 }
 
-void Match(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale){
+void MatchImageToTemplate(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale){
     /// Create the result matrix
     Mat result;
     int result_cols =  img.cols - templ.cols + 1;
     int result_rows = img.rows - templ.rows + 1;
-
     result.create( result_rows, result_cols, CV_32FC1 );
 
+    //Match using TM_CCOEFF
     matchTemplate(img, templ, result, TM_CCOEFF);
 
     /// Localizing the best match with minMaxLoc
@@ -315,7 +328,7 @@ void Match(const Mat& img, const Mat& templ, match* bestMatch, double angle, dou
     
 }
 
-void RotTemplate(double angle, const Mat &src, Mat &dst){
+void RotateTemplate(double angle, const Mat &src, Mat &dst){
     /// get rotation matrix for rotating the image around its center in pixel coordinates
     Point2f center((src.cols-1)/2.0, (src.rows-1)/2.0);
 

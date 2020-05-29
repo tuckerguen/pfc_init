@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named ColorFilterTesting
+
+# Build rule for target.
+ColorFilterTesting: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ColorFilterTesting
+.PHONY : ColorFilterTesting
+
+# fast build rule for target.
+ColorFilterTesting/fast:
+	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/build
+.PHONY : ColorFilterTesting/fast
+
+#=============================================================================
 # Target rules for targets named solve_lin_sys
 
 # Build rule for target.
@@ -187,6 +200,33 @@ TestCannyThreshold: cmake_check_build_system
 TestCannyThreshold/fast:
 	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/build
 .PHONY : TestCannyThreshold/fast
+
+home/tucker/research/pfc_init/src/ColorFilterTesting.o: home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o
+
+.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.o
+
+# target to build an object file
+home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o:
+	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o
+.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o
+
+home/tucker/research/pfc_init/src/ColorFilterTesting.i: home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.i
+
+.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.i
+
+# target to preprocess a source file
+home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.i:
+	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.i
+.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.i
+
+home/tucker/research/pfc_init/src/ColorFilterTesting.s: home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.s
+
+.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.s
+
+# target to generate assembly for a file
+home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.s:
+	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.s
+.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.s
 
 home/tucker/research/pfc_init/src/CreateNeedleTemplate.o: home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.o
 
@@ -358,12 +398,16 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... ColorFilterTesting"
 	@echo "... solve_lin_sys"
 	@echo "... NMSURF"
 	@echo "... NeedleMatch"
 	@echo "... pfc_init"
 	@echo "... CreateNeedleTemplate"
 	@echo "... TestCannyThreshold"
+	@echo "... home/tucker/research/pfc_init/src/ColorFilterTesting.o"
+	@echo "... home/tucker/research/pfc_init/src/ColorFilterTesting.i"
+	@echo "... home/tucker/research/pfc_init/src/ColorFilterTesting.s"
 	@echo "... home/tucker/research/pfc_init/src/CreateNeedleTemplate.o"
 	@echo "... home/tucker/research/pfc_init/src/CreateNeedleTemplate.i"
 	@echo "... home/tucker/research/pfc_init/src/CreateNeedleTemplate.s"

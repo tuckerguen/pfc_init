@@ -17,7 +17,7 @@ char* template_window = "Template";
 int match_method;
 int max_Trackbar = 5;
 
-void Match(int, void*);
+void MatchImageToTemplate(int, void*);
 void RotTemplate(double angle, const Mat &src, Mat &dst);
 
 int main(int argc, char** argv){
@@ -33,14 +33,14 @@ int main(int argc, char** argv){
 
     for(int i = 0; i < 360; ++i){
         RotTemplate(-90, iTempl, templ);
-        Match(0, 0);
+        MatchImageToTemplate(0, 0);
     }
     
 
 
 
 //    char* trackbar_label = "Method: \n 0: SQDIFF \n 1: SQDIFF NORMED \n 2: TM CCORR \n 3: TM CCORR NORMED \n 4: TM COEFF \n 5: TM COEFF NORMED";
-//    createTrackbar( trackbar_label, image_window, &match_method, max_Trackbar, Match );
+//    createTrackbar( trackbar_label, image_window, &match_method, max_Trackbar, MatchImageToTemplate );
 
 
 
@@ -70,7 +70,7 @@ void RotTemplate(double angle, const Mat &src, Mat &dst){
     warpAffine(src, dst, rot, bbox.size());
 }
 
-void Match( int, void*){
+void MatchImageToTemplate( int, void*){
     Mat img_display;
     img_display = img.clone();
 

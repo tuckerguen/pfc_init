@@ -20,19 +20,26 @@ const int ratio = 3;
 const int kernel_size = 3;
 const char* window_name = "Edge Map";
 
+
+int low_H = 0, low_S = 0, low_V = 0;
+int high_H = 4, high_S = 0, high_V = 140;
+
 int minHessian = 400;
 
 
 static void CannyThreshold(int, void*)
 {
     // blur( src_gray, detected_edges, Size(3,3) );
-    Mat colorFiltered;
-    inRange(src, Scalar(lowThreshold, lowThreshold, lowThreshold), Scalar(high_threshold, high_threshold, high_threshold), colorFiltered);
+    // inRange(src, Scalar(lowThreshold, lowThreshold, lowThreshold), Scalar(high_threshold, high_threshold, high_threshold), colorFiltered);
+  
+    // GaussianBlur( colorFiltered, detected_edges, Size(3,3), 0);
+    Mat img_HSV;
+    cvtColor(src, img_HSV, COLOR_BGR2HSV);
+    inRange(img_HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), detected_edges);
+    GaussianBlur( detected_edges, detected_edges, Size(3,3), 0);
+    Canny( detected_edges, detected_edges, 8, 8*3, kernel_size );
     Rect r(168, 92, 58, 35);
-    colorFiltered = colorFiltered(r);
-    GaussianBlur( colorFiltered, detected_edges, Size(3,3), 0);
-    // Canny( detected_edges, detected_edges, 8, 8*3, kernel_size );
-
+    detected_edges = detected_edges(r);
 
     //Do SURF feature detection
     // Ptr<SURF> detector = SURF::create( minHessian );
@@ -55,8 +62,14 @@ int main()
     dst.create( src.size(), src.type() );
     // cvtColor( src, src_gray, COLOR_BGR2GRAY );
     namedWindow( window_name, WINDOW_AUTOSIZE );
-    createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold, CannyThreshold );
-    createTrackbar( "Max Threshold:", window_name, &high_threshold, max_lowThreshold, CannyThreshold );
+    // createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold, CannyThreshold );
+    // createTrackbar( "Max Threshold:", window_name, &high_threshold, max_lowThreshold, CannyThreshold );
+    createTrackbar("Low H", window_name, &low_H, 180, CannyThreshold);
+    createTrackbar("High H", window_name, &high_H, 170, CannyThreshold);
+    createTrackbar("Low S", window_name, &low_S, 255, CannyThreshold);
+    createTrackbar("High S", window_name, &high_S, 255, CannyThreshold);
+    createTrackbar("Low V", window_name, &low_V, 255, CannyThreshold);
+    createTrackbar("High V", window_name, &high_V, 255, CannyThreshold);
 
     CannyThreshold(0, 0);
     waitKey(0);
