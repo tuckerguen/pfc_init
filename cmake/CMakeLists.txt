@@ -1,19 +1,28 @@
 cmake_minimum_required(VERSION 2.8)
 project( OpenCV_Practice )
-find_package( OpenCV REQUIRED )
-find_package( OpenCV )
-include_directories( ${OpenCV_INCLUDE_DIRS} )
-add_executable(NeedleMatch ../src/NeedleMatch.cpp)
+
+set(OpenCV_INCLUDE_DIRS
+  /usr/local/include
+  /usr/local/include/opencv2
+)
+
+set(OpenCV_LIB_DIR
+  /usr/local/lib
+)
+
+set(OpenCV_LIBS
+  opencv_core
+  opencv_highgui
+  opencv_imgcodecs
+  opencv_imgproc
+  opencv_features2d
+  opencv_cudaimgproc
+)
+
+include_directories(${OpenCV_INCLUDE_DIRS})
+link_directories(${OpenCV_LIB_DIR})
+
 add_executable(pfc_init ../src/pfc_init.cpp)
-add_executable(CreateNeedleTemplate ../src/CreateNeedleTemplate.cpp )
 add_executable(TestCannyThreshold ../src/TestCannyThreshold.cpp )
-add_executable(NMSURF ../src/NMSURF.cpp )
-add_executable(solve_lin_sys ../src/solve_lin_sys.cpp )
-add_executable(ColorFilterTesting ../src/ColorFilterTesting.cpp )
-target_link_libraries(ColorFilterTesting ${OpenCV_LIBS})
-target_link_libraries(solve_lin_sys ${OpenCV_LIBS})
-target_link_libraries(NMSURF ${OpenCV_LIBS})
 target_link_libraries(TestCannyThreshold ${OpenCV_LIBS})
-target_link_libraries(CreateNeedleTemplate ${OpenCV_LIBS})
 target_link_libraries(pfc_init ${OpenCV_LIBS})
-target_link_libraries(NeedleMatch ${OpenCV_LIBS} )

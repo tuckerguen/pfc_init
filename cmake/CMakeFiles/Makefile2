@@ -60,235 +60,13 @@ CMAKE_SOURCE_DIR = /home/tucker/research/pfc_init/cmake
 CMAKE_BINARY_DIR = /home/tucker/research/pfc_init/cmake
 
 #=============================================================================
-# Target rules for target CMakeFiles/ColorFilterTesting.dir
-
-# All Build rule for target.
-CMakeFiles/ColorFilterTesting.dir/all:
-	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/depend
-	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=1,2 "Built target ColorFilterTesting"
-.PHONY : CMakeFiles/ColorFilterTesting.dir/all
-
-# Include target in all.
-all: CMakeFiles/ColorFilterTesting.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/ColorFilterTesting.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ColorFilterTesting.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/ColorFilterTesting.dir/rule
-
-# Convenience name for target.
-ColorFilterTesting: CMakeFiles/ColorFilterTesting.dir/rule
-
-.PHONY : ColorFilterTesting
-
-# clean rule for target.
-CMakeFiles/ColorFilterTesting.dir/clean:
-	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/clean
-.PHONY : CMakeFiles/ColorFilterTesting.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/ColorFilterTesting.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/solve_lin_sys.dir
-
-# All Build rule for target.
-CMakeFiles/solve_lin_sys.dir/all:
-	$(MAKE) -f CMakeFiles/solve_lin_sys.dir/build.make CMakeFiles/solve_lin_sys.dir/depend
-	$(MAKE) -f CMakeFiles/solve_lin_sys.dir/build.make CMakeFiles/solve_lin_sys.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=13,14 "Built target solve_lin_sys"
-.PHONY : CMakeFiles/solve_lin_sys.dir/all
-
-# Include target in all.
-all: CMakeFiles/solve_lin_sys.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/solve_lin_sys.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/solve_lin_sys.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/solve_lin_sys.dir/rule
-
-# Convenience name for target.
-solve_lin_sys: CMakeFiles/solve_lin_sys.dir/rule
-
-.PHONY : solve_lin_sys
-
-# clean rule for target.
-CMakeFiles/solve_lin_sys.dir/clean:
-	$(MAKE) -f CMakeFiles/solve_lin_sys.dir/build.make CMakeFiles/solve_lin_sys.dir/clean
-.PHONY : CMakeFiles/solve_lin_sys.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/solve_lin_sys.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/NMSURF.dir
-
-# All Build rule for target.
-CMakeFiles/NMSURF.dir/all:
-	$(MAKE) -f CMakeFiles/NMSURF.dir/build.make CMakeFiles/NMSURF.dir/depend
-	$(MAKE) -f CMakeFiles/NMSURF.dir/build.make CMakeFiles/NMSURF.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=5,6 "Built target NMSURF"
-.PHONY : CMakeFiles/NMSURF.dir/all
-
-# Include target in all.
-all: CMakeFiles/NMSURF.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/NMSURF.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/NMSURF.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/NMSURF.dir/rule
-
-# Convenience name for target.
-NMSURF: CMakeFiles/NMSURF.dir/rule
-
-.PHONY : NMSURF
-
-# clean rule for target.
-CMakeFiles/NMSURF.dir/clean:
-	$(MAKE) -f CMakeFiles/NMSURF.dir/build.make CMakeFiles/NMSURF.dir/clean
-.PHONY : CMakeFiles/NMSURF.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/NMSURF.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/NeedleMatch.dir
-
-# All Build rule for target.
-CMakeFiles/NeedleMatch.dir/all:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/depend
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=7,8 "Built target NeedleMatch"
-.PHONY : CMakeFiles/NeedleMatch.dir/all
-
-# Include target in all.
-all: CMakeFiles/NeedleMatch.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/NeedleMatch.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/NeedleMatch.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/NeedleMatch.dir/rule
-
-# Convenience name for target.
-NeedleMatch: CMakeFiles/NeedleMatch.dir/rule
-
-.PHONY : NeedleMatch
-
-# clean rule for target.
-CMakeFiles/NeedleMatch.dir/clean:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/clean
-.PHONY : CMakeFiles/NeedleMatch.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/NeedleMatch.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/pfc_init.dir
-
-# All Build rule for target.
-CMakeFiles/pfc_init.dir/all:
-	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/depend
-	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=11,12 "Built target pfc_init"
-.PHONY : CMakeFiles/pfc_init.dir/all
-
-# Include target in all.
-all: CMakeFiles/pfc_init.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/pfc_init.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/pfc_init.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/pfc_init.dir/rule
-
-# Convenience name for target.
-pfc_init: CMakeFiles/pfc_init.dir/rule
-
-.PHONY : pfc_init
-
-# clean rule for target.
-CMakeFiles/pfc_init.dir/clean:
-	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/clean
-.PHONY : CMakeFiles/pfc_init.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/pfc_init.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/CreateNeedleTemplate.dir
-
-# All Build rule for target.
-CMakeFiles/CreateNeedleTemplate.dir/all:
-	$(MAKE) -f CMakeFiles/CreateNeedleTemplate.dir/build.make CMakeFiles/CreateNeedleTemplate.dir/depend
-	$(MAKE) -f CMakeFiles/CreateNeedleTemplate.dir/build.make CMakeFiles/CreateNeedleTemplate.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=3,4 "Built target CreateNeedleTemplate"
-.PHONY : CMakeFiles/CreateNeedleTemplate.dir/all
-
-# Include target in all.
-all: CMakeFiles/CreateNeedleTemplate.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/CreateNeedleTemplate.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/CreateNeedleTemplate.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/CreateNeedleTemplate.dir/rule
-
-# Convenience name for target.
-CreateNeedleTemplate: CMakeFiles/CreateNeedleTemplate.dir/rule
-
-.PHONY : CreateNeedleTemplate
-
-# clean rule for target.
-CMakeFiles/CreateNeedleTemplate.dir/clean:
-	$(MAKE) -f CMakeFiles/CreateNeedleTemplate.dir/build.make CMakeFiles/CreateNeedleTemplate.dir/clean
-.PHONY : CMakeFiles/CreateNeedleTemplate.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/CreateNeedleTemplate.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
 # Target rules for target CMakeFiles/TestCannyThreshold.dir
 
 # All Build rule for target.
 CMakeFiles/TestCannyThreshold.dir/all:
 	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/depend
 	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=9,10 "Built target TestCannyThreshold"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=1,2 "Built target TestCannyThreshold"
 .PHONY : CMakeFiles/TestCannyThreshold.dir/all
 
 # Include target in all.
@@ -315,6 +93,43 @@ CMakeFiles/TestCannyThreshold.dir/clean:
 
 # clean rule for target.
 clean: CMakeFiles/TestCannyThreshold.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/pfc_init.dir
+
+# All Build rule for target.
+CMakeFiles/pfc_init.dir/all:
+	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/depend
+	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=3,4 "Built target pfc_init"
+.PHONY : CMakeFiles/pfc_init.dir/all
+
+# Include target in all.
+all: CMakeFiles/pfc_init.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/pfc_init.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/pfc_init.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
+.PHONY : CMakeFiles/pfc_init.dir/rule
+
+# Convenience name for target.
+pfc_init: CMakeFiles/pfc_init.dir/rule
+
+.PHONY : pfc_init
+
+# clean rule for target.
+CMakeFiles/pfc_init.dir/clean:
+	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/clean
+.PHONY : CMakeFiles/pfc_init.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/pfc_init.dir/clean
 
 .PHONY : clean
 

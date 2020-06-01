@@ -111,56 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ColorFilterTesting
+# Target rules for targets named TestCannyThreshold
 
 # Build rule for target.
-ColorFilterTesting: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ColorFilterTesting
-.PHONY : ColorFilterTesting
+TestCannyThreshold: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 TestCannyThreshold
+.PHONY : TestCannyThreshold
 
 # fast build rule for target.
-ColorFilterTesting/fast:
-	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/build
-.PHONY : ColorFilterTesting/fast
-
-#=============================================================================
-# Target rules for targets named solve_lin_sys
-
-# Build rule for target.
-solve_lin_sys: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 solve_lin_sys
-.PHONY : solve_lin_sys
-
-# fast build rule for target.
-solve_lin_sys/fast:
-	$(MAKE) -f CMakeFiles/solve_lin_sys.dir/build.make CMakeFiles/solve_lin_sys.dir/build
-.PHONY : solve_lin_sys/fast
-
-#=============================================================================
-# Target rules for targets named NMSURF
-
-# Build rule for target.
-NMSURF: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 NMSURF
-.PHONY : NMSURF
-
-# fast build rule for target.
-NMSURF/fast:
-	$(MAKE) -f CMakeFiles/NMSURF.dir/build.make CMakeFiles/NMSURF.dir/build
-.PHONY : NMSURF/fast
-
-#=============================================================================
-# Target rules for targets named NeedleMatch
-
-# Build rule for target.
-NeedleMatch: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 NeedleMatch
-.PHONY : NeedleMatch
-
-# fast build rule for target.
-NeedleMatch/fast:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/build
-.PHONY : NeedleMatch/fast
+TestCannyThreshold/fast:
+	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/build
+.PHONY : TestCannyThreshold/fast
 
 #=============================================================================
 # Target rules for targets named pfc_init
@@ -174,140 +135,6 @@ pfc_init: cmake_check_build_system
 pfc_init/fast:
 	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/build
 .PHONY : pfc_init/fast
-
-#=============================================================================
-# Target rules for targets named CreateNeedleTemplate
-
-# Build rule for target.
-CreateNeedleTemplate: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 CreateNeedleTemplate
-.PHONY : CreateNeedleTemplate
-
-# fast build rule for target.
-CreateNeedleTemplate/fast:
-	$(MAKE) -f CMakeFiles/CreateNeedleTemplate.dir/build.make CMakeFiles/CreateNeedleTemplate.dir/build
-.PHONY : CreateNeedleTemplate/fast
-
-#=============================================================================
-# Target rules for targets named TestCannyThreshold
-
-# Build rule for target.
-TestCannyThreshold: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 TestCannyThreshold
-.PHONY : TestCannyThreshold
-
-# fast build rule for target.
-TestCannyThreshold/fast:
-	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/build
-.PHONY : TestCannyThreshold/fast
-
-home/tucker/research/pfc_init/src/ColorFilterTesting.o: home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o
-
-.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.o
-
-# target to build an object file
-home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o:
-	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o
-.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o
-
-home/tucker/research/pfc_init/src/ColorFilterTesting.i: home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.i
-
-.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.i
-
-# target to preprocess a source file
-home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.i:
-	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.i
-.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.i
-
-home/tucker/research/pfc_init/src/ColorFilterTesting.s: home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.s
-
-.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.s
-
-# target to generate assembly for a file
-home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.s:
-	$(MAKE) -f CMakeFiles/ColorFilterTesting.dir/build.make CMakeFiles/ColorFilterTesting.dir/home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.s
-.PHONY : home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.s
-
-home/tucker/research/pfc_init/src/CreateNeedleTemplate.o: home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.o
-
-.PHONY : home/tucker/research/pfc_init/src/CreateNeedleTemplate.o
-
-# target to build an object file
-home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.o:
-	$(MAKE) -f CMakeFiles/CreateNeedleTemplate.dir/build.make CMakeFiles/CreateNeedleTemplate.dir/home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.o
-.PHONY : home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.o
-
-home/tucker/research/pfc_init/src/CreateNeedleTemplate.i: home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.i
-
-.PHONY : home/tucker/research/pfc_init/src/CreateNeedleTemplate.i
-
-# target to preprocess a source file
-home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.i:
-	$(MAKE) -f CMakeFiles/CreateNeedleTemplate.dir/build.make CMakeFiles/CreateNeedleTemplate.dir/home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.i
-.PHONY : home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.i
-
-home/tucker/research/pfc_init/src/CreateNeedleTemplate.s: home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.s
-
-.PHONY : home/tucker/research/pfc_init/src/CreateNeedleTemplate.s
-
-# target to generate assembly for a file
-home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.s:
-	$(MAKE) -f CMakeFiles/CreateNeedleTemplate.dir/build.make CMakeFiles/CreateNeedleTemplate.dir/home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.s
-.PHONY : home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.s
-
-home/tucker/research/pfc_init/src/NMSURF.o: home/tucker/research/pfc_init/src/NMSURF.cpp.o
-
-.PHONY : home/tucker/research/pfc_init/src/NMSURF.o
-
-# target to build an object file
-home/tucker/research/pfc_init/src/NMSURF.cpp.o:
-	$(MAKE) -f CMakeFiles/NMSURF.dir/build.make CMakeFiles/NMSURF.dir/home/tucker/research/pfc_init/src/NMSURF.cpp.o
-.PHONY : home/tucker/research/pfc_init/src/NMSURF.cpp.o
-
-home/tucker/research/pfc_init/src/NMSURF.i: home/tucker/research/pfc_init/src/NMSURF.cpp.i
-
-.PHONY : home/tucker/research/pfc_init/src/NMSURF.i
-
-# target to preprocess a source file
-home/tucker/research/pfc_init/src/NMSURF.cpp.i:
-	$(MAKE) -f CMakeFiles/NMSURF.dir/build.make CMakeFiles/NMSURF.dir/home/tucker/research/pfc_init/src/NMSURF.cpp.i
-.PHONY : home/tucker/research/pfc_init/src/NMSURF.cpp.i
-
-home/tucker/research/pfc_init/src/NMSURF.s: home/tucker/research/pfc_init/src/NMSURF.cpp.s
-
-.PHONY : home/tucker/research/pfc_init/src/NMSURF.s
-
-# target to generate assembly for a file
-home/tucker/research/pfc_init/src/NMSURF.cpp.s:
-	$(MAKE) -f CMakeFiles/NMSURF.dir/build.make CMakeFiles/NMSURF.dir/home/tucker/research/pfc_init/src/NMSURF.cpp.s
-.PHONY : home/tucker/research/pfc_init/src/NMSURF.cpp.s
-
-home/tucker/research/pfc_init/src/NeedleMatch.o: home/tucker/research/pfc_init/src/NeedleMatch.cpp.o
-
-.PHONY : home/tucker/research/pfc_init/src/NeedleMatch.o
-
-# target to build an object file
-home/tucker/research/pfc_init/src/NeedleMatch.cpp.o:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/NeedleMatch.cpp.o
-.PHONY : home/tucker/research/pfc_init/src/NeedleMatch.cpp.o
-
-home/tucker/research/pfc_init/src/NeedleMatch.i: home/tucker/research/pfc_init/src/NeedleMatch.cpp.i
-
-.PHONY : home/tucker/research/pfc_init/src/NeedleMatch.i
-
-# target to preprocess a source file
-home/tucker/research/pfc_init/src/NeedleMatch.cpp.i:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/NeedleMatch.cpp.i
-.PHONY : home/tucker/research/pfc_init/src/NeedleMatch.cpp.i
-
-home/tucker/research/pfc_init/src/NeedleMatch.s: home/tucker/research/pfc_init/src/NeedleMatch.cpp.s
-
-.PHONY : home/tucker/research/pfc_init/src/NeedleMatch.s
-
-# target to generate assembly for a file
-home/tucker/research/pfc_init/src/NeedleMatch.cpp.s:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/NeedleMatch.cpp.s
-.PHONY : home/tucker/research/pfc_init/src/NeedleMatch.cpp.s
 
 home/tucker/research/pfc_init/src/TestCannyThreshold.o: home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o
 
@@ -363,33 +190,6 @@ home/tucker/research/pfc_init/src/pfc_init.cpp.s:
 	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.s
 .PHONY : home/tucker/research/pfc_init/src/pfc_init.cpp.s
 
-home/tucker/research/pfc_init/src/solve_lin_sys.o: home/tucker/research/pfc_init/src/solve_lin_sys.cpp.o
-
-.PHONY : home/tucker/research/pfc_init/src/solve_lin_sys.o
-
-# target to build an object file
-home/tucker/research/pfc_init/src/solve_lin_sys.cpp.o:
-	$(MAKE) -f CMakeFiles/solve_lin_sys.dir/build.make CMakeFiles/solve_lin_sys.dir/home/tucker/research/pfc_init/src/solve_lin_sys.cpp.o
-.PHONY : home/tucker/research/pfc_init/src/solve_lin_sys.cpp.o
-
-home/tucker/research/pfc_init/src/solve_lin_sys.i: home/tucker/research/pfc_init/src/solve_lin_sys.cpp.i
-
-.PHONY : home/tucker/research/pfc_init/src/solve_lin_sys.i
-
-# target to preprocess a source file
-home/tucker/research/pfc_init/src/solve_lin_sys.cpp.i:
-	$(MAKE) -f CMakeFiles/solve_lin_sys.dir/build.make CMakeFiles/solve_lin_sys.dir/home/tucker/research/pfc_init/src/solve_lin_sys.cpp.i
-.PHONY : home/tucker/research/pfc_init/src/solve_lin_sys.cpp.i
-
-home/tucker/research/pfc_init/src/solve_lin_sys.s: home/tucker/research/pfc_init/src/solve_lin_sys.cpp.s
-
-.PHONY : home/tucker/research/pfc_init/src/solve_lin_sys.s
-
-# target to generate assembly for a file
-home/tucker/research/pfc_init/src/solve_lin_sys.cpp.s:
-	$(MAKE) -f CMakeFiles/solve_lin_sys.dir/build.make CMakeFiles/solve_lin_sys.dir/home/tucker/research/pfc_init/src/solve_lin_sys.cpp.s
-.PHONY : home/tucker/research/pfc_init/src/solve_lin_sys.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -398,34 +198,14 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... ColorFilterTesting"
-	@echo "... solve_lin_sys"
-	@echo "... NMSURF"
-	@echo "... NeedleMatch"
-	@echo "... pfc_init"
-	@echo "... CreateNeedleTemplate"
 	@echo "... TestCannyThreshold"
-	@echo "... home/tucker/research/pfc_init/src/ColorFilterTesting.o"
-	@echo "... home/tucker/research/pfc_init/src/ColorFilterTesting.i"
-	@echo "... home/tucker/research/pfc_init/src/ColorFilterTesting.s"
-	@echo "... home/tucker/research/pfc_init/src/CreateNeedleTemplate.o"
-	@echo "... home/tucker/research/pfc_init/src/CreateNeedleTemplate.i"
-	@echo "... home/tucker/research/pfc_init/src/CreateNeedleTemplate.s"
-	@echo "... home/tucker/research/pfc_init/src/NMSURF.o"
-	@echo "... home/tucker/research/pfc_init/src/NMSURF.i"
-	@echo "... home/tucker/research/pfc_init/src/NMSURF.s"
-	@echo "... home/tucker/research/pfc_init/src/NeedleMatch.o"
-	@echo "... home/tucker/research/pfc_init/src/NeedleMatch.i"
-	@echo "... home/tucker/research/pfc_init/src/NeedleMatch.s"
+	@echo "... pfc_init"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.o"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.i"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.s"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.o"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.i"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.s"
-	@echo "... home/tucker/research/pfc_init/src/solve_lin_sys.o"
-	@echo "... home/tucker/research/pfc_init/src/solve_lin_sys.i"
-	@echo "... home/tucker/research/pfc_init/src/solve_lin_sys.s"
 .PHONY : help
 
 

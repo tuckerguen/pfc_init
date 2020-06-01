@@ -4,6 +4,7 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
+#include <opencv2/cudaimgproc.hpp>
 #include <iostream>
 #include <unistd.h>
 
@@ -48,7 +49,7 @@ void InitNeedleImage(string path, Mat& img);
 void InitTemplate(string path, Mat& templ);
 void PrintResultsForImage(match *match, string side);
 void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch);
-void MatchImageToTemplate(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale);
+void MatchImageToTemplate(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale, bool use_gpu);
 void RotateTemplate(double angle, const Mat &src, Mat &dst);
 void DetectEdges(const Mat& img, Mat& dst);
 
@@ -87,7 +88,6 @@ int PFCInit(string left_image_path, string right_image_path){
     namedWindow( right_image_path, WINDOW_AUTOSIZE );
     namedWindow( "best template", WINDOW_AUTOSIZE );
     namedWindow( "result", WINDOW_AUTOSIZE );
-    namedWindow("template", WINDOW_AUTOSIZE);
 
     //Start timer
     double t = (double)getTickCount();
@@ -158,6 +158,28 @@ int PFCInit(string left_image_path, string right_image_path){
     return 0;
 }
 
+double IntersectionOverUnion(const Rect *ground, const Rect *data){
+    int x1, y1, x2, y2, width, height, overlap_area, rect_union;
+    //Upper left corner
+    x1 = max(ground->x, data->x);
+    y1 = max(ground->y, data->y);
+    //Lower right corner
+    x2 = min(ground->x + ground->width, data->x + data->width);
+    y2 = min(ground->y + ground->height, data->y + data->height);
+
+    //overlap area
+    width = x2 - x1;
+    height = y2 - y1;
+    if(width < 0 || height < 0)
+        return 0.0;
+    overlap_area = width * height;
+
+    //Combined area
+    rect_union = ground->area() + data->area();
+
+    return (double) overlap_area / (double) rect_union;
+}
+
 Point3d DeProjectPoints(const Mat& img_l, const Mat& img_r, const match* match_l, const match* match_r){
     //construct the output mat:
     Mat results(4,1,CV_64FC1);
@@ -189,7 +211,8 @@ Point3d DeProjectPoints(const Mat& img_l, const Mat& img_r, const match* match_l
                                         0,  fy_r,  rv_r, 0, 
                                         0,     0,     0, 1);
 
-    triangulatePoints(P_l, P_r, p_l, p_r, results);
+
+    // triangulatePoints(P_l, P_r, p_l, p_r, results);
 
     Point3d result;
 
@@ -202,11 +225,12 @@ Point3d DeProjectPoints(const Mat& img_l, const Mat& img_r, const match* match_l
 
 
 void DrawMatch(Mat& src, match* match){
+    int line_weight = 1;
     rectangle( src, match->maxLoc,
             Point(
-            match->maxLoc.x + match->templ.cols ,
-            match->maxLoc.y + match->templ.rows ),
-                    Scalar::all(255), 2, 8, 0 );
+                match->maxLoc.x + match->templ.cols ,
+                match->maxLoc.y + match->templ.rows ),
+                    Scalar::all(255), line_weight, 8, 0 );
 }
 
 void InitNeedleImage(string path, Mat& img){
@@ -223,7 +247,7 @@ void InitNeedleImage(string path, Mat& img){
     inRange(img_HSV, Scalar(low_h, low_s, low_v), Scalar(high_h, high_s, high_v), img);
 
     // Do edge detection on filtered image
-    // DetectEdges(filtered, img);
+    // DetectEdges(raw, img);
 }
 
 void InitTemplate(string path, Mat& templ){
@@ -235,16 +259,18 @@ void InitTemplate(string path, Mat& templ){
         exit(0);
     }
 
-    // Filter by HSV for needle
-    cvtColor(raw, img_HSV, COLOR_BGR2HSV);
-    inRange(img_HSV, Scalar(low_h, low_s, low_v), Scalar(high_h, high_s, high_v), filtered);
-    
     //Crop template image to just needle
     Rect r(168, 92, 58, 35);
-    templ = filtered(r);
+    raw = raw(r);
 
+    ///With HSV filtering
+    // Filter by HSV for needle
+    cvtColor(raw, img_HSV, COLOR_BGR2HSV);
+    inRange(img_HSV, Scalar(low_h, low_s, low_v), Scalar(high_h, high_s, high_v), templ);
+
+    ///With edge detection
     // Do edge detection on filtered image
-    // DetectEdges(filtered, templ);
+    // DetectEdges(raw, templ);
 }
 
 
@@ -287,7 +313,7 @@ void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch){
             RotateTemplate(rot_angle, resized, rot_templ);
 
             //Match rotated template to image
-            MatchImageToTemplate(img, rot_templ, bestMatch, rot_angle, scale);
+            MatchImageToTemplate(img, rot_templ, bestMatch, rot_angle, scale, false);
         }
     }
 }
@@ -300,16 +326,29 @@ void DetectEdges(const Mat& img, Mat& dst){
     Canny( detected_edges, dst, lowThreshold, lowThreshold * ratio, kernel_size );
 }
 
-void MatchImageToTemplate(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale){
+void MatchImageToTemplate(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale, bool use_gpu){
+
     /// Create the result matrix
     Mat result;
     int result_cols =  img.cols - templ.cols + 1;
     int result_rows = img.rows - templ.rows + 1;
     result.create( result_rows, result_cols, CV_32FC1 );
 
-    //Match using TM_CCOEFF
-    matchTemplate(img, templ, result, TM_CCOEFF);
+    if(use_gpu){
+        //Using cuda GPU accelerated matching
+        //Currently Slower than using non-accelerated (likely due to overhead of copying the imgs and templates from cpu to gpu and back every time)
+        cuda::setDevice(0);
+        cuda::GpuMat img_gpu(img), templ_gpu(templ), result_gpu;
+        Ptr<cv::cuda::TemplateMatching> matcher = cuda::createTemplateMatching(img.type(), CV_TM_CCOEFF);
+        matcher->match(img_gpu, templ_gpu, result_gpu);
+        result_gpu.download(result);
+    }
+    else{
+        //Match using TM_CCOEFF
+        matchTemplate(img, templ, result, TM_CCOEFF);
+    }
 
+    
     /// Localizing the best match with minMaxLoc
     double minVal; double maxVal; Point minLoc; Point maxLoc;
     Point matchLoc;
@@ -325,16 +364,15 @@ void MatchImageToTemplate(const Mat& img, const Mat& templ, match* bestMatch, do
         bestMatch->templ = templ;
         bestMatch->result = result;
     }
-    
 }
 
 void RotateTemplate(double angle, const Mat &src, Mat &dst){
     /// get rotation matrix for rotating the image around its center in pixel coordinates
-    Point2f center((src.cols-1)/2.0, (src.rows-1)/2.0);
+    Point2d center((src.cols-1)/2.0, (src.rows-1)/2.0);
 
     Mat rot = getRotationMatrix2D(center, angle, 1.0);
     /// determine bounding rectangle, center not relevant
-    Rect2f bbox = RotatedRect(Point2f(), src.size(), angle).boundingRect2f();
+    Rect2d bbox = RotatedRect(Point2d(), src.size(), angle).boundingRect2f();
     /// adjust transformation matrix
     rot.at<double>(0,2) += bbox.width/2.0 - src.cols/2.0;
     rot.at<double>(1,2) += bbox.height/2.0 - src.rows/2.0;
