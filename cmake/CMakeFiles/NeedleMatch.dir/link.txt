@@ -1,1 +1,1 @@
-/usr/bin/c++      CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/NeedleMatch.cpp.o  -o NeedleMatch  -L/usr/local/lib -rdynamic -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_features2d -Wl,-rpath,/usr/local/lib 
+/usr/bin/c++      CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o  -o NeedleMatch  -L/usr/local/lib -rdynamic -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_features2d -lopencv_cudaimgproc -Wl,-rpath,/usr/local/lib 

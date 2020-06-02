@@ -41,6 +41,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/TestCannyThreshold.dir/DependInfo.cmake"
   "CMakeFiles/pfc_init.dir/DependInfo.cmake"
+  "CMakeFiles/TestCannyThreshold.dir/DependInfo.cmake"
+  "CMakeFiles/NeedleMatch.dir/DependInfo.cmake"
   )

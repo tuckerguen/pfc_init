@@ -11,10 +11,18 @@
 using namespace std;
 using namespace cv;
 
-Mat img, templ, result, iTempl;
 string image_window = "Source Image";
 string result_window = "Result Window";
 string template_window = "Template";
+
+//A template match
+struct match {
+    double maxVal; //max matching value assigned by opencv templatematch()
+    double angle; //angle matched at
+    double scale; //scale matched at
+    Point maxLoc; //location of match
+    Mat templ; //template used to match
+};
 
 int match_method;
 int max_Trackbar = 5;
@@ -22,24 +30,43 @@ int max_Trackbar = 5;
 int main(int argc, char** argv){
     namedWindow( image_window, WINDOW_AUTOSIZE );
     namedWindow( result_window, WINDOW_AUTOSIZE );
-    namedWindow(template_window,  WINDOW_AUTOSIZE);
+    namedWindow( template_window,  WINDOW_AUTOSIZE );
 
     Mat raw_img, raw_templ, img_hsv, templ_hsv;
+    Mat *img, *templ, result, *iTempl;
+
+    // match match bestMatch = {
+    //     -DBL_MAX,
+    //     0.0,
+    //     0.0,
+    //     Point(0, 0),
+    //     templ,
+    // };
     
+    size_t img_size = img.total() * img.elemSize();
+    size_t templ_size = templ.total() * templ.elemSize();
+    size_t iTempl_size = iTempl.total() * iTempl.elemSize();
+    //Add necessary mats to unified memory
+    cudaMallocManaged(&img, img_size);
+    cudaMallocManaged(&templ, templ_size);
+    cudaMallocManaged(&iTempl, iTempl_size);
+
+    //pick block size
+    int blockSize = 256;
+    int numBlocks = (360 + blockSize - 1) / blockSize;
+    
+    //CPU image preproc operations
     raw_img = imread("../../imgs/raw_l_c.png", IMREAD_COLOR);
     raw_templ = imread("../../imgs/raw_l_b.png", IMREAD_COLOR);
     Rect r(168, 92, 58, 35);
     raw_templ = raw_templ(r);
-
     cvtColor(raw_img, img_hsv, COLOR_BGR2HSV);
     inRange(img_hsv, Scalar(0, 0, 0), Scalar(5, 0, 140), img);
     cvtColor(raw_templ, templ_hsv, COLOR_BGR2HSV);
     inRange(templ_hsv, Scalar(0, 0, 0), Scalar(5, 0, 140), iTempl);
 
-    for(int i = 0; i < 360; i+=10){
-        RotTemplate(i);
-        MatchImageToTemplate();
-    }
+    //Run Rotations and matching on the GPU
+    run<<<numBlocks, blockSize>>>();
 
     imshow(template_window, templ);
 
@@ -48,7 +75,16 @@ int main(int argc, char** argv){
     return 0;
 }
 
-void RotTemplate(double angle){
+__global__ run(template){
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+    for(int i = index; i < 360; i+= stride){
+        RotTemplate(i);
+        MatchImageToTemplate();
+    }
+}
+
+__device__ void RotTemplate(double angle){
     // get rotation matrix for rotating the image around its center in pixel coordinates
     Point2f center((iTempl.cols-1)/2.0, (iTempl.rows-1)/2.0);
     Mat rot = getRotationMatrix2D(center, angle, 1.0);
@@ -61,7 +97,7 @@ void RotTemplate(double angle){
     warpAffine(iTempl, templ, rot, bbox.size());
 }
 
-void MatchImageToTemplate(){
+__device__ void MatchImageToTemplate(){
     Mat img_display;
     img_display = img.clone();
 

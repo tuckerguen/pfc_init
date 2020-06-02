@@ -24,5 +24,8 @@ link_directories(${OpenCV_LIB_DIR})
 
 add_executable(pfc_init ../src/pfc_init.cpp)
 add_executable(TestCannyThreshold ../src/TestCannyThreshold.cpp )
+add_executable(NeedleMatch ../src/old/NeedleMatch.cpp)
+
+target_link_libraries(NeedleMatch ${OpenCV_LIBS})
 target_link_libraries(TestCannyThreshold ${OpenCV_LIBS})
 target_link_libraries(pfc_init ${OpenCV_LIBS})

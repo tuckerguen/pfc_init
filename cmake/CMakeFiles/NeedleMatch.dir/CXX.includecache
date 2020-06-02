@@ -6,34 +6,30 @@
 
 #IncludeRegexTransform: 
 
-/home/tucker/research/pfc_init/src/pfc_init.cpp
+/home/tucker/research/pfc_init/src/old/NeedleMatch.cpp
 opencv2/highgui.hpp
 -
 opencv2/imgproc.hpp
--
-opencv2/opencv.hpp
 -
 opencv2/cudaimgproc.hpp
 -
 iostream
 -
-unistd.h
+stdio.h
 -
-pfc_init.hpp
-/home/tucker/research/pfc_init/src/pfc_init.hpp
+NeedleMatch.hpp
+/home/tucker/research/pfc_init/src/old/NeedleMatch.hpp
 
-/home/tucker/research/pfc_init/src/pfc_init.hpp
+/home/tucker/research/pfc_init/src/old/NeedleMatch.hpp
 opencv2/highgui.hpp
 -
 opencv2/imgproc.hpp
 -
-opencv2/opencv.hpp
--
-opencv2/cudaimgproc.hpp
+opencv2/core/cuda.hpp
 -
 iostream
 -
-unistd.h
+stdio.h
 -
 
 /usr/local/include/opencv2/calib3d.hpp

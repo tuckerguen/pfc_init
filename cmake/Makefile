@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named pfc_init
+
+# Build rule for target.
+pfc_init: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pfc_init
+.PHONY : pfc_init
+
+# fast build rule for target.
+pfc_init/fast:
+	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/build
+.PHONY : pfc_init/fast
+
+#=============================================================================
 # Target rules for targets named TestCannyThreshold
 
 # Build rule for target.
@@ -124,17 +137,17 @@ TestCannyThreshold/fast:
 .PHONY : TestCannyThreshold/fast
 
 #=============================================================================
-# Target rules for targets named pfc_init
+# Target rules for targets named NeedleMatch
 
 # Build rule for target.
-pfc_init: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 pfc_init
-.PHONY : pfc_init
+NeedleMatch: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 NeedleMatch
+.PHONY : NeedleMatch
 
 # fast build rule for target.
-pfc_init/fast:
-	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/build
-.PHONY : pfc_init/fast
+NeedleMatch/fast:
+	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/build
+.PHONY : NeedleMatch/fast
 
 home/tucker/research/pfc_init/src/TestCannyThreshold.o: home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o
 
@@ -162,6 +175,33 @@ home/tucker/research/pfc_init/src/TestCannyThreshold.s: home/tucker/research/pfc
 home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s:
 	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s
 .PHONY : home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s
+
+home/tucker/research/pfc_init/src/old/NeedleMatch.o: home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o
+
+.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.o
+
+# target to build an object file
+home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o:
+	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o
+.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o
+
+home/tucker/research/pfc_init/src/old/NeedleMatch.i: home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.i
+
+.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.i
+
+# target to preprocess a source file
+home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.i:
+	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.i
+.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.i
+
+home/tucker/research/pfc_init/src/old/NeedleMatch.s: home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.s
+
+.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.s
+
+# target to generate assembly for a file
+home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.s:
+	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.s
+.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.s
 
 home/tucker/research/pfc_init/src/pfc_init.o: home/tucker/research/pfc_init/src/pfc_init.cpp.o
 
@@ -197,12 +237,16 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... rebuild_cache"
-	@echo "... TestCannyThreshold"
 	@echo "... pfc_init"
+	@echo "... TestCannyThreshold"
+	@echo "... rebuild_cache"
+	@echo "... NeedleMatch"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.o"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.i"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.s"
+	@echo "... home/tucker/research/pfc_init/src/old/NeedleMatch.o"
+	@echo "... home/tucker/research/pfc_init/src/old/NeedleMatch.i"
+	@echo "... home/tucker/research/pfc_init/src/old/NeedleMatch.s"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.o"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.i"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.s"
