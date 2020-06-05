@@ -25,8 +25,8 @@ const double max_rotation = 360;   //Max number of degrees to rotate template
 const double angle_increment = 10; //Number of degrees to rotate template each iteration
 
 // Scaling parameters
-const int min_scale = 50;         //minimum template scale to try to match (in %)
-const int max_scale = 150;        //maximum template scale to try to match (in %)
+const int min_scale = 95;         //minimum template scale to try to match (in %)
+const int max_scale = 105;        //maximum template scale to try to match (in %)
 const double scale_increment = 1; //% scale to increase by on each iteration
 
 //HSV Filtering Parameters
@@ -115,6 +115,7 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
     InitNeedleImage(left_image_path, img_l);
     InitNeedleImage(right_image_path, img_r);
     InitTemplate(template_img_path, templ);
+
     Mat raw_l, raw_r;
     raw_l = imread(left_image_path, IMREAD_COLOR);
     raw_r = imread(right_image_path, IMREAD_COLOR);
@@ -140,7 +141,7 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
 
     //Run localization algorithm on left and right images
     LocateNeedle(img_l, templ, &bestMatch_l);
-    LocateNeedle(img_r, templ, &bestMatch_r);
+    // LocateNeedle(img_r, templ, &bestMatch_r);
     
     // Point3d location = DeProjectPoints(img_l, img_r, &bestMatch_l, &bestMatch_r);
     // cout << "location: (" << location.x << ", " << location.y << ", " << location.z << endl;
@@ -249,8 +250,11 @@ void LocateNeedle(const Mat &img, const Mat &templ, match *bestMatch)
 {
     //Loop over all scales
     double scale = min_scale / 100.0;
+    cout << ceil((max_scale - min_scale) / scale_increment) << endl;
     for (int i = 0; i < ceil((max_scale - min_scale) / scale_increment); ++i)
     {
+        cout << "\r";
+        cout << i << endl;
         scale += ((double)scale_increment) / 100.0;
         Mat resized;
 
@@ -270,6 +274,7 @@ void LocateNeedle(const Mat &img, const Mat &templ, match *bestMatch)
         double rot_angle = 0;
         for (int j = 0; j < ceil(max_rotation / angle_increment); ++j)
         {
+            // cout << rot_angle << "\r";
             rot_angle += angle_increment;
             //Rotate
             Mat rot_templ;
@@ -298,7 +303,6 @@ void RotateTemplate(double angle, const Mat &src, Mat &dst)
 
 void MatchImageToTemplate(const Mat &img, const Mat &templ, match *bestMatch, double angle, double scale, bool use_gpu)
 {
-
     /// Create the result matrix
     Mat result;
     int result_cols = img.cols - templ.cols + 1;
@@ -385,7 +389,8 @@ Rect GetTrueMatchFromMeta(string img_path){
 
         istringstream ss(data);
         int tx, ty, tw, th;
-        ss >> ty >> tx >> tw >> th;
+        ss >> tx >> ty >> tw >> th;
+        cout << "read from meta: " << tx << "," << ty  << "," <<  tw << "," << th << endl;
         return Rect (tx, ty, tw, th);
     }
     else {
