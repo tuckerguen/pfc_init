@@ -12,6 +12,7 @@
 using namespace std;
 using namespace cv;
 
+//const string template_img_path = "../imgs/raw_l_b.png";
 const string template_img_path = "../imgs/raw_l_b.png";
 
 //Canny edge detection parameters
@@ -48,12 +49,8 @@ int main(int argc, char *argv[])
     cout << "rght img: " << right_image_path << endl;
     cout << "type: " << image_type << ", use_gpu: " << (use_gpu == true ? "yes" : "no") << endl;
 
-    int status = PFCInit(left_image_path, right_image_path);
-
-    if (status)
-    {
-        cout << "init failed" << endl;
-    }
+    PFCInit(left_image_path, right_image_path, true);
+    return 0;
 }
 
 int HandleArguments(int argc, char **argv, string *image_id, string *image_type, string *left_image_path, string *right_image_path)
@@ -105,14 +102,8 @@ int HandleArguments(int argc, char **argv, string *image_id, string *image_type,
     return 1;
 }
 
-int PFCInit(string left_image_path, string right_image_path)
+double PFCInit(string left_image_path, string right_image_path, bool display_results)
 {
-    ///Define viewing windows
-    namedWindow(left_image_path, WINDOW_AUTOSIZE);
-    namedWindow(right_image_path, WINDOW_AUTOSIZE);
-    namedWindow("best template", WINDOW_AUTOSIZE);
-    namedWindow("result", WINDOW_AUTOSIZE);
-
     //Start timer
     double t = (double)getTickCount();
 
@@ -123,7 +114,6 @@ int PFCInit(string left_image_path, string right_image_path)
     InitNeedleImage(left_image_path, img_l);
     InitNeedleImage(right_image_path, img_r);
     InitTemplate(template_img_path, templ);
-
     Mat raw_l, raw_r;
     raw_l = imread(left_image_path, IMREAD_COLOR);
     raw_r = imread(right_image_path, IMREAD_COLOR);
@@ -134,7 +124,7 @@ int PFCInit(string left_image_path, string right_image_path)
         -DBL_MAX,
         0.0,
         0.0,
-        Point(0, 0),
+        Rect(0,0,0,0),
         templ,
         init_result};
 
@@ -143,31 +133,54 @@ int PFCInit(string left_image_path, string right_image_path)
         -DBL_MAX,
         0.0,
         0.0,
-        Point(0, 0),
+        Rect(0,0,0,0),
         templ,
         init_result};
 
     //Run localization algorithm on left and right images
     LocateNeedle(img_l, templ, &bestMatch_l);
     LocateNeedle(img_r, templ, &bestMatch_r);
-
-    //Draw the matches on originals and result images
-    DrawMatch(raw_l, &bestMatch_l);
-    DrawMatch(bestMatch_l.result, &bestMatch_l);
-    DrawMatch(raw_r, &bestMatch_r);
-    DrawMatch(bestMatch_r.result, &bestMatch_r);
-
-    //Record time
-    t = ((double)getTickCount() - t) / getTickFrequency();
-    cout << "Times passed in seconds: " << t << endl;
-    cout << "--------------------------------------" << endl;
-
-    //Print match information
-    PrintResultsForImage(&bestMatch_l, "left");
-    PrintResultsForImage(&bestMatch_r, "right");
-
+    
     // Point3d location = DeProjectPoints(img_l, img_r, &bestMatch_l, &bestMatch_r);
     // cout << "location: (" << location.x << ", " << location.y << ", " << location.z << endl;
+
+    t = ((double)getTickCount() - t) / getTickFrequency();
+
+    if(display_results)
+        DisplayResults(left_image_path, right_image_path, raw_l, raw_r, bestMatch_l, bestMatch_r, t);
+
+    //Record time
+    return t;
+}
+
+void DisplayResults(string left_image_path, string right_image_path, Mat& raw_l,  Mat& raw_r, match bestMatch_l, match bestMatch_r, double t){
+    cout << endl <<  "Times passed in seconds: " << t << endl;
+    cout << "--------------------------------------" << endl;
+    
+    ///Define viewing windows
+    namedWindow(left_image_path, WINDOW_AUTOSIZE);
+    namedWindow(right_image_path, WINDOW_AUTOSIZE);
+    namedWindow("best template", WINDOW_AUTOSIZE);
+    namedWindow("result", WINDOW_AUTOSIZE);
+
+    //Draw algorithm matches on originals and result images
+    Scalar white = Scalar::all(255);
+    Scalar cyan = Scalar(255, 255, 0);
+    DrawMatch(raw_l, bestMatch_l.maxRect, white);
+    DrawMatch(bestMatch_l.result, bestMatch_l.maxRect, white);
+    DrawMatch(raw_r, bestMatch_r.maxRect, white);
+    DrawMatch(bestMatch_r.result, bestMatch_r.maxRect, white);
+
+    //Draw the ground truth matches on images
+    Rect left_truth = GetTrueMatchFromMeta(left_image_path);
+    Rect right_truth = GetTrueMatchFromMeta(right_image_path);
+    DrawMatch(raw_l, left_truth, cyan);
+    DrawMatch(raw_r, right_truth, cyan);
+
+
+    //Print match information
+    PrintResultsForImage(&bestMatch_l, left_image_path);
+    PrintResultsForImage(&bestMatch_r, right_image_path);
 
     //Display images
     imshow(left_image_path, raw_l);
@@ -176,10 +189,7 @@ int PFCInit(string left_image_path, string right_image_path)
     imshow("result", bestMatch_l.result);
 
     waitKey(0);
-    return 0;
 }
-
-
 
 void InitNeedleImage(string path, Mat &img)
 {
@@ -224,7 +234,6 @@ void InitTemplate(string path, Mat &templ)
     // Do edge detection on filtered image
     // DetectEdges(raw, templ);
 }
-
 
 //With HSV filtering, no longer seems necessary
 void DetectEdges(const Mat &img, Mat &dst)
@@ -326,33 +335,62 @@ void MatchImageToTemplate(const Mat &img, const Mat &templ, match *bestMatch, do
         bestMatch->maxVal = maxVal;
         bestMatch->angle = angle;
         bestMatch->scale = scale;
-        bestMatch->maxLoc = maxLoc;
+        bestMatch->maxRect.x = maxLoc.x;
+        bestMatch->maxRect.y = maxLoc.y;
+        bestMatch->maxRect.width = templ.cols;
+        bestMatch->maxRect.height = templ.rows;
         bestMatch->templ = templ;
         bestMatch->result = result;
     }
 }
 
-void DrawMatch(Mat &src, match *match)
+void DrawMatch(Mat &src, Rect match, Scalar color)
 {
     int line_weight = 1;
-    rectangle(src, match->maxLoc,
-              Point(
-                  match->maxLoc.x + match->templ.cols,
-                  match->maxLoc.y + match->templ.rows),
-              Scalar::all(255), line_weight, 8, 0);
+    rectangle(src, match, color, line_weight, 8, 0);
 }
 
-void PrintResultsForImage(match *match, string side)
+void PrintResultsForImage(match *match, string img_path)
 {
-    cout << side << " image: " << endl;
+    cout << endl << "--------------------------------------" << endl;
+    cout << "Results for: " << img_path << endl;
     if (match->angle > 180.0)
     {
         match->angle = -(match->angle - 360.0);
     }
-    cout << "Location: (" << match->maxLoc.x << ", " << match->maxLoc.y << ")" << endl;
+    cout << "Location: (" << match->maxRect.x << ", " << match->maxRect.y << ")" << endl;
+    cout << "Size: " << "width: " << match->maxRect.width << ", height: " << match->maxRect.height << endl;
     cout << "Yaw: degrees = " << match->angle << ", radians = " << match->angle * (3.1415926535 / 180.0) << endl;
     cout << "Scale: " << match->scale << endl;
-    cout << "--------------------------------------" << endl;
+        
+    Rect truth = GetTrueMatchFromMeta(img_path);
+    double score  = IntersectionOverUnion(&truth, &match->maxRect);;    
+    cout << "IoU Score : " << score << endl;    
+}
+
+Rect GetTrueMatchFromMeta(string img_path){
+    //read from metafile
+    string meta_path = img_path;
+    meta_path.erase(0, 8);
+    meta_path.erase(meta_path.length() - 3, 3);
+    meta_path = "../imgs/meta/" + meta_path + "meta";
+
+    string data;
+    ifstream meta_file;
+    meta_file.open(meta_path.c_str());
+    if(meta_file.good()){
+        getline(meta_file, data);
+        meta_file.close();
+
+        istringstream ss(data);
+        int tx, ty, tw, th;
+        ss >> ty >> tx >> tw >> th;
+        return Rect (tx, ty, tw, th);
+    }
+    else {
+        cout << "unable to open meta_file at: " << meta_path << endl;
+        return Rect(-1,-1,-1,-1);
+    }
 }
 
 Point3d DeProjectPoints(const Mat &img_l, const Mat &img_r, const match *match_l, const match *match_r)
@@ -362,11 +400,11 @@ Point3d DeProjectPoints(const Mat &img_l, const Mat &img_r, const match *match_l
     Mat p_l(2, 1, CV_64FC1);
     Mat p_r(2, 1, CV_64FC1);
 
-    p_l.at<double>(0) = match_l->maxLoc.x;
-    p_l.at<double>(1) = match_l->maxLoc.y;
+    p_l.at<double>(0) = match_l->maxRect.x;
+    p_l.at<double>(1) = match_l->maxRect.y;
 
-    p_r.at<double>(0) = match_r->maxLoc.x;
-    p_r.at<double>(1) = match_r->maxLoc.y;
+    p_r.at<double>(0) = match_r->maxRect.x;
+    p_r.at<double>(1) = match_r->maxRect.y;
 
     //Camera intrinsic matrices (placeholders for now)
     double fx_l = 5.749;
@@ -411,12 +449,16 @@ double IntersectionOverUnion(const Rect *ground, const Rect *data)
     //overlap area
     width = x2 - x1;
     height = y2 - y1;
-    if (width < 0 || height < 0)
+
+    if (width < 0 || height < 0){
+        cout << "width or height < 0" << endl;
         return 0.0;
+    }
+
     overlap_area = width * height;
 
     //Combined area
-    rect_union = ground->area() + data->area();
-
+    rect_union = ground->area() + data->area() - overlap_area;    
+    
     return (double)overlap_area / (double)rect_union;
 }

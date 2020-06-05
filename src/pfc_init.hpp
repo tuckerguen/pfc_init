@@ -1,32 +1,26 @@
-#include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/cudaimgproc.hpp>
-#include <iostream>
-#include <unistd.h>
-
-using namespace std;
-using namespace cv;
 
 //A template match
 struct match {
     double maxVal; //max matching value assigned by opencv templatematch()
     double angle; //angle matched at
     double scale; //scale matched at
-    Point maxLoc; //location of match
-    Mat templ; //template used to match
-    Mat result; //result image from opencv templatematch()
+    cv::Rect maxRect; //location of match
+    cv::Mat templ; //template used to match
+    cv::Mat result; //result image from opencv templatematch()
 };
 
-int HandleArguments(int argc, char** argv, string *image_id, string* image_type, string* left_image_path, string* right_image_path);
-int PFCInit(string left_image_path, string right_image_path);
-void InitNeedleImage(string path, Mat& img);
-void InitTemplate(string path, Mat& templ);
-void DetectEdges(const Mat& img, Mat& dst);
-void LocateNeedle (const Mat& img, const Mat& templ, match *bestMatch);
-void RotateTemplate(double angle, const Mat &src, Mat &dst);
-void MatchImageToTemplate(const Mat& img, const Mat& templ, match* bestMatch, double angle, double scale, bool use_gpu);
-void DrawMatch(Mat& src, match* match);
-void PrintResultsForImage(match *match, string side);
-Point3d DeProjectPoints(const Mat& img_l, const Mat& img_r, const match* match_l, const match* match_r);
-double IntersectionOverUnion(const Rect *ground, const Rect *data);
+int HandleArguments(int argc, char** argv, std::string *image_id, std::string* image_type, std::string* left_image_path, std::string* right_image_path);
+double PFCInit(std::string left_image_path, std::string right_image_path, bool display_results);
+void DisplayResults(std::string left_image_path, std::string right_image_path, cv::Mat& raw_l,  cv::Mat& raw_r, match bestMatch_l, match bestMatch_r, double t);
+void InitNeedleImage(std::string path, cv::Mat& img);
+void InitTemplate(std::string path, cv::Mat& templ);
+void DetectEdges(const cv::Mat& img, cv::Mat& dst);
+void LocateNeedle (const cv::Mat& img, const cv::Mat& templ, match *bestMatch);
+void RotateTemplate(double angle, const cv::Mat &src, cv::Mat &dst);
+void MatchImageToTemplate(const cv::Mat& img, const cv::Mat& templ, match* bestMatch, double angle, double scale, bool use_gpu);
+void DrawMatch(cv::Mat &src, cv::Rect match, cv::Scalar color);
+void PrintResultsForImage(match *match, std::string side);
+cv::Rect GetTrueMatchFromMeta(std::string img_path);
+cv::Point3d DeProjectPoints(const cv::Mat& img_l, const cv::Mat& img_r, const match* match_l, const match* match_r);
+double IntersectionOverUnion(const cv::Rect *ground, const cv::Rect *data);

@@ -137,17 +137,17 @@ TestCannyThreshold/fast:
 .PHONY : TestCannyThreshold/fast
 
 #=============================================================================
-# Target rules for targets named NeedleMatch
+# Target rules for targets named manual_localize
 
 # Build rule for target.
-NeedleMatch: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 NeedleMatch
-.PHONY : NeedleMatch
+manual_localize: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 manual_localize
+.PHONY : manual_localize
 
 # fast build rule for target.
-NeedleMatch/fast:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/build
-.PHONY : NeedleMatch/fast
+manual_localize/fast:
+	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/build
+.PHONY : manual_localize/fast
 
 home/tucker/research/pfc_init/src/TestCannyThreshold.o: home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o
 
@@ -176,32 +176,32 @@ home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s:
 	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s
 .PHONY : home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s
 
-home/tucker/research/pfc_init/src/old/NeedleMatch.o: home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o
+home/tucker/research/pfc_init/src/manual_localize.o: home/tucker/research/pfc_init/src/manual_localize.cpp.o
 
-.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.o
+.PHONY : home/tucker/research/pfc_init/src/manual_localize.o
 
 # target to build an object file
-home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o
-.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.o
+home/tucker/research/pfc_init/src/manual_localize.cpp.o:
+	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.o
+.PHONY : home/tucker/research/pfc_init/src/manual_localize.cpp.o
 
-home/tucker/research/pfc_init/src/old/NeedleMatch.i: home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.i
+home/tucker/research/pfc_init/src/manual_localize.i: home/tucker/research/pfc_init/src/manual_localize.cpp.i
 
-.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.i
+.PHONY : home/tucker/research/pfc_init/src/manual_localize.i
 
 # target to preprocess a source file
-home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.i:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.i
-.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.i
+home/tucker/research/pfc_init/src/manual_localize.cpp.i:
+	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.i
+.PHONY : home/tucker/research/pfc_init/src/manual_localize.cpp.i
 
-home/tucker/research/pfc_init/src/old/NeedleMatch.s: home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.s
+home/tucker/research/pfc_init/src/manual_localize.s: home/tucker/research/pfc_init/src/manual_localize.cpp.s
 
-.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.s
+.PHONY : home/tucker/research/pfc_init/src/manual_localize.s
 
 # target to generate assembly for a file
-home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.s:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.s
-.PHONY : home/tucker/research/pfc_init/src/old/NeedleMatch.cpp.s
+home/tucker/research/pfc_init/src/manual_localize.cpp.s:
+	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.s
+.PHONY : home/tucker/research/pfc_init/src/manual_localize.cpp.s
 
 home/tucker/research/pfc_init/src/pfc_init.o: home/tucker/research/pfc_init/src/pfc_init.cpp.o
 
@@ -240,13 +240,13 @@ help:
 	@echo "... pfc_init"
 	@echo "... TestCannyThreshold"
 	@echo "... rebuild_cache"
-	@echo "... NeedleMatch"
+	@echo "... manual_localize"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.o"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.i"
 	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.s"
-	@echo "... home/tucker/research/pfc_init/src/old/NeedleMatch.o"
-	@echo "... home/tucker/research/pfc_init/src/old/NeedleMatch.i"
-	@echo "... home/tucker/research/pfc_init/src/old/NeedleMatch.s"
+	@echo "... home/tucker/research/pfc_init/src/manual_localize.o"
+	@echo "... home/tucker/research/pfc_init/src/manual_localize.i"
+	@echo "... home/tucker/research/pfc_init/src/manual_localize.s"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.o"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.i"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.s"

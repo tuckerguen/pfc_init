@@ -43,5 +43,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/pfc_init.dir/DependInfo.cmake"
   "CMakeFiles/TestCannyThreshold.dir/DependInfo.cmake"
-  "CMakeFiles/NeedleMatch.dir/DependInfo.cmake"
+  "CMakeFiles/manual_localize.dir/DependInfo.cmake"
   )

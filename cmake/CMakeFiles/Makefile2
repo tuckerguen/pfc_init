@@ -103,7 +103,7 @@ clean: CMakeFiles/pfc_init.dir/clean
 CMakeFiles/TestCannyThreshold.dir/all:
 	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/depend
 	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=3,4 "Built target TestCannyThreshold"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=1,2 "Built target TestCannyThreshold"
 .PHONY : CMakeFiles/TestCannyThreshold.dir/all
 
 # Include target in all.
@@ -134,39 +134,39 @@ clean: CMakeFiles/TestCannyThreshold.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/NeedleMatch.dir
+# Target rules for target CMakeFiles/manual_localize.dir
 
 # All Build rule for target.
-CMakeFiles/NeedleMatch.dir/all:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/depend
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=1,2 "Built target NeedleMatch"
-.PHONY : CMakeFiles/NeedleMatch.dir/all
+CMakeFiles/manual_localize.dir/all:
+	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/depend
+	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=3,4 "Built target manual_localize"
+.PHONY : CMakeFiles/manual_localize.dir/all
 
 # Include target in all.
-all: CMakeFiles/NeedleMatch.dir/all
+all: CMakeFiles/manual_localize.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/NeedleMatch.dir/rule: cmake_check_build_system
+CMakeFiles/manual_localize.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/NeedleMatch.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/manual_localize.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/NeedleMatch.dir/rule
+.PHONY : CMakeFiles/manual_localize.dir/rule
 
 # Convenience name for target.
-NeedleMatch: CMakeFiles/NeedleMatch.dir/rule
+manual_localize: CMakeFiles/manual_localize.dir/rule
 
-.PHONY : NeedleMatch
-
-# clean rule for target.
-CMakeFiles/NeedleMatch.dir/clean:
-	$(MAKE) -f CMakeFiles/NeedleMatch.dir/build.make CMakeFiles/NeedleMatch.dir/clean
-.PHONY : CMakeFiles/NeedleMatch.dir/clean
+.PHONY : manual_localize
 
 # clean rule for target.
-clean: CMakeFiles/NeedleMatch.dir/clean
+CMakeFiles/manual_localize.dir/clean:
+	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/clean
+.PHONY : CMakeFiles/manual_localize.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/manual_localize.dir/clean
 
 .PHONY : clean
 

@@ -1,0 +1,27 @@
+File_nm => y x width height rotation 
+
+raw_l_a.png => 105 148 59 36 180
+raw_r_a.png => 105 139 58 35 180
+
+raw_l_b.png => 92 168 58 35
+raw_l_b.png => 92 158 58 35
+
+raw_l_c.png => 91 197 42 69 270
+raw_r_c.png => 90 184 43 71 270 
+
+raw_l_darkneedle.png => 110 149 58 35 180
+raw_r_darkneedle.png => 109 138 59 37 180
+
+raw_l_fatty.png => 105 149 58 35 180
+raw_r_fatty.png => 105 139 58 35 180
+
+raw_l_marked.png => 105 149 58 35 180
+raw_r_marked.png => 105 139 58 35 180
+
+raw_l_redsuture.png => 105 149 58 35 180
+raw_r_redsuture.png => 105 139 58 35 180
+
+raw_l_tansuture.png => 105 149 58 35 180
+raw_r_tansuture.png => 105 139 58 35 180
+
+

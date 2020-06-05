@@ -19,13 +19,24 @@ set(OpenCV_LIBS
   opencv_cudaimgproc
 )
 
+# add_library(pfc_init
+#   ../src/pfc_init.cpp
+# )
+
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})
 
 add_executable(pfc_init ../src/pfc_init.cpp)
 add_executable(TestCannyThreshold ../src/TestCannyThreshold.cpp )
-add_executable(NeedleMatch ../src/old/NeedleMatch.cpp)
+# add_executable(batch_init ../src/batch_init.cpp)
+add_executable(manual_localize ../src/manual_localize.cpp)
 
-target_link_libraries(NeedleMatch ${OpenCV_LIBS})
+# add_executable(NeedleMatch ../src/old/NeedleMatch.cpp)
+
+# target_link_libraries(NeedleMatch ${OpenCV_LIBS})
+target_link_libraries(manual_localize ${OpenCV_LIBS})
+# target_link_libraries(batch_init ${OpenCV_LIBS} pfc_init)
 target_link_libraries(TestCannyThreshold ${OpenCV_LIBS})
 target_link_libraries(pfc_init ${OpenCV_LIBS})
+
+

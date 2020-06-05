@@ -262,6 +262,9 @@ OpenCV_Practice_BINARY_DIR:STATIC=/home/tucker/research/pfc_init/cmake
 //Value Computed by CMake
 OpenCV_Practice_SOURCE_DIR:STATIC=/home/tucker/research/pfc_init/cmake
 
+//Dependencies for the target
+pfc_init_LIB_DEPENDS:STATIC=general;opencv_core;general;opencv_highgui;general;opencv_imgcodecs;general;opencv_imgproc;general;opencv_features2d;general;opencv_cudaimgproc;
+
 
 ########################
 # INTERNAL cache entries
