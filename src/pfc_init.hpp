@@ -10,7 +10,7 @@ struct match {
     cv::Mat result; //result image from opencv templatematch()
 };
 
-int HandleArguments(int argc, char** argv, std::string *image_id, std::string* image_type, std::string* left_image_path, std::string* right_image_path);
+int HandleArguments(int argc, char** argv, std::string *image_id, std::string* image_type);
 double PFCInit(std::string left_image_path, std::string right_image_path, bool display_results);
 void DisplayResults(std::string left_image_path, std::string right_image_path, cv::Mat& raw_l,  cv::Mat& raw_r, match bestMatch_l, match bestMatch_r, double t);
 void InitNeedleImage(std::string path, cv::Mat& img);

@@ -39,11 +39,12 @@ bool use_gpu;
 int main(int argc, char *argv[])
 {
     string image_id = "a", image_type = "raw";
+
+    if (!HandleArguments(argc, argv, &image_id, &image_type))
+        return 1;
+
     string left_image_path = "../imgs/" + image_type + "_l_" + image_id + ".png";
     string right_image_path = "../imgs/" + image_type + "_r_" + image_id + ".png";
-
-    if (!HandleArguments(argc, argv, &image_id, &image_type, &left_image_path, &right_image_path))
-        return 1;
 
     cout << "left img: " << left_image_path << endl;
     cout << "rght img: " << right_image_path << endl;
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-int HandleArguments(int argc, char **argv, string *image_id, string *image_type, string *left_image_path, string *right_image_path)
+int HandleArguments(int argc, char **argv, string *image_id, string *image_type)
 {
     if (argc == 4)
     {
@@ -96,7 +97,7 @@ int HandleArguments(int argc, char **argv, string *image_id, string *image_type,
     }
     else if (argc != 1)
     {
-        cout << "not proper use" << endl;
+        cout << "Use: ./pfc_init <image_id ('a','marked', etc)> <image_type (raw, vessel)> <use_gpu (1,0)>" << endl;
         return 0;
     }
     return 1;
