@@ -17,6 +17,7 @@ set(OpenCV_LIBS
   opencv_imgproc
   opencv_features2d
   opencv_cudaimgproc
+  opencv_sfm
 )
 
 # add_library(pfc_init

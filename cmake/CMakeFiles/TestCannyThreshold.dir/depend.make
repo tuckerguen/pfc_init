@@ -135,4 +135,7 @@ CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThr
 CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o: /usr/local/include/opencv2/viz/viz3d.hpp
 CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o: /usr/local/include/opencv2/viz/vizcore.hpp
 CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o: /usr/local/include/opencv2/viz/widgets.hpp
+CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o: /usr/local/include/opencv2/xfeatures2d.hpp
+CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o: /usr/local/include/opencv2/xfeatures2d/cuda.hpp
+CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o: /usr/local/include/opencv2/xfeatures2d/nonfree.hpp
 

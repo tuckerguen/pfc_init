@@ -1,4 +1,5 @@
 #include <opencv2/imgproc.hpp>
+#include <eigen3/Eigen/Dense>
 
 //A template match
 struct match {
@@ -22,5 +23,6 @@ void MatchImageToTemplate(const cv::Mat& img, const cv::Mat& templ, match* bestM
 void DrawMatch(cv::Mat &src, cv::Rect match, cv::Scalar color);
 void PrintResultsForImage(match *match, std::string side);
 cv::Rect GetTrueMatchFromMeta(std::string img_path);
+Eigen::Vector4f RPYtoQuat(double roll, double pitch, double yaw);
 cv::Point3d DeProjectPoints(const cv::Mat& img_l, const cv::Mat& img_r, const match* match_l, const match* match_r);
 double IntersectionOverUnion(const cv::Rect *ground, const cv::Rect *data);

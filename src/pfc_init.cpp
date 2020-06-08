@@ -5,12 +5,17 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/cudaimgproc.hpp>
+#include <eigen3/Eigen/Geometry>
+#include <eigen3/Eigen/Dense>
+#include <opencv2/sfm/triangulation.hpp>
+
 #include <iostream>
 #include <unistd.h>
 #include "pfc_init.hpp"
 
 using namespace std;
 using namespace cv;
+using namespace Eigen;
 
 //const string template_img_path = "../imgs/raw_l_b.png";
 const string template_img_path = "../imgs/raw_l_b.png";
@@ -141,7 +146,7 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
 
     //Run localization algorithm on left and right images
     LocateNeedle(img_l, templ, &bestMatch_l);
-    // LocateNeedle(img_r, templ, &bestMatch_r);
+    LocateNeedle(img_r, templ, &bestMatch_r);
     
     // Point3d location = DeProjectPoints(img_l, img_r, &bestMatch_l, &bestMatch_r);
     // cout << "location: (" << location.x << ", " << location.y << ", " << location.z << endl;
@@ -373,6 +378,8 @@ void PrintResultsForImage(match *match, string img_path)
     cout << "IoU Score : " << score << endl;    
 }
 
+
+
 Rect GetTrueMatchFromMeta(string img_path){
     //read from metafile
     string meta_path = img_path;
@@ -399,6 +406,14 @@ Rect GetTrueMatchFromMeta(string img_path){
     }
 }
 
+Vector4f RPYtoQuat(double roll, double pitch, double yaw){
+    Quaternionf q;
+    q = AngleAxisf(roll, Vector3f::UnitX())
+        * AngleAxisf(pitch, Vector3f::UnitY())
+        * AngleAxisf(yaw, Vector3f::UnitZ());
+    return q.coeffs();
+}
+
 Point3d DeProjectPoints(const Mat &img_l, const Mat &img_r, const match *match_l, const match *match_r)
 {
     //construct the output mat:
@@ -413,31 +428,39 @@ Point3d DeProjectPoints(const Mat &img_l, const Mat &img_r, const match *match_l
     p_r.at<double>(1) = match_r->maxRect.y;
 
     //Camera intrinsic matrices (placeholders for now)
-    double fx_l = 5.749;
-    double fy_l = 5.999;
-    double rh_l = img_l.cols / 2.0;
-    double rv_l = img_l.rows / 2.0;
+    // double fx_l = 5.749;
+    // double fy_l = 5.999;
+    // double rh_l = img_l.cols / 2.0;
+    // double rv_l = img_l.rows / 2.0;
 
-    double fx_r = 4.500;
-    double fy_r = 4.680;
-    double rh_r = img_r.cols / 2.0;
-    double rv_r = img_r.rows / 2.0;
+    // double fx_r = 4.500;
+    // double fy_r = 4.680;displays
+    // double rh_r = img_r.cols / 2.0;
+    // double rv_r = img_r.rows / 2.0;
 
-    Mat P_l = (Mat_<double>(3, 4) << fx_l, 0, rh_l, 0,
-               0, fy_l, rv_l, 0,
-               0, 0, 0, 1);
+    Mat P_l = (Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -3.31225177808194, 
+                                     0.0, 662.450355616388, 240.5, 0.0,
+                                     0.0, 0.0, 1.0, 0.0);
 
-    Mat P_r = (Mat_<double>(3, 4) << fx_r, 0, rh_r, 0,
-               0, fy_r, rv_r, 0,
-               0, 0, 0, 1);
+    Mat P_r = (Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -0.0, 
+                                     0.0, 662.450355616388, 240.5, 0.0, 
+                                     0.0, 0.0, 1.0, 0.0);
 
-    // triangulatePoints(P_l, P_r, p_l, p_r, results);
+    Mat projections = (Mat_<Mat_<double> >(1,2) << P_l, P_r);
+    Mat points (2, 2, CV_64FC1);
+    points.at<double>(0, 0) =  match_l->maxRect.x;
+    points.at<double>(0, 1) =  match_l->maxRect.y;
+    points.at<double>(1, 0) =  match_r->maxRect.x;
+    points.at<double>(1, 1) =  match_r->maxRect.y;
+
+    sfm::triangulatePoints(points, projections, results);
 
     Point3d result;
 
     result.x = results.at<double>(0) / results.at<double>(3);
     result.y = results.at<double>(1) / results.at<double>(3);
     result.z = results.at<double>(2) / results.at<double>(3);
+    cout << result.x << ", " << result.y << ", " << result.z << endl;
 
     return result;
 }

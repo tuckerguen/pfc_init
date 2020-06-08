@@ -2,13 +2,22 @@ cmake_minimum_required(VERSION 2.8)
 project( OpenCV_Practice )
 
 set(OpenCV_INCLUDE_DIRS
-        /usr/local/include
-        /usr/local/include/opencv2
-        )
+        /home/tucker/Downloads/opencv-3.2.0_1/include
+        /home/tucker/Downloads/opencv-3.2.0_1/include/opencv2
+)
 
 set(OpenCV_LIB_DIR
-        /usr/local/lib
-        )
+        /home/tucker/Downloads/opencv-3.2.0_1/build/lib
+)
+
+# set(OpenCV_INCLUDE_DIRS
+#         /usr/local/include
+#         /usr/local/include/opencv2
+# )
+
+# set(OpenCV_LIB_DIR
+#         /usr/local/lib
+# )
 
 set(OpenCV_LIBS
         opencv_core
@@ -17,7 +26,10 @@ set(OpenCV_LIBS
         opencv_imgproc
         opencv_features2d
         opencv_cudaimgproc
-        )
+        opencv_sfm
+)
+
+
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})

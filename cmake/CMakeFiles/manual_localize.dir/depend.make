@@ -135,4 +135,7 @@ CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize
 CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.o: /usr/local/include/opencv2/viz/viz3d.hpp
 CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.o: /usr/local/include/opencv2/viz/vizcore.hpp
 CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.o: /usr/local/include/opencv2/viz/widgets.hpp
+CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.o: /usr/local/include/opencv2/xfeatures2d.hpp
+CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.o: /usr/local/include/opencv2/xfeatures2d/cuda.hpp
+CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.o: /usr/local/include/opencv2/xfeatures2d/nonfree.hpp
 

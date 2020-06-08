@@ -91,6 +91,7 @@ CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/l
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/opencv_modules.hpp
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/photo.hpp
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/photo/photo_c.h
+CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/sfm/triangulation.hpp
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/shape.hpp
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/shape/emdL1.hpp
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/shape/hist_cost.hpp
@@ -136,4 +137,7 @@ CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/l
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/viz/viz3d.hpp
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/viz/vizcore.hpp
 CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/viz/widgets.hpp
+CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/xfeatures2d.hpp
+CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/xfeatures2d/cuda.hpp
+CMakeFiles/pfc_init.dir/home/tucker/research/pfc_init/src/pfc_init.cpp.o: /usr/local/include/opencv2/xfeatures2d/nonfree.hpp
 
