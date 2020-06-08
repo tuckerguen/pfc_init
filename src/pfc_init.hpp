@@ -11,7 +11,7 @@ struct match {
     cv::Mat result; //result image from opencv templatematch()
 };
 
-int HandleArguments(int argc, char** argv, std::string *image_id, std::string* image_type);
+int HandleArguments(int argc, char** argv, std::string *image_id);
 double PFCInit(std::string left_image_path, std::string right_image_path, bool display_results);
 void DisplayResults(std::string left_image_path, std::string right_image_path, cv::Mat& raw_l,  cv::Mat& raw_r, match bestMatch_l, match bestMatch_r, double t);
 void InitNeedleImage(std::string path, cv::Mat& img);
@@ -24,5 +24,5 @@ void DrawMatch(cv::Mat &src, cv::Rect match, cv::Scalar color);
 void PrintResultsForImage(match *match, std::string side);
 cv::Rect GetTrueMatchFromMeta(std::string img_path);
 Eigen::Vector4f RPYtoQuat(double roll, double pitch, double yaw);
-cv::Point3d DeProjectPoints(const cv::Mat& img_l, const cv::Mat& img_r, const match* match_l, const match* match_r);
+cv::Point3d DeProjectPoints(const match* match_l, const match* match_r);
 double IntersectionOverUnion(const cv::Rect *ground, const cv::Rect *data);

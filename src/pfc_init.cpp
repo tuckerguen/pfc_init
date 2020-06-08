@@ -18,7 +18,7 @@ using namespace cv;
 using namespace Eigen;
 
 //const string template_img_path = "../imgs/raw_l_b.png";
-const string template_img_path = "../imgs/raw_l_b.png";
+const string template_img_path = "../imgs/raw/11_l_b.png";
 
 //Canny edge detection parameters
 int lowThreshold = 8;
@@ -43,30 +43,30 @@ bool use_gpu;
 
 int main(int argc, char *argv[])
 {
-    string image_id = "a", image_type = "raw";
+    string image_id = "a";
+    string image_num = "10";
 
-    if (!HandleArguments(argc, argv, &image_id, &image_type))
+    if (!HandleArguments(argc, argv, &image_id))
         return 1;
 
-    string left_image_path = "../imgs/" + image_type + "_l_" + image_id + ".png";
-    string right_image_path = "../imgs/" + image_type + "_r_" + image_id + ".png";
+    string left_image_path = "../imgs/raw/" + image_num + "_l_" + image_id + ".png";
+    string right_image_path = "../imgs/raw/" + image_num + "_r_" + image_id + ".png";
 
     cout << "left img: " << left_image_path << endl;
     cout << "rght img: " << right_image_path << endl;
-    cout << "type: " << image_type << ", use_gpu: " << (use_gpu == true ? "yes" : "no") << endl;
+    cout << "type: " << ", use_gpu: " << (use_gpu == true ? "yes" : "no") << endl;
 
     PFCInit(left_image_path, right_image_path, true);
     return 0;
 }
 
-int HandleArguments(int argc, char **argv, string *image_id, string *image_type)
+int HandleArguments(int argc, char **argv, string *image_id)
 {
     if (argc == 4)
     {
         *image_id = argv[1];
         if (!strcmp(argv[2], "raw") || !strcmp(argv[2], "vessel"))
         {
-            *image_type = argv[2];
         }
         else
         {
@@ -88,7 +88,6 @@ int HandleArguments(int argc, char **argv, string *image_id, string *image_type)
         *image_id = argv[1];
         if (!strcmp(argv[2], "raw") || !strcmp(argv[2], "vessel"))
         {
-            *image_type = argv[2];
         }
         else
         {
@@ -148,8 +147,8 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
     LocateNeedle(img_l, templ, &bestMatch_l);
     LocateNeedle(img_r, templ, &bestMatch_r);
     
-    // Point3d location = DeProjectPoints(img_l, img_r, &bestMatch_l, &bestMatch_r);
-    // cout << "location: (" << location.x << ", " << location.y << ", " << location.z << endl;
+    Point3d location = DeProjectPoints(&bestMatch_l, &bestMatch_r);
+    cout << "location: (" << location.x << ", " << location.y << ", " << location.z << ")" << endl;
 
     t = ((double)getTickCount() - t) / getTickFrequency();
 
@@ -224,7 +223,7 @@ void InitTemplate(string path, Mat &templ)
     raw = imread(path, IMREAD_COLOR);
     if (!raw.data)
     {
-        cerr << "Loading image failed" << endl;
+        cerr << "Loading image: " << path << " failed" << endl;
         exit(0);
     }
 
@@ -378,8 +377,6 @@ void PrintResultsForImage(match *match, string img_path)
     cout << "IoU Score : " << score << endl;    
 }
 
-
-
 Rect GetTrueMatchFromMeta(string img_path){
     //read from metafile
     string meta_path = img_path;
@@ -414,18 +411,17 @@ Vector4f RPYtoQuat(double roll, double pitch, double yaw){
     return q.coeffs();
 }
 
-Point3d DeProjectPoints(const Mat &img_l, const Mat &img_r, const match *match_l, const match *match_r)
+Point3d DeProjectPoints(const match *match_l, const match *match_r)
 {
     //construct the output mat:
-    Mat results(4, 1, CV_64FC1);
     Mat p_l(2, 1, CV_64FC1);
     Mat p_r(2, 1, CV_64FC1);
 
-    p_l.at<double>(0) = match_l->maxRect.x;
-    p_l.at<double>(1) = match_l->maxRect.y;
+    p_l.at<double>(0) = match_l->maxRect.x + 29;
+    p_l.at<double>(1) = match_l->maxRect.y + 30;
 
-    p_r.at<double>(0) = match_r->maxRect.x;
-    p_r.at<double>(1) = match_r->maxRect.y;
+    p_r.at<double>(0) = match_r->maxRect.x + 29;
+    p_r.at<double>(1) = match_r->maxRect.y + 30;
 
     //Camera intrinsic matrices (placeholders for now)
     // double fx_l = 5.749;
@@ -445,22 +441,22 @@ Point3d DeProjectPoints(const Mat &img_l, const Mat &img_r, const match *match_l
     Mat P_r = (Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -0.0, 
                                      0.0, 662.450355616388, 240.5, 0.0, 
                                      0.0, 0.0, 1.0, 0.0);
+    Mat results;
 
-    Mat projections = (Mat_<Mat_<double> >(1,2) << P_l, P_r);
-    Mat points (2, 2, CV_64FC1);
-    points.at<double>(0, 0) =  match_l->maxRect.x;
-    points.at<double>(0, 1) =  match_l->maxRect.y;
-    points.at<double>(1, 0) =  match_r->maxRect.x;
-    points.at<double>(1, 1) =  match_r->maxRect.y;
+    vector<Mat> points;
+    points.push_back(p_l);
+    points.push_back(p_r);
 
+    vector<Mat> projections;
+    projections.push_back(P_l);
+    projections.push_back(P_r);
     sfm::triangulatePoints(points, projections, results);
 
     Point3d result;
 
-    result.x = results.at<double>(0) / results.at<double>(3);
-    result.y = results.at<double>(1) / results.at<double>(3);
-    result.z = results.at<double>(2) / results.at<double>(3);
-    cout << result.x << ", " << result.y << ", " << result.z << endl;
+    result.x = results.at<double>(0);
+    result.y = results.at<double>(1);
+    result.z = results.at<double>(2);
 
     return result;
 }
