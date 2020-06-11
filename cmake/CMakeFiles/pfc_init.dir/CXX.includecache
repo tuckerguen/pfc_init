@@ -21,6 +21,10 @@ eigen3/Eigen/Dense
 -
 opencv2/sfm/triangulation.hpp
 -
+opencv2/viz.hpp
+-
+opencv2/calib3d.hpp
+-
 iostream
 -
 unistd.h

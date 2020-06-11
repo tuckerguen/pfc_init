@@ -13,16 +13,14 @@ struct match {
 
 int HandleArguments(int argc, char** argv, std::string *image_id);
 double PFCInit(std::string left_image_path, std::string right_image_path, bool display_results);
-void DisplayResults(std::string left_image_path, std::string right_image_path, cv::Mat& raw_l,  cv::Mat& raw_r, match bestMatch_l, match bestMatch_r, double t);
+void DisplayResults(std::string left_image_path, std::string right_image_path, cv::Mat& raw_l,  cv::Mat& raw_r, match bestMatch_l, match bestMatch_r, cv::Point3d location, double t);
 void InitNeedleImage(std::string path, cv::Mat& img);
 void InitTemplate(std::string path, cv::Mat& templ);
 void DetectEdges(const cv::Mat& img, cv::Mat& dst);
 void LocateNeedle (const cv::Mat& img, const cv::Mat& templ, match *bestMatch);
 void RotateTemplate(double angle, const cv::Mat &src, cv::Mat &dst);
 void MatchImageToTemplate(const cv::Mat& img, const cv::Mat& templ, match* bestMatch, double angle, double scale, bool use_gpu);
-void DrawMatch(cv::Mat &src, cv::Rect match, cv::Scalar color);
+void DrawMatch(cv::Mat &src, match* match, cv::Scalar color);
 void PrintResultsForImage(match *match, std::string side);
-cv::Rect GetTrueMatchFromMeta(std::string img_path);
 Eigen::Vector4f RPYtoQuat(double roll, double pitch, double yaw);
 cv::Point3d DeProjectPoints(const match* match_l, const match* match_r);
-double IntersectionOverUnion(const cv::Rect *ground, const cv::Rect *data);

@@ -8,6 +8,8 @@
 #include <eigen3/Eigen/Geometry>
 #include <eigen3/Eigen/Dense>
 #include <opencv2/sfm/triangulation.hpp>
+#include <opencv2/viz.hpp>
+#include <opencv2/calib3d.hpp>
 
 #include <iostream>
 #include <unistd.h>
@@ -18,7 +20,7 @@ using namespace cv;
 using namespace Eigen;
 
 //const string template_img_path = "../imgs/raw_l_b.png";
-const string template_img_path = "../imgs/raw/11_l_b.png";
+const string template_img_path = "../imgs/raw/0_l_c_fatty.png";
 
 //Canny edge detection parameters
 int lowThreshold = 8;
@@ -31,7 +33,7 @@ const double angle_increment = 10; //Number of degrees to rotate template each i
 
 // Scaling parameters
 const int min_scale = 95;         //minimum template scale to try to match (in %)
-const int max_scale = 105;        //maximum template scale to try to match (in %)
+const int max_scale = 110;        //maximum template scale to try to match (in %)
 const double scale_increment = 1; //% scale to increase by on each iteration
 
 //HSV Filtering Parameters
@@ -39,18 +41,28 @@ const int low_h = 0, high_h = 5;
 const int low_s = 0, high_s = 0;
 const int low_v = 0, high_v = 140;
 
+//Needle position offset (move coordinate frame from top left 
+//to point bisecting line between ends)
+const int needle_origin_offset_x = 52;
+const int needle_origin_offset_y = 4;
+const int template_width_0 = 105;
+const int template_height_0 = 56;
+
+//Degree 2 radians conversion constant
+const double deg2rad = M_PI / 180.0;
+
 bool use_gpu;
 
 int main(int argc, char *argv[])
 {
-    string image_id = "a";
-    string image_num = "10";
+    string image_id = "marked";
+    string image_num = "8";
 
     if (!HandleArguments(argc, argv, &image_id))
         return 1;
 
-    string left_image_path = "../imgs/raw/" + image_num + "_l_" + image_id + ".png";
-    string right_image_path = "../imgs/raw/" + image_num + "_r_" + image_id + ".png";
+    string left_image_path = "../imgs/raw/" + image_num + "_l_c_" + image_id + ".png";
+    string right_image_path = "../imgs/raw/" + image_num + "_r_c_" + image_id + ".png";
 
     cout << "left img: " << left_image_path << endl;
     cout << "rght img: " << right_image_path << endl;
@@ -148,18 +160,17 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
     LocateNeedle(img_r, templ, &bestMatch_r);
     
     Point3d location = DeProjectPoints(&bestMatch_l, &bestMatch_r);
-    cout << "location: (" << location.x << ", " << location.y << ", " << location.z << ")" << endl;
 
     t = ((double)getTickCount() - t) / getTickFrequency();
 
     if(display_results)
-        DisplayResults(left_image_path, right_image_path, raw_l, raw_r, bestMatch_l, bestMatch_r, t);
+        DisplayResults(left_image_path, right_image_path, raw_l, raw_r, bestMatch_l, bestMatch_r, location, t);
 
     //Record time
     return t;
 }
 
-void DisplayResults(string left_image_path, string right_image_path, Mat& raw_l,  Mat& raw_r, match bestMatch_l, match bestMatch_r, double t){
+void DisplayResults(string left_image_path, string right_image_path, Mat& raw_l,  Mat& raw_r, match bestMatch_l, match bestMatch_r, Point3d location, double t){
     cout << endl <<  "Times passed in seconds: " << t << endl;
     cout << "--------------------------------------" << endl;
     
@@ -172,21 +183,18 @@ void DisplayResults(string left_image_path, string right_image_path, Mat& raw_l,
     //Draw algorithm matches on originals and result images
     Scalar white = Scalar::all(255);
     Scalar cyan = Scalar(255, 255, 0);
-    DrawMatch(raw_l, bestMatch_l.maxRect, white);
-    DrawMatch(bestMatch_l.result, bestMatch_l.maxRect, white);
-    DrawMatch(raw_r, bestMatch_r.maxRect, white);
-    DrawMatch(bestMatch_r.result, bestMatch_r.maxRect, white);
+    DrawMatch(raw_l, &bestMatch_l, white);
+    DrawMatch(bestMatch_l.result, &bestMatch_l, white);
+    DrawMatch(raw_r, &bestMatch_r, white);
+    DrawMatch(bestMatch_r.result, &bestMatch_r, white);
 
-    //Draw the ground truth matches on images
-    Rect left_truth = GetTrueMatchFromMeta(left_image_path);
-    Rect right_truth = GetTrueMatchFromMeta(right_image_path);
-    DrawMatch(raw_l, left_truth, cyan);
-    DrawMatch(raw_r, right_truth, cyan);
-
-
+    cout << "match angle: " << bestMatch_l.angle << endl;
     //Print match information
     PrintResultsForImage(&bestMatch_l, left_image_path);
     PrintResultsForImage(&bestMatch_r, right_image_path);
+
+    //Final 3D coordinate location
+    cout << "3D Location: (" << location.x << ", " << location.y << ", " << location.z << ")" << endl;
 
     //Display images
     imshow(left_image_path, raw_l);
@@ -219,7 +227,7 @@ void InitNeedleImage(string path, Mat &img)
 void InitTemplate(string path, Mat &templ)
 {
     //Load camera image to match
-    Mat raw, filtered, img_HSV;
+    Mat raw, filtered, img_HSV, bw;
     raw = imread(path, IMREAD_COLOR);
     if (!raw.data)
     {
@@ -228,13 +236,14 @@ void InitTemplate(string path, Mat &templ)
     }
 
     //Crop template image to just needle
-    Rect r(168, 92, 58, 35);
+    Rect r(287, 205, template_width_0, template_height_0);
     raw = raw(r);
 
     ///With HSV filtering
     // Filter by HSV for needle
     cvtColor(raw, img_HSV, COLOR_BGR2HSV);
-    inRange(img_HSV, Scalar(low_h, low_s, low_v), Scalar(high_h, high_s, high_v), templ);
+    inRange(img_HSV, Scalar(low_h, low_s, low_v), Scalar(high_h, high_s, high_v), bw);
+    RotateTemplate(180, bw, templ);
 
     ///With edge detection
     // Do edge detection on filtered image
@@ -254,11 +263,8 @@ void LocateNeedle(const Mat &img, const Mat &templ, match *bestMatch)
 {
     //Loop over all scales
     double scale = min_scale / 100.0;
-    cout << ceil((max_scale - min_scale) / scale_increment) << endl;
     for (int i = 0; i < ceil((max_scale - min_scale) / scale_increment); ++i)
     {
-        cout << "\r";
-        cout << i << endl;
         scale += ((double)scale_increment) / 100.0;
         Mat resized;
 
@@ -278,7 +284,6 @@ void LocateNeedle(const Mat &img, const Mat &templ, match *bestMatch)
         double rot_angle = 0;
         for (int j = 0; j < ceil(max_rotation / angle_increment); ++j)
         {
-            // cout << rot_angle << "\r";
             rot_angle += angle_increment;
             //Rotate
             Mat rot_templ;
@@ -338,7 +343,6 @@ void MatchImageToTemplate(const Mat &img, const Mat &templ, match *bestMatch, do
     minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, Mat());
 
     //If the new match is better than our previous best, record it
-    // cout << ": " << maxVal << endl;
     if (bestMatch->maxVal < maxVal)
     {
         bestMatch->maxVal = maxVal;
@@ -353,94 +357,93 @@ void MatchImageToTemplate(const Mat &img, const Mat &templ, match *bestMatch, do
     }
 }
 
-void DrawMatch(Mat &src, Rect match, Scalar color)
+void DrawMatch(Mat &src, match* match, Scalar color)
 {
     int line_weight = 1;
-    rectangle(src, match, color, line_weight, 8, 0);
+    rectangle(src, match->maxRect, color, line_weight, 8, 0);
+
+    //Apply the same rotation matrix used to rotate the template to the base template origin offset
+    Mat needle_origin_offset_mat = (Mat_<double>(3,1) << needle_origin_offset_x, needle_origin_offset_y, 1);
+    Point2d center((template_width_0 - 1) / 2.0, (template_height_0 - 1) / 2.0);
+    Mat rot = getRotationMatrix2D(center, match->angle, match->scale);
+    Rect2d bbox = RotatedRect(Point2d(), Size2d(template_width_0, template_height_0), match->angle).boundingRect2f();
+    /// adjust transformation matrix
+    rot.at<double>(0, 2) += bbox.width / 2.0 - template_width_0 / 2.0;
+    rot.at<double>(1, 2) += bbox.height / 2.0 - template_height_0 / 2.0;
+    Mat needle_origin_offset_rot = rot * needle_origin_offset_mat;
+
+    circle(src, 
+            Point(match->maxRect.x + needle_origin_offset_rot.at<double>(0), 
+                  match->maxRect.y + needle_origin_offset_rot.at<double>(1)),
+            0.1, color, 1, 8, 0);
 }
 
 void PrintResultsForImage(match *match, string img_path)
 {
     cout << endl << "--------------------------------------" << endl;
     cout << "Results for: " << img_path << endl;
-    if (match->angle > 180.0)
-    {
-        match->angle = -(match->angle - 360.0);
-    }
-    cout << "Location: (" << match->maxRect.x << ", " << match->maxRect.y << ")" << endl;
+    // if (match->angle > 180.0)
+    // {
+    //     match->angle = -(match->angle - 360.0);
+    // }
+    cout << "Pixel Location: (" << match->maxRect.x << ", " << match->maxRect.y << ")" << endl;
     cout << "Size: " << "width: " << match->maxRect.width << ", height: " << match->maxRect.height << endl;
-    cout << "Yaw: degrees = " << match->angle << ", radians = " << match->angle * (3.1415926535 / 180.0) << endl;
+    cout << "Yaw: degrees = " << match->angle << ", radians = " << match->angle * deg2rad << endl;
     cout << "Scale: " << match->scale << endl;
-        
-    Rect truth = GetTrueMatchFromMeta(img_path);
-    double score  = IntersectionOverUnion(&truth, &match->maxRect);;    
-    cout << "IoU Score : " << score << endl;    
-}
 
-Rect GetTrueMatchFromMeta(string img_path){
-    //read from metafile
-    string meta_path = img_path;
-    meta_path.erase(0, 8);
-    meta_path.erase(meta_path.length() - 3, 3);
-    meta_path = "../imgs/meta/" + meta_path + "meta";
-
-    string data;
-    ifstream meta_file;
-    meta_file.open(meta_path.c_str());
-    if(meta_file.good()){
-        getline(meta_file, data);
-        meta_file.close();
-
-        istringstream ss(data);
-        int tx, ty, tw, th;
-        ss >> tx >> ty >> tw >> th;
-        cout << "read from meta: " << tx << "," << ty  << "," <<  tw << "," << th << endl;
-        return Rect (tx, ty, tw, th);
-    }
-    else {
-        cout << "unable to open meta_file at: " << meta_path << endl;
-        return Rect(-1,-1,-1,-1);
-    }
+    Vector4f orientation = RPYtoQuat(0,0, -match->angle);
+    cout << "3D Orientation: " << endl;
+    cout << "Quaternion: (" << orientation.x() << ", " << orientation.y() << ", " << orientation.z() << ", " << orientation.w() << ")" << endl;
+    cout << "Euler angles: yaw= " << match->angle << endl;
 }
 
 Vector4f RPYtoQuat(double roll, double pitch, double yaw){
+    double roll_radians = deg2rad * roll;
+    double pitch_radians = deg2rad * pitch;
+    double yaw_radians = deg2rad * yaw;
     Quaternionf q;
-    q = AngleAxisf(roll, Vector3f::UnitX())
-        * AngleAxisf(pitch, Vector3f::UnitY())
-        * AngleAxisf(yaw, Vector3f::UnitZ());
+    q = AngleAxisf(roll_radians, Vector3f::UnitX())
+        * AngleAxisf(pitch_radians, Vector3f::UnitY())
+        * AngleAxisf(yaw_radians, Vector3f::UnitZ());
     return q.coeffs();
 }
 
+// vector<double> GetNeedleOriginOffset(double rotation
+
 Point3d DeProjectPoints(const match *match_l, const match *match_r)
 {
-    //construct the output mat:
     Mat p_l(2, 1, CV_64FC1);
     Mat p_r(2, 1, CV_64FC1);
 
-    p_l.at<double>(0) = match_l->maxRect.x + 29;
-    p_l.at<double>(1) = match_l->maxRect.y + 30;
+    cout << "cols: " << match_l->templ.cols << ", rows: " << match_l->templ.rows << "size: " << match_l->templ.size() 
+    << "angle: " << match_l->angle << "scale: " << match_l->scale << endl;
 
-    p_r.at<double>(0) = match_r->maxRect.x + 29;
-    p_r.at<double>(1) = match_r->maxRect.y + 30;
+    //Apply the same rotation matrix used to rotate the template to the base template origin offset
+    Mat needle_origin_offset_mat = (Mat_<double>(3,1) << needle_origin_offset_x, needle_origin_offset_y, 1);
+    Point2d center((template_width_0 - 1) / 2.0, (template_height_0 - 1) / 2.0);
+    Mat rot = getRotationMatrix2D(center, match_l->angle, match_l->scale);
+    Rect2d bbox = RotatedRect(Point2d(), Size2d(template_width_0, template_height_0), match_l->angle).boundingRect2f();
+    /// adjust transformation matrix
+    rot.at<double>(0, 2) += bbox.width / 2.0 - template_width_0 / 2.0;
+    rot.at<double>(1, 2) += bbox.height / 2.0 - template_height_0 / 2.0;
+    Mat needle_origin_offset_rot = rot * needle_origin_offset_mat;
+    cout << "N_O_O: " << needle_origin_offset_rot << endl;
 
-    //Camera intrinsic matrices (placeholders for now)
-    // double fx_l = 5.749;
-    // double fy_l = 5.999;
-    // double rh_l = img_l.cols / 2.0;
-    // double rv_l = img_l.rows / 2.0;
+    p_l.at<double>(0) = match_l->maxRect.x + needle_origin_offset_rot.at<double>(0);
+    p_l.at<double>(1) = match_l->maxRect.y + needle_origin_offset_rot.at<double>(1);
 
-    // double fx_r = 4.500;
-    // double fy_r = 4.680;displays
-    // double rh_r = img_r.cols / 2.0;
-    // double rv_r = img_r.rows / 2.0;
+    p_r.at<double>(0) = match_r->maxRect.x + needle_origin_offset_rot.at<double>(0);
+    p_r.at<double>(1) = match_r->maxRect.y + needle_origin_offset_rot.at<double>(1);
 
-    Mat P_l = (Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -3.31225177808194, 
+    Mat P_r = (Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -3.31225177808194, 
                                      0.0, 662.450355616388, 240.5, 0.0,
                                      0.0, 0.0, 1.0, 0.0);
 
-    Mat P_r = (Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -0.0, 
+    Mat P_l = (Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, 0.0, 
                                      0.0, 662.450355616388, 240.5, 0.0, 
                                      0.0, 0.0, 1.0, 0.0);
+
+
     Mat results;
 
     vector<Mat> points;
@@ -450,6 +453,7 @@ Point3d DeProjectPoints(const match *match_l, const match *match_r)
     vector<Mat> projections;
     projections.push_back(P_l);
     projections.push_back(P_r);
+
     sfm::triangulatePoints(points, projections, results);
 
     Point3d result;
@@ -458,32 +462,12 @@ Point3d DeProjectPoints(const match *match_l, const match *match_r)
     result.y = results.at<double>(1);
     result.z = results.at<double>(2);
 
+    Point3d truth(0.0130668,-0.00752352,0.159038);
+    double dist = norm(result - truth);
+    cout << "Euclidean Distance from Truth: " << dist << endl;
+    cout << "Diff X: " << truth.x - result.x << " meters" << endl;
+    cout << "Diff Y: " << truth.y - result.y << " meters" << endl;
+    cout << "Diff Z: " << truth.z - result.z << " meters" << endl;
+
     return result;
-}
-
-double IntersectionOverUnion(const Rect *ground, const Rect *data)
-{
-    int x1, y1, x2, y2, width, height, overlap_area, rect_union;
-    //Upper left corner
-    x1 = max(ground->x, data->x);
-    y1 = max(ground->y, data->y);
-    //Lower right corner
-    x2 = min(ground->x + ground->width, data->x + data->width);
-    y2 = min(ground->y + ground->height, data->y + data->height);
-
-    //overlap area
-    width = x2 - x1;
-    height = y2 - y1;
-
-    if (width < 0 || height < 0){
-        cout << "width or height < 0" << endl;
-        return 0.0;
-    }
-
-    overlap_area = width * height;
-
-    //Combined area
-    rect_union = ground->area() + data->area() - overlap_area;    
-    
-    return (double)overlap_area / (double)rect_union;
 }

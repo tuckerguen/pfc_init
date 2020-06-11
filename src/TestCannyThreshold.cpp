@@ -51,7 +51,7 @@ static void CannyThreshold(int, void*)
 
 int main()
 {
-    src = imread( "../imgs/raw_l_b.png", IMREAD_COLOR ); //00 Load an image
+    src = imread( "../imgs/raw/0_l_c_marked.png", IMREAD_COLOR ); //00 Load an image
     if( src.empty() )
     {
         std::cout << "Could not open or find the image!\n" << std::endl;
@@ -62,14 +62,14 @@ int main()
     namedWindow( window_name, WINDOW_AUTOSIZE );
     // createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold, CannyThreshold );
     // createTrackbar( "Max Threshold:", window_name, &high_threshold, max_lowThreshold, CannyThreshold );
-    createTrackbar("Low H", window_name, &low_H, 180, CannyThreshold);
-    createTrackbar("High H", window_name, &high_H, 170, CannyThreshold);
-    createTrackbar("Low S", window_name, &low_S, 255, CannyThreshold);
-    createTrackbar("High S", window_name, &high_S, 255, CannyThreshold);
-    createTrackbar("Low V", window_name, &low_V, 255, CannyThreshold);
-    createTrackbar("High V", window_name, &high_V, 255, CannyThreshold);
-
-    CannyThreshold(0, 0);
+    // createTrackbar("Low H", window_name, &low_H, 180, CannyThreshold);
+    // createTrackbar("High H", window_name, &high_H, 170, CannyThreshold);
+    // createTrackbar("Low S", window_name, &low_S, 255, CannyThreshold);
+    // createTrackbar("High S", window_name, &high_S, 255, CannyThreshold);
+    // createTrackbar("Low V", window_name, &low_V, 255, CannyThreshold);
+    // createTrackbar("High V", window_name, &high_V, 255, CannyThreshold);
+imshow( window_name, src);
+    // CannyThreshold(0, 0);
     waitKey(0);
     return 0;
 }

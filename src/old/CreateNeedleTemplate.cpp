@@ -33,7 +33,7 @@ void RotateTemplate(double angle, const Mat &src, Mat &dst)
 int main()
 {
     Mat raw, filtered, img_HSV, templ;
-    raw = imread("../../imgs/raw_l_b.png", IMREAD_COLOR);
+    raw = imread("../../imgs/raw/0_l_c_fatty.png", IMREAD_COLOR);
     if (!raw.data)
     {
         cerr << "Loading image failed" << endl;
@@ -41,7 +41,7 @@ int main()
     }
 
     //Crop template image to just needle
-    Rect r(168, 92, 58, 35);
+    Rect r(287, 205, 105, 56);
     raw = raw(r);
 
     ///With HSV filtering
@@ -49,19 +49,23 @@ int main()
     cvtColor(raw, img_HSV, COLOR_BGR2HSV);
     inRange(img_HSV, Scalar(low_h, low_s, low_v), Scalar(high_h, high_s, high_v), templ);
 
-    for(int i = 0; i < 356; i+=5){
-        Mat rotated;
-        RotateTemplate(i, templ, rotated);
-        string name = "../../imgs/templates/template_";
-        string i_str = to_string(i);
+    // for(int i = 0; i < 356; i+=5){
+    //     Mat rotated;
+    //     RotateTemplate(i, templ, rotated);
+    //     string name = "../../imgs/templates/template_";
+    //     string i_str = to_string(i);
         
-        name = name + i_str + ".png";
-        cout << name << endl;
-        imwrite(name, rotated);
-    }
-    
+    //     name = name + i_str + ".png";
+    //     cout << name << endl;
+    //     imwrite(name, rotated);
+    // }
 
-    //
+    imwrite("../imgs/templates/template.png", templ);
+    Mat rotated;
+    RotateTemplate(180, templ, rotated);
+    namedWindow("hi", WINDOW_AUTOSIZE);
+    imshow("hi", rotated);
+    imwrite("../imgs/templates/template.png", rotated);
 
     // namedWindow("template", WINDOW_NORMAL | WINDOW_KEEPRATIO);
 
