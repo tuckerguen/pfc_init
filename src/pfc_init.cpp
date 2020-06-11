@@ -12,8 +12,10 @@
 #include <opencv2/calib3d.hpp>
 
 #include <iostream>
+#include <string>  
 #include <unistd.h>
 #include "pfc_init.hpp"
+#include "CSVReader.hpp"
 
 using namespace std;
 using namespace cv;
@@ -48,6 +50,8 @@ const int needle_origin_offset_y = 4;
 const int template_width_0 = 105;
 const int template_height_0 = 56;
 
+int pose_id;
+
 //Degree 2 radians conversion constant
 const double deg2rad = M_PI / 180.0;
 
@@ -56,13 +60,14 @@ bool use_gpu;
 int main(int argc, char *argv[])
 {
     string image_id = "marked";
-    string image_num = "8";
+    string pose_id_str = "4";
 
     if (!HandleArguments(argc, argv, &image_id))
         return 1;
 
-    string left_image_path = "../imgs/raw/" + image_num + "_l_c_" + image_id + ".png";
-    string right_image_path = "../imgs/raw/" + image_num + "_r_c_" + image_id + ".png";
+    pose_id = stoi(pose_id_str);
+    string left_image_path = "../imgs/raw/" + pose_id_str + "_l_c_" + image_id + ".png";
+    string right_image_path = "../imgs/raw/" + pose_id_str + "_r_c_" + image_id + ".png";
 
     cout << "left img: " << left_image_path << endl;
     cout << "rght img: " << right_image_path << endl;
@@ -138,7 +143,7 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
 
     Mat init_result;
     //Init best match info for left image
-    match bestMatch_l = {
+    Match bestMatch_l = {
         -DBL_MAX,
         0.0,
         0.0,
@@ -147,7 +152,7 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
         init_result};
 
     //Init best match info for right image
-    match bestMatch_r = {
+    Match bestMatch_r = {
         -DBL_MAX,
         0.0,
         0.0,
@@ -170,7 +175,7 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
     return t;
 }
 
-void DisplayResults(string left_image_path, string right_image_path, Mat& raw_l,  Mat& raw_r, match bestMatch_l, match bestMatch_r, Point3d location, double t){
+void DisplayResults(string left_image_path, string right_image_path, Mat& raw_l,  Mat& raw_r, Match bestMatch_l, Match bestMatch_r, Point3d location, double t){
     cout << endl <<  "Times passed in seconds: " << t << endl;
     cout << "--------------------------------------" << endl;
     
@@ -259,7 +264,7 @@ void DetectEdges(const Mat &img, Mat &dst)
     Canny(detected_edges, dst, lowThreshold, lowThreshold * ratio, kernel_size);
 }
 
-void LocateNeedle(const Mat &img, const Mat &templ, match *bestMatch)
+void LocateNeedle(const Mat &img, const Mat &templ, Match *bestMatch)
 {
     //Loop over all scales
     double scale = min_scale / 100.0;
@@ -310,7 +315,7 @@ void RotateTemplate(double angle, const Mat &src, Mat &dst)
     warpAffine(src, dst, rot, bbox.size());
 }
 
-void MatchImageToTemplate(const Mat &img, const Mat &templ, match *bestMatch, double angle, double scale, bool use_gpu)
+void MatchImageToTemplate(const Mat &img, const Mat &templ, Match *bestMatch, double angle, double scale, bool use_gpu)
 {
     /// Create the result matrix
     Mat result;
@@ -357,7 +362,7 @@ void MatchImageToTemplate(const Mat &img, const Mat &templ, match *bestMatch, do
     }
 }
 
-void DrawMatch(Mat &src, match* match, Scalar color)
+void DrawMatch(Mat &src, Match* match, Scalar color)
 {
     int line_weight = 1;
     rectangle(src, match->maxRect, color, line_weight, 8, 0);
@@ -378,7 +383,7 @@ void DrawMatch(Mat &src, match* match, Scalar color)
             0.1, color, 1, 8, 0);
 }
 
-void PrintResultsForImage(match *match, string img_path)
+void PrintResultsForImage(Match *match, string img_path)
 {
     cout << endl << "--------------------------------------" << endl;
     cout << "Results for: " << img_path << endl;
@@ -410,7 +415,7 @@ Vector4f RPYtoQuat(double roll, double pitch, double yaw){
 
 // vector<double> GetNeedleOriginOffset(double rotation
 
-Point3d DeProjectPoints(const match *match_l, const match *match_r)
+Point3d DeProjectPoints(const Match *match_l, const Match *match_r)
 {
     Mat p_l(2, 1, CV_64FC1);
     Mat p_r(2, 1, CV_64FC1);
@@ -423,11 +428,11 @@ Point3d DeProjectPoints(const match *match_l, const match *match_r)
     Point2d center((template_width_0 - 1) / 2.0, (template_height_0 - 1) / 2.0);
     Mat rot = getRotationMatrix2D(center, match_l->angle, match_l->scale);
     Rect2d bbox = RotatedRect(Point2d(), Size2d(template_width_0, template_height_0), match_l->angle).boundingRect2f();
+    
     /// adjust transformation matrix
     rot.at<double>(0, 2) += bbox.width / 2.0 - template_width_0 / 2.0;
     rot.at<double>(1, 2) += bbox.height / 2.0 - template_height_0 / 2.0;
     Mat needle_origin_offset_rot = rot * needle_origin_offset_mat;
-    cout << "N_O_O: " << needle_origin_offset_rot << endl;
 
     p_l.at<double>(0) = match_l->maxRect.x + needle_origin_offset_rot.at<double>(0);
     p_l.at<double>(1) = match_l->maxRect.y + needle_origin_offset_rot.at<double>(1);
@@ -462,7 +467,8 @@ Point3d DeProjectPoints(const match *match_l, const match *match_r)
     result.y = results.at<double>(1);
     result.z = results.at<double>(2);
 
-    Point3d truth(0.0130668,-0.00752352,0.159038);
+    Pose pose = ReadTruePoseFromCSV(pose_id);
+    Point3d truth = pose.location;
     double dist = norm(result - truth);
     cout << "Euclidean Distance from Truth: " << dist << endl;
     cout << "Diff X: " << truth.x - result.x << " meters" << endl;
@@ -470,4 +476,21 @@ Point3d DeProjectPoints(const match *match_l, const match *match_r)
     cout << "Diff Z: " << truth.z - result.z << " meters" << endl;
 
     return result;
+}
+
+Pose ReadTruePoseFromCSV(int pose_id)
+{
+	CSVReader reader("../positions/needle_positions.csv");
+    vector<vector<string> > all_pose_data = reader.getData();
+    vector<string> pose_data = all_pose_data.at(pose_id);
+ 
+    Pose pose;
+    pose.location.x = stod(pose_data.at(1));
+    pose.location.y = stod(pose_data.at(2));
+    pose.location.z = stod(pose_data.at(3));
+    pose.orientation(0) = stod(pose_data.at(4));
+    pose.orientation(1) = stod(pose_data.at(5));
+    pose.orientation(2) = stod(pose_data.at(6));
+    pose.orientation(3) = stod(pose_data.at(7));
+    return pose;
 }

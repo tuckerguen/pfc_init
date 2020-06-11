@@ -4,11 +4,19 @@
 #include <eigen3/Eigen/Geometry>
 #include <eigen3/Eigen/Dense>
 #include <opencv2/imgproc.hpp>
+#include <fstream>
+#include "CSVReader.hpp"
 
 using namespace cv;
 using namespace std;
 using namespace cv::sfm;
 using namespace Eigen;
+
+struct Pose {
+    cv::Point3d location;
+    Eigen::Vector4f orientation;
+};
+Pose ReadTruePoseFromCSV(int pose_id);
 
 int main(){
  //construct the output mat:
@@ -74,7 +82,9 @@ int main(){
 
     cout << "Final Position: " << result.x << ", " << result.y << ", " << result.z << endl;
 
-    Point3d truth(0.0130668,-0.00752352,0.159038);
+    Pose p = ReadTruePoseFromCSV(3);
+    Point3d truth = p.location;
+    cout << "True Position: " << truth.x << ", " << truth.y << ", " << truth.z << endl;
     double dist = norm(result - truth);
     cout << "Euclidean Distance from Truth: " << dist << endl;
     cout << "Diff X: " << truth.x - result.x << " meters" << endl;
@@ -86,4 +96,53 @@ int main(){
         * AngleAxisf(0, Vector3f::UnitY())
         * AngleAxisf(-3.839724354, Vector3f::UnitZ());
     cout << "(" << q.coeffs().x() << ", " << q.coeffs().y() << ", " << q.coeffs().z() << ", " << q.coeffs().w() << endl;;
+}
+
+// Pose ReadTruePoseFromCSV(string pose_id){
+//     Pose pose;
+
+//     fstream fin;
+//     fin.open("../positions/needle_positions.csv", ios::in);
+//     vector<string> pose_data;
+//     string line, val, temp;
+//     while (fin >> temp)
+//     {
+//         getline(fin, line);
+//         stringstream s(line);
+//         getline(s, val, ',');
+//         cout << "val: " << val << endl;
+//         if(val == pose_id)
+//         {
+//             pose_data.clear();
+//             while(getline(s, val, ','))
+//             {
+//                 pose_data.push_back(val);
+//             }
+//             pose.location.x = stod(pose_data.at(0));
+//             pose.location.y = stod(pose_data.at(1));
+//             pose.location.z = stod(pose_data.at(2));
+//             pose.orientation(0) = stod(pose_data.at(3));
+//             pose.orientation(1) = stod(pose_data.at(4));
+//             pose.orientation(2) = stod(pose_data.at(5));
+//             pose.orientation(3) = stod(pose_data.at(6));
+//         }
+//     }
+//     return pose;
+// }
+
+Pose ReadTruePoseFromCSV(int pose_id)
+{
+	CSVReader reader("../positions/needle_positions.csv");
+    vector<vector<string> > all_pose_data = reader.getData();
+    vector<string> pose_data = all_pose_data.at(pose_id);
+ 
+    Pose pose;
+    pose.location.x = stod(pose_data.at(1));
+    pose.location.y = stod(pose_data.at(2));
+    pose.location.z = stod(pose_data.at(3));
+    pose.orientation(0) = stod(pose_data.at(4));
+    pose.orientation(1) = stod(pose_data.at(5));
+    pose.orientation(2) = stod(pose_data.at(6));
+    pose.orientation(3) = stod(pose_data.at(7));
+    return pose;
 }
