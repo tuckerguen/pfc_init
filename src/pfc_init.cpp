@@ -50,10 +50,10 @@ const int needle_origin_offset_y = 4;
 const int template_width_0 = 105;
 const int template_height_0 = 56;
 
-int pose_id;
-
 //Degree 2 radians conversion constant
 const double deg2rad = M_PI / 180.0;
+
+int pose_id;
 
 bool use_gpu;
 
@@ -61,9 +61,6 @@ int main(int argc, char *argv[])
 {
     string image_id = "marked";
     string pose_id_str = "4";
-
-    if (!HandleArguments(argc, argv, &image_id))
-        return 1;
 
     pose_id = stoi(pose_id_str);
     string left_image_path = "../imgs/raw/" + pose_id_str + "_l_c_" + image_id + ".png";
@@ -75,53 +72,6 @@ int main(int argc, char *argv[])
 
     PFCInit(left_image_path, right_image_path, true);
     return 0;
-}
-
-int HandleArguments(int argc, char **argv, string *image_id)
-{
-    if (argc == 4)
-    {
-        *image_id = argv[1];
-        if (!strcmp(argv[2], "raw") || !strcmp(argv[2], "vessel"))
-        {
-        }
-        else
-        {
-            cout << argv[2] << " is not a valid image type" << endl;
-            return 0;
-        }
-        if (!strcmp(argv[3], "1") || !strcmp(argv[3], "0"))
-        {
-            int val = atoi(argv[3]);
-            use_gpu = val == 1;
-        }
-        else
-        {
-            cout << argv[3] << " use_gpu only assumes value 1 or 0" << endl;
-        }
-    }
-    else if (argc == 3)
-    {
-        *image_id = argv[1];
-        if (!strcmp(argv[2], "raw") || !strcmp(argv[2], "vessel"))
-        {
-        }
-        else
-        {
-            cout << argv[2] << " is not a valid image type" << endl;
-            return 0;
-        }
-    }
-    else if (argc == 2)
-    {
-        *image_id = argv[1];
-    }
-    else if (argc != 1)
-    {
-        cout << "Use: ./pfc_init <image_id ('a','marked', etc)> <image_type (raw, vessel)> <use_gpu (1,0)>" << endl;
-        return 0;
-    }
-    return 1;
 }
 
 double PFCInit(string left_image_path, string right_image_path, bool display_results)
@@ -149,7 +99,8 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
         0.0,
         Rect(0,0,0,0),
         templ,
-        init_result};
+        init_result
+    };
 
     //Init best match info for right image
     Match bestMatch_r = {
@@ -158,7 +109,8 @@ double PFCInit(string left_image_path, string right_image_path, bool display_res
         0.0,
         Rect(0,0,0,0),
         templ,
-        init_result};
+        init_result
+    };
 
     //Run localization algorithm on left and right images
     LocateNeedle(img_l, templ, &bestMatch_l);
@@ -312,7 +264,10 @@ void RotateTemplate(double angle, const Mat &src, Mat &dst)
     rot.at<double>(0, 2) += bbox.width / 2.0 - src.cols / 2.0;
     rot.at<double>(1, 2) += bbox.height / 2.0 - src.rows / 2.0;
 
+    cout << "1: " << src.rows << ", " << src.cols << endl;
     warpAffine(src, dst, rot, bbox.size());
+    cout << "2: " << dst.rows << ", " << dst.cols << endl;
+
 }
 
 void MatchImageToTemplate(const Mat &img, const Mat &templ, Match *bestMatch, double angle, double scale, bool use_gpu)

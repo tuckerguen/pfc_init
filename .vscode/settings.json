@@ -56,6 +56,8 @@
         "cinttypes": "cpp",
         "utility": "cpp",
         "typeindex": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "alignedvector3": "cpp",
+        "fft": "cpp"
     }
 }

@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /home/tucker/research/pfc_init/cmake
 CMakeFiles/pfc_init.dir/all:
 	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/depend
 	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=5,6 "Built target pfc_init"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=1,2 "Built target pfc_init"
 .PHONY : CMakeFiles/pfc_init.dir/all
 
 # Include target in all.
@@ -93,80 +93,6 @@ CMakeFiles/pfc_init.dir/clean:
 
 # clean rule for target.
 clean: CMakeFiles/pfc_init.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/TestCannyThreshold.dir
-
-# All Build rule for target.
-CMakeFiles/TestCannyThreshold.dir/all:
-	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/depend
-	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=1,2 "Built target TestCannyThreshold"
-.PHONY : CMakeFiles/TestCannyThreshold.dir/all
-
-# Include target in all.
-all: CMakeFiles/TestCannyThreshold.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/TestCannyThreshold.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/TestCannyThreshold.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/TestCannyThreshold.dir/rule
-
-# Convenience name for target.
-TestCannyThreshold: CMakeFiles/TestCannyThreshold.dir/rule
-
-.PHONY : TestCannyThreshold
-
-# clean rule for target.
-CMakeFiles/TestCannyThreshold.dir/clean:
-	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/clean
-.PHONY : CMakeFiles/TestCannyThreshold.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/TestCannyThreshold.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/manual_localize.dir
-
-# All Build rule for target.
-CMakeFiles/manual_localize.dir/all:
-	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/depend
-	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tucker/research/pfc_init/cmake/CMakeFiles --progress-num=3,4 "Built target manual_localize"
-.PHONY : CMakeFiles/manual_localize.dir/all
-
-# Include target in all.
-all: CMakeFiles/manual_localize.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/manual_localize.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/manual_localize.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tucker/research/pfc_init/cmake/CMakeFiles 0
-.PHONY : CMakeFiles/manual_localize.dir/rule
-
-# Convenience name for target.
-manual_localize: CMakeFiles/manual_localize.dir/rule
-
-.PHONY : manual_localize
-
-# clean rule for target.
-CMakeFiles/manual_localize.dir/clean:
-	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/clean
-.PHONY : CMakeFiles/manual_localize.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/manual_localize.dir/clean
 
 .PHONY : clean
 

@@ -123,86 +123,6 @@ pfc_init/fast:
 	$(MAKE) -f CMakeFiles/pfc_init.dir/build.make CMakeFiles/pfc_init.dir/build
 .PHONY : pfc_init/fast
 
-#=============================================================================
-# Target rules for targets named TestCannyThreshold
-
-# Build rule for target.
-TestCannyThreshold: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 TestCannyThreshold
-.PHONY : TestCannyThreshold
-
-# fast build rule for target.
-TestCannyThreshold/fast:
-	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/build
-.PHONY : TestCannyThreshold/fast
-
-#=============================================================================
-# Target rules for targets named manual_localize
-
-# Build rule for target.
-manual_localize: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 manual_localize
-.PHONY : manual_localize
-
-# fast build rule for target.
-manual_localize/fast:
-	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/build
-.PHONY : manual_localize/fast
-
-home/tucker/research/pfc_init/src/TestCannyThreshold.o: home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o
-
-.PHONY : home/tucker/research/pfc_init/src/TestCannyThreshold.o
-
-# target to build an object file
-home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o:
-	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o
-.PHONY : home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.o
-
-home/tucker/research/pfc_init/src/TestCannyThreshold.i: home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.i
-
-.PHONY : home/tucker/research/pfc_init/src/TestCannyThreshold.i
-
-# target to preprocess a source file
-home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.i:
-	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.i
-.PHONY : home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.i
-
-home/tucker/research/pfc_init/src/TestCannyThreshold.s: home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s
-
-.PHONY : home/tucker/research/pfc_init/src/TestCannyThreshold.s
-
-# target to generate assembly for a file
-home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s:
-	$(MAKE) -f CMakeFiles/TestCannyThreshold.dir/build.make CMakeFiles/TestCannyThreshold.dir/home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s
-.PHONY : home/tucker/research/pfc_init/src/TestCannyThreshold.cpp.s
-
-home/tucker/research/pfc_init/src/manual_localize.o: home/tucker/research/pfc_init/src/manual_localize.cpp.o
-
-.PHONY : home/tucker/research/pfc_init/src/manual_localize.o
-
-# target to build an object file
-home/tucker/research/pfc_init/src/manual_localize.cpp.o:
-	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.o
-.PHONY : home/tucker/research/pfc_init/src/manual_localize.cpp.o
-
-home/tucker/research/pfc_init/src/manual_localize.i: home/tucker/research/pfc_init/src/manual_localize.cpp.i
-
-.PHONY : home/tucker/research/pfc_init/src/manual_localize.i
-
-# target to preprocess a source file
-home/tucker/research/pfc_init/src/manual_localize.cpp.i:
-	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.i
-.PHONY : home/tucker/research/pfc_init/src/manual_localize.cpp.i
-
-home/tucker/research/pfc_init/src/manual_localize.s: home/tucker/research/pfc_init/src/manual_localize.cpp.s
-
-.PHONY : home/tucker/research/pfc_init/src/manual_localize.s
-
-# target to generate assembly for a file
-home/tucker/research/pfc_init/src/manual_localize.cpp.s:
-	$(MAKE) -f CMakeFiles/manual_localize.dir/build.make CMakeFiles/manual_localize.dir/home/tucker/research/pfc_init/src/manual_localize.cpp.s
-.PHONY : home/tucker/research/pfc_init/src/manual_localize.cpp.s
-
 home/tucker/research/pfc_init/src/pfc_init.o: home/tucker/research/pfc_init/src/pfc_init.cpp.o
 
 .PHONY : home/tucker/research/pfc_init/src/pfc_init.o
@@ -237,16 +157,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... pfc_init"
-	@echo "... TestCannyThreshold"
 	@echo "... rebuild_cache"
-	@echo "... manual_localize"
-	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.o"
-	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.i"
-	@echo "... home/tucker/research/pfc_init/src/TestCannyThreshold.s"
-	@echo "... home/tucker/research/pfc_init/src/manual_localize.o"
-	@echo "... home/tucker/research/pfc_init/src/manual_localize.i"
-	@echo "... home/tucker/research/pfc_init/src/manual_localize.s"
+	@echo "... pfc_init"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.o"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.i"
 	@echo "... home/tucker/research/pfc_init/src/pfc_init.s"

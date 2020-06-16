@@ -15,4 +15,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/tucker/research/pfc_init/src/cmake-build-debug
+-- Build files have been written to: /home/tucker/research/pfc_init/src

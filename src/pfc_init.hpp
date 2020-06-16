@@ -16,7 +16,6 @@ struct Pose {
     Eigen::Vector4f orientation;
 };
 
-int HandleArguments(int argc, char** argv, std::string *image_id);
 double PFCInit(std::string left_image_path, std::string right_image_path, bool display_results);
 void DisplayResults(std::string left_image_path, std::string right_image_path, cv::Mat& raw_l,  cv::Mat& raw_r, Match bestMatch_l, Match bestMatch_r, cv::Point3d location, double t);
 void InitNeedleImage(std::string path, cv::Mat& img);

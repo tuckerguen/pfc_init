@@ -98,38 +98,6 @@ int main(){
     cout << "(" << q.coeffs().x() << ", " << q.coeffs().y() << ", " << q.coeffs().z() << ", " << q.coeffs().w() << endl;;
 }
 
-// Pose ReadTruePoseFromCSV(string pose_id){
-//     Pose pose;
-
-//     fstream fin;
-//     fin.open("../positions/needle_positions.csv", ios::in);
-//     vector<string> pose_data;
-//     string line, val, temp;
-//     while (fin >> temp)
-//     {
-//         getline(fin, line);
-//         stringstream s(line);
-//         getline(s, val, ',');
-//         cout << "val: " << val << endl;
-//         if(val == pose_id)
-//         {
-//             pose_data.clear();
-//             while(getline(s, val, ','))
-//             {
-//                 pose_data.push_back(val);
-//             }
-//             pose.location.x = stod(pose_data.at(0));
-//             pose.location.y = stod(pose_data.at(1));
-//             pose.location.z = stod(pose_data.at(2));
-//             pose.orientation(0) = stod(pose_data.at(3));
-//             pose.orientation(1) = stod(pose_data.at(4));
-//             pose.orientation(2) = stod(pose_data.at(5));
-//             pose.orientation(3) = stod(pose_data.at(6));
-//         }
-//     }
-//     return pose;
-// }
-
 Pose ReadTruePoseFromCSV(int pose_id)
 {
 	CSVReader reader("../positions/needle_positions.csv");
