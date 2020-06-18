@@ -3,6 +3,9 @@
 
 #include <opencv2/imgproc.hpp>
 #include <eigen3/Eigen/Dense>
+#include "PfcInitConstants.hpp"
+#include <iostream>
+using namespace std;
 
 class NeedlePose 
 {
@@ -19,10 +22,14 @@ public:
     {}
 
     void setOrientation(Eigen::Vector3f new_orientation) { orientation = new_orientation;}
+    void setOrientation(Eigen::Quaternionf q) { 
+        orientation = q.toRotationMatrix().eulerAngles(0, 1, 2);
+        orientation = orientation * rad2deg;
+    }
     Eigen::Vector3f getEulerAngleOrientation() { return orientation; };
 
     void print();
-    Eigen::Vector4f getQuaternionOrientation();
+    Eigen::Quaternionf getQuaternionOrientation();
 };
 
 #endif

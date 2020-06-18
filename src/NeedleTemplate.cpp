@@ -61,11 +61,8 @@ TemplateMatch NeedleTemplate::matchOverScaleAndRotation(const cv::Mat& img, doub
         //Use inter-linear in all cases (is faster than inter_area, similar results)
         cv::resize(templ, resized, cv::Size(), scale, scale, cv::INTER_LINEAR);
 
-        ///Loop over all rotations
-        double rot_angle = 0;
-        for (int j = 0; j < ceil(max_rotation / rotation_increment); ++j)
+        for (double rot_angle = min_rotation; rot_angle < max_rotation; rot_angle += rotation_increment)
         {
-            rot_angle += rotation_increment;
             //Rotate template
             rotate(rot_angle, resized, rot_templ);
             //Match rotated template to image
@@ -84,8 +81,8 @@ void match(const cv::Mat &img, const cv:: Mat& templ, TemplateMatch *bestMatch, 
     int result_rows = img.rows - templ.rows + 1;
     result.create(result_rows, result_cols, CV_32FC1);
     
-    //Match using TM_CCOEFF
-    cv::matchTemplate(img, templ, result, cv::TM_CCOEFF);
+    //Match using TM_CCOEFF_NORMED
+    cv::matchTemplate(img, templ, result, cv::TM_CCOEFF_NORMED);
 
     /// Localizing the best match with minMaxLoc
     double minVal;
@@ -95,11 +92,17 @@ void match(const cv::Mat &img, const cv:: Mat& templ, TemplateMatch *bestMatch, 
     cv::Point matchLoc;
     cv::minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat());
 
+    // if (angle>135 && angle < 160)
+        // cout << angle << ": " << maxVal << endl;
+
     //If the new match is better than our previous best, record it
     if (bestMatch->score < maxVal)
     {
         bestMatch->score = maxVal;
-        bestMatch->angle = angle;
+        if(angle > 180.0)
+            bestMatch->angle = 360 - angle;
+        else
+            bestMatch->angle = -angle;
         bestMatch->scale = scale;
         bestMatch->rect.x = maxLoc.x;
         bestMatch->rect.y = maxLoc.y;

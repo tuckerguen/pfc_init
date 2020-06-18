@@ -6,6 +6,26 @@
 
 #IncludeRegexTransform: 
 
+/home/tucker/research/pfc_init/src/CSVReader.hpp
+string
+-
+vector
+-
+fstream
+-
+vector
+-
+iterator
+-
+string
+-
+algorithm
+-
+iostream
+-
+boost/algorithm/string.hpp
+-
+
 /home/tucker/research/pfc_init/src/NeedleImage.cpp
 NeedleImage.hpp
 /home/tucker/research/pfc_init/src/NeedleImage.hpp
@@ -44,6 +64,10 @@ iostream
 opencv2/imgproc.hpp
 -
 eigen3/Eigen/Dense
+-
+PfcInitConstants.hpp
+/home/tucker/research/pfc_init/src/PfcInitConstants.hpp
+iostream
 -
 
 /home/tucker/research/pfc_init/src/NeedleTemplate.cpp
@@ -91,6 +115,8 @@ TemplateMatch.hpp
 /home/tucker/research/pfc_init/src/TemplateMatch.hpp
 NeedlePose.hpp
 /home/tucker/research/pfc_init/src/NeedlePose.hpp
+CSVReader.hpp
+/home/tucker/research/pfc_init/src/CSVReader.hpp
 string
 -
 opencv2/core.hpp

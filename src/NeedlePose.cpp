@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Eigen::Vector4f NeedlePose::getQuaternionOrientation()
+Eigen::Quaternionf NeedlePose::getQuaternionOrientation()
 {
     // double roll_radians = deg2rad * orientation.x();
     // double pitch_radians = deg2rad * orientation.y();
@@ -17,14 +17,13 @@ Eigen::Vector4f NeedlePose::getQuaternionOrientation()
     q = Eigen::AngleAxisf(roll_radians, Eigen::Vector3f::UnitX())
         * Eigen::AngleAxisf(pitch_radians, Eigen::Vector3f::UnitY())
         * Eigen::AngleAxisf(yaw_radians, Eigen::Vector3f::UnitZ());
-    return q.coeffs();
+    return q;
 }
 
 void NeedlePose::print()
 {
-    Eigen::Vector4f quat = getQuaternionOrientation();
-    cout << "3D Location: " << endl << "(" << location.x << ", " << location.y << ", " << location.z << ")" << endl;
-    cout << "3D Orientation: " << endl;
-    cout << "Quaternion: (" << quat.x() << ", " << quat.y() << ", " << quat.z() << ", " << quat.w() << ")" << endl;
-    cout << "Euler angles: (" << orientation.x() << ", " << orientation.y() << ", " << orientation.z() << ")" << endl;
+    Eigen::Quaternionf q = getQuaternionOrientation();
+    cout << "Pos: (x,y,z)   = (" << location.x << ", " << location.y << ", " << location.z << ")" << endl;
+    cout << "Rot: (x,y,z,w) = (" << q.x() << ", " << q.y() << ", " << q.z() << ", " << q.w() << ")" << endl;
+    cout << "Rot: (r,p,y)   = (" << orientation.x() << ", " << orientation.y() << ", " << orientation.z() << ")" << endl;
 }

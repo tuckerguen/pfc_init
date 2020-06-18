@@ -3,6 +3,7 @@
 #include "NeedleTemplate.hpp"
 #include "TemplateMatch.hpp"
 #include "NeedlePose.hpp"
+#include "CSVReader.hpp"
 #include <string>
 #include <opencv2/core.hpp>
 #include <iostream>
@@ -13,9 +14,9 @@
 using namespace std;
 
 // Rotation parameters
-const double min_rotation = 0.0;
+const double min_rotation = 0;
 const double max_rotation = 360;   //Max number of degrees to rotate template
-const double rotation_increment = 10; //Number of degrees to rotate template each iteration
+const double rotation_increment = 1; //Number of degrees to rotate template each iteration
 
 // Scaling parameters
 const int min_scale = 95;         //minimum template scale to try to match (in %)
@@ -34,15 +35,29 @@ NeedlePose PfcInit::computeNeedlePose()
     return pose;
 }
 
-void PfcInit::scorePoseEstimation(NeedlePose pose, int pose_id)
+void PfcInit::scorePoseEstimation()
 {
-    // NeedlePose pose = ReadTruePoseFromCSV(pose_id);
-    // cv::Point3d truth = pose.location;
-    // double dist = cv::norm(result - truth);
-    // cout << "Euclidean Distance from Truth: " << dist << endl;
-    // cout << "Diff X: " << truth.x - result.x << " meters" << endl;
-    // cout << "Diff Y: " << truth.y - result.y << " meters" << endl;
-    // cout << "Diff Z: " << truth.z - result.z << " meters" << endl;
+    NeedlePose true_pose = ReadTruePoseFromCSV();
+
+    cv::Point3d true_loc = true_pose.location;
+    cv::Point3d result_loc = pose.location;
+    double dist = cv::norm(result_loc - true_loc);
+
+    Eigen::Quaternionf true_orientation = true_pose.getQuaternionOrientation();
+    Eigen::Quaternionf result_orientation = pose.getQuaternionOrientation();  
+    Eigen::Quaternionf qdiff = true_orientation.inverse() * result_orientation;
+    double angle_diff = 2*atan2(qdiff.vec().norm(), qdiff.w());
+
+
+    cout << "----------------------------------------------------------------------" << endl;
+    cout << "Scoring Results" << endl;
+    cout << "----------------------------------------------------------------------" << endl;
+    cout << "True Pos: (x,y,z)   = (" << true_loc.x << ", " << true_loc.y << ", " << true_loc.z << ")" << endl;
+    cout << "True Rot: (x,y,z,w) = (" << true_orientation.x() << ", " << true_orientation.y() << ", " << true_orientation.z() << ", " << true_orientation.w() << ")" << endl;
+
+
+    cout << "Pos error (meters)  = " << dist << endl;
+    cout << "Rot error (degrees) = " << angle_diff*rad2deg << endl;
 
 }
 
@@ -102,7 +117,12 @@ void PfcInit::drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar co
     //Apply the same rotation matrix used to rotate the template to the base template origin offset
     cv::Mat needle_origin_offset_mat = (cv::Mat_<double>(3,1) << templ.origin_offset_x, templ.origin_offset_y, 1);
     cv::Point2d center((templ.initialRect.width - 1) / 2.0, (templ.initialRect.height - 1) / 2.0);
-    cv::Mat rot = getRotationMatrix2D(center, match->angle, match->scale);
+    
+    double rot_angle = -match->angle;
+    if(match->angle < 180)
+        rot_angle = 360 - match->angle;
+    
+    cv::Mat rot = getRotationMatrix2D(center, rot_angle, match->scale);
     cv::Rect2d bbox = cv::RotatedRect(cv::Point2d(), cv::Size2d(templ.initialRect.width, templ.initialRect.height), match->angle).boundingRect2f();
     /// adjust transformation matrix
     rot.at<double>(0, 2) += bbox.width / 2.0 - templ.initialRect.width / 2.0;
@@ -122,7 +142,9 @@ void PfcInit::displayResults()
     match_r.drawOnImage(right_image.raw, cv::Scalar::all(255));
     drawNeedleOrigin(left_image.raw, &match_l, cv::Scalar::all(255)); 
     drawNeedleOrigin(right_image.raw, &match_r, cv::Scalar::all(255)); 
-
+    cout << "----------------------------------------------------------------------" << endl;
+    cout << "Experimental Results" << endl;
+    cout << "----------------------------------------------------------------------" << endl;
     pose.print();
 
     cv::namedWindow("left", cv::WINDOW_AUTOSIZE);
@@ -130,4 +152,26 @@ void PfcInit::displayResults()
     cv::imshow("left", left_image.raw);
     cv::imshow("right", right_image.raw);
     cv::waitKey(0);
+}
+
+NeedlePose PfcInit::ReadTruePoseFromCSV()
+{
+	CSVReader reader("../positions/needle_positions.csv");
+    vector<vector<string> > all_pose_data = reader.getData();
+    vector<string> pose_data = all_pose_data.at(pose_id);
+
+    NeedlePose pose;
+    pose.location.x = stod(pose_data.at(1));
+    pose.location.y = stod(pose_data.at(2));
+    pose.location.z = stod(pose_data.at(3));
+
+    Eigen::Quaternionf q;
+    q.x() = stod(pose_data.at(4));
+    q.y() = stod(pose_data.at(5));
+    q.z() = stod(pose_data.at(6));
+    q.w() = stod(pose_data.at(7));
+
+    pose.setOrientation(q);
+
+    return pose;
 }

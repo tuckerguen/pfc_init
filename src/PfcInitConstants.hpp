@@ -3,6 +3,7 @@
 
 //Degree 2 radians conversion constant
 const double deg2rad = M_PI / 180.0;
+const double rad2deg = 180.0 / M_PI;
 
 //HSV Filtering Parameters
 const int low_h = 0, high_h = 5;
