@@ -1,3 +1,6 @@
+#ifndef PFC_INIT
+#define PFC_INIT
+
 #include "PfcInit.hpp"
 #include "NeedleImage.hpp"
 #include "NeedleTemplate.hpp"
@@ -13,20 +16,10 @@
 
 using namespace std;
 
-// Rotation parameters
-const double min_rotation = 0;
-const double max_rotation = 360;   //Max number of degrees to rotate template
-const double rotation_increment = 1; //Number of degrees to rotate template each iteration
-
-// Scaling parameters
-const int min_scale = 95;         //minimum template scale to try to match (in %)
-const int max_scale = 110;        //maximum template scale to try to match (in %)
-const double scale_increment = 1; //% scale to increase by on each iteration
-
 NeedlePose PfcInit::computeNeedlePose()
 {
-    match_l = templ.matchOverScaleAndRotation(left_image.image, min_scale, max_scale, scale_increment, min_rotation, max_rotation, rotation_increment);
-    match_r = templ.matchOverScaleAndRotation(right_image.image, min_scale, max_scale, scale_increment, min_rotation, max_rotation, rotation_increment);
+    match_l = templ.matchOverScaleAndRotation(left_image.image);
+    match_r = templ.matchOverScaleAndRotation(right_image.image);
     
     cv::Point3d location = DeProjectPoints(&match_l, &match_r);
     Eigen::Vector3f orientation(0.0, 0.0, match_l.getAngleDegrees());
@@ -57,7 +50,7 @@ void PfcInit::scorePoseEstimation()
 
 
     cout << "Pos error (meters)  = " << dist << endl;
-    cout << "Rot error (degrees) = " << angle_diff*rad2deg << endl;
+    cout << "Rot error (degrees) = " << angle_diff * pfc::rad2deg << endl;
 
 }
 
@@ -175,3 +168,5 @@ NeedlePose PfcInit::ReadTruePoseFromCSV()
 
     return pose;
 }
+
+#endif

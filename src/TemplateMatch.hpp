@@ -23,7 +23,7 @@ public:
     {} 
 
     double getAngleDegrees() { return angle; }
-    double getAngleRadians() { return angle * deg2rad; }
+    double getAngleRadians() { return angle * pfc::deg2rad; }
 
     void printMatchSummary();    
     void drawOnImage(cv::Mat& img, const cv::Scalar& color);

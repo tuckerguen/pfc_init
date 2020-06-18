@@ -103,6 +103,8 @@ opencv2/highgui.hpp
 -
 iostream
 -
+PfcInitConstants.hpp
+/home/tucker/research/pfc_init/src/PfcInitConstants.hpp
 
 /home/tucker/research/pfc_init/src/PfcInit.cpp
 PfcInit.hpp
@@ -139,8 +141,12 @@ TemplateMatch.hpp
 /home/tucker/research/pfc_init/src/TemplateMatch.hpp
 NeedlePose.hpp
 /home/tucker/research/pfc_init/src/NeedlePose.hpp
+PfcInitConstants.hpp
+/home/tucker/research/pfc_init/src/PfcInitConstants.hpp
 
 /home/tucker/research/pfc_init/src/PfcInitConstants.hpp
+opencv2/core.hpp
+-
 
 /home/tucker/research/pfc_init/src/TemplateMatch.cpp
 TemplateMatch.hpp

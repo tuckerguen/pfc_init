@@ -1,3 +1,6 @@
+#ifndef MAIN
+#define MAIN
+
 #include "PfcInit.hpp"
 #include <string>
 #include "PfcInitConstants.hpp"
@@ -7,12 +10,15 @@ Eigen::Vector4f RPYtoQuat(double roll, double pitch, double yaw);
 
 int main()
 {
-    string left_img_path = "../imgs/raw/1_l_c_marked.png";
-    string right_img_path = "../imgs/raw/1_r_c_marked.png";
-    string templ_img_path = "../imgs/raw/0_l_c_fatty.png";
+    int pose_id = 1;
 
-    PfcInit pfc(left_img_path, right_img_path, templ_img_path, 1);
+    string left_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_l_c_marked.png";
+    string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_marked.png";
+
+    PfcInit pfc(left_img_path, right_img_path, pose_id);
     pfc.computeNeedlePose();
     pfc.scorePoseEstimation();
     pfc.displayResults();
 }
+
+#endif

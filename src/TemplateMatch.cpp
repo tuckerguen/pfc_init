@@ -1,3 +1,6 @@
+#ifndef TEMPLATE_MATCH
+#define TEMPLATE_MATCH
+
 #include "TemplateMatch.hpp"
 #include <iostream>
 
@@ -13,5 +16,7 @@ void TemplateMatch::printMatchSummary()
 
 void TemplateMatch::drawOnImage(cv::Mat& img, const cv::Scalar& color)
 {
-    rectangle(img, rect, color, line_weight, line_type, shift);
+    rectangle(img, rect, color, pfc::line_weight, pfc::line_type, pfc::shift);
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef NEEDLE_IMAGE
+#define NEEDLE_IMAGE
+
 #include "NeedleImage.hpp"
 #include "PfcInitConstants.hpp"
 #include <opencv2/core.hpp>
@@ -20,5 +23,7 @@ NeedleImage::NeedleImage(string path)
 
     // Filter by color for needle
     cv::cvtColor(raw, img_HSV, cv::COLOR_BGR2HSV);
-    cv::inRange(img_HSV, cv::Scalar(low_h, low_s, low_v), cv::Scalar(high_h, high_s, high_v), image);
+    cv::inRange(img_HSV, cv::Scalar(pfc::low_h, pfc::low_s, pfc::low_v), cv::Scalar(pfc::high_h, pfc::high_s, pfc::high_v), image);
 }
+
+#endif

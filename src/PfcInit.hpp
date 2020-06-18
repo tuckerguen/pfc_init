@@ -1,7 +1,10 @@
+
+
 #include "NeedleImage.hpp"
 #include "NeedleTemplate.hpp"
 #include "TemplateMatch.hpp"
 #include "NeedlePose.hpp"
+#include "PfcInitConstants.hpp"
 
 class PfcInit
 {
@@ -14,8 +17,10 @@ public:
     TemplateMatch match_r;
     NeedlePose pose;
 
-    PfcInit(string left_image_path, string right_image_path, string template_path, int pose_id)
-        : left_image(left_image_path), right_image(right_image_path), templ(template_path, cv::Rect2i(287, 205, 105, 56), 52, 4, -176.65), pose_id(pose_id)
+    PfcInit(string left_image_path, string right_image_path, int pose_id)
+        : left_image(left_image_path), right_image(right_image_path), 
+            templ(pfc::templ_path, pfc::initial_rect, pfc::origin_offset_x, pfc::origin_offset_y, pfc::initial_rotation), 
+            pose_id(pose_id)
     {}
 
     NeedlePose computeNeedlePose();

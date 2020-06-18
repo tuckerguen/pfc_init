@@ -24,7 +24,7 @@ public:
     void setOrientation(Eigen::Vector3f new_orientation) { orientation = new_orientation;}
     void setOrientation(Eigen::Quaternionf q) { 
         orientation = q.toRotationMatrix().eulerAngles(0, 1, 2);
-        orientation = orientation * rad2deg;
+        orientation = orientation * pfc::rad2deg;
     }
     Eigen::Vector3f getEulerAngleOrientation() { return orientation; };
 

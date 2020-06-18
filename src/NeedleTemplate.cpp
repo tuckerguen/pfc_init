@@ -1,3 +1,6 @@
+#ifndef NEEDLE_TEMPLATE
+#define NEEDLE_TEMPLATE
+
 #include "NeedleTemplate.hpp"
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
@@ -9,8 +12,6 @@
 #include <opencv2/cudaimgproc.hpp>
 
 using namespace std;
-
-//inital: "../imgs/raw/0_l_c_fatty.png", 287, 205, 105, 56, 180
 
 NeedleTemplate::NeedleTemplate(const string& path, const cv::Rect2i& rect, int origin_offset_x, int origin_offset_y, double rotation)
 : initialRect(rect), origin_offset_x(origin_offset_x), origin_offset_y(origin_offset_y)
@@ -29,7 +30,7 @@ NeedleTemplate::NeedleTemplate(const string& path, const cv::Rect2i& rect, int o
 
     // Filter by HSV for needle
     cvtColor(raw, img_HSV, cv::COLOR_BGR2HSV);
-    inRange(img_HSV, cv::Scalar(low_h, low_s, low_v), cv::Scalar(high_h, high_s, high_v), segmented);
+    inRange(img_HSV, cv::Scalar(pfc::low_h, pfc::low_s, pfc::low_v), cv::Scalar(pfc::high_h, pfc::high_s, pfc::high_v), segmented);
     rotate(rotation, segmented, templ);
 }
 
@@ -48,20 +49,20 @@ void rotate(double degrees, const cv::Mat &src, cv::Mat &dst)
     warpAffine(src, dst, rot, bbox.size());
 }
 
-TemplateMatch NeedleTemplate::matchOverScaleAndRotation(const cv::Mat& img, double min_scale, double max_scale, double scale_increment, double min_rotation, double max_rotation, double rotation_increment)
+TemplateMatch NeedleTemplate::matchOverScaleAndRotation(const cv::Mat& img)
 {
-    TemplateMatch bestMatch(min_rotation, -DBL_MAX, min_scale);
+    TemplateMatch bestMatch(pfc::min_rotation, -DBL_MAX, pfc::min_scale);
 
-    double scale = min_scale / 100.0;
-    for (int i = 0; i < ceil((max_scale - min_scale) / scale_increment); ++i)
+    double scale = pfc::min_scale / 100.0;
+    for (int i = 0; i < ceil((pfc::max_scale - pfc::min_scale) / pfc::scale_increment); ++i)
     {
-        scale += ((double)scale_increment) / 100.0;
+        scale += ((double)pfc::scale_increment) / 100.0;
         cv::Mat resized, rot_templ;
 
         //Use inter-linear in all cases (is faster than inter_area, similar results)
         cv::resize(templ, resized, cv::Size(), scale, scale, cv::INTER_LINEAR);
 
-        for (double rot_angle = min_rotation; rot_angle < max_rotation; rot_angle += rotation_increment)
+        for (double rot_angle = pfc::min_rotation; rot_angle < pfc::max_rotation; rot_angle += pfc::rotation_increment)
         {
             //Rotate template
             rotate(rot_angle, resized, rot_templ);
@@ -111,3 +112,5 @@ void match(const cv::Mat &img, const cv:: Mat& templ, TemplateMatch *bestMatch, 
         bestMatch->result = result;
     }
 }
+
+#endif

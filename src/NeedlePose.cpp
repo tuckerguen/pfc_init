@@ -1,3 +1,6 @@
+#ifndef NEEDLE_POSE
+#define NEEDLE_POSE
+
 #include <opencv2/imgproc.hpp>
 #include <eigen3/Eigen/Dense>
 #include "NeedlePose.hpp"
@@ -12,7 +15,7 @@ Eigen::Quaternionf NeedlePose::getQuaternionOrientation()
     // double pitch_radians = deg2rad * orientation.y();
     double roll_radians = 0;
     double pitch_radians = 0;
-    double yaw_radians = deg2rad * orientation.z();
+    double yaw_radians = pfc::deg2rad * orientation.z();
     Eigen::Quaternionf q;
     q = Eigen::AngleAxisf(roll_radians, Eigen::Vector3f::UnitX())
         * Eigen::AngleAxisf(pitch_radians, Eigen::Vector3f::UnitY())
@@ -27,3 +30,5 @@ void NeedlePose::print()
     cout << "Rot: (x,y,z,w) = (" << q.x() << ", " << q.y() << ", " << q.z() << ", " << q.w() << ")" << endl;
     cout << "Rot: (r,p,y)   = (" << orientation.x() << ", " << orientation.y() << ", " << orientation.z() << ")" << endl;
 }
+
+#endif
