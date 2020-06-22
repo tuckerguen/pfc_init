@@ -28,19 +28,18 @@ NeedlePose PfcInit::computeNeedlePose()
     return pose;
 }
 
-void PfcInit::scorePoseEstimation()
+vector<double> PfcInit::scorePoseEstimation()
 {
-    NeedlePose true_pose = ReadTruePoseFromCSV();
+    NeedlePose true_pose = readTruePoseFromCSV();
 
     cv::Point3d true_loc = true_pose.location;
     cv::Point3d result_loc = pose.location;
-    double dist = cv::norm(result_loc - true_loc);
+    double loc_err = cv::norm(result_loc - true_loc);
 
     Eigen::Quaternionf true_orientation = true_pose.getQuaternionOrientation();
     Eigen::Quaternionf result_orientation = pose.getQuaternionOrientation();  
     Eigen::Quaternionf qdiff = true_orientation.inverse() * result_orientation;
-    double angle_diff = 2*atan2(qdiff.vec().norm(), qdiff.w());
-
+    double angle_err = 2*atan2(qdiff.vec().norm(), qdiff.w()) * pfc::rad2deg;
 
     cout << "----------------------------------------------------------------------" << endl;
     cout << "Scoring Results" << endl;
@@ -49,32 +48,61 @@ void PfcInit::scorePoseEstimation()
     cout << "True Rot: (x,y,z,w) = (" << true_orientation.x() << ", " << true_orientation.y() << ", " << true_orientation.z() << ", " << true_orientation.w() << ")" << endl;
 
 
-    cout << "Pos error (meters)  = " << dist << endl;
-    cout << "Rot error (degrees) = " << angle_diff * pfc::rad2deg << endl;
+    cout << "Pos error (meters)  = " << loc_err << endl;
+    cout << "Rot error (degrees) = " << angle_err << endl;
 
+    vector<double> results;
+    results.push_back(loc_err);
+    results.push_back(angle_err);
+    return results;
 }
 
-cv::Point3d PfcInit::DeProjectPoints(const TemplateMatch *match_l, const TemplateMatch *match_r)
+cv::Mat getRotatedOrigin(double angle, double scale, NeedleTemplate* templ)
+{
+    // "Correct angle" is clockwise, we rotate counter clockwise
+    angle = -angle;
+
+    // Original template size
+    double cols = scale * templ->templ.cols;
+    double rows = scale * templ->templ.rows;
+
+    //Get center of original image
+    cv::Point2d center((cols-1)/2.0, (rows-1)/2.0);
+    //Get rotation matrix given center, angle, and scale
+    cv::Mat rot = getRotationMatrix2D(center, angle, 1.0);
+    //Compute what the size of the rotated image will be
+    cv::Rect2d bbox = cv::RotatedRect(cv::Point2d(), cv::Size(cols, rows), angle).boundingRect2f();
+    
+    // Add translation to rotation matrix to shift the center of the image to the correct location
+    rot.at<double>(0, 2) += bbox.width / 2.0 - cols / 2.0;
+    rot.at<double>(1, 2) += bbox.height / 2.0 - rows / 2.0;
+
+    //Scale the original origin to account for scale of template
+    cv::Mat original_origin = (cv::Mat_<double>(3,1) << scale * templ->origin_offset_x, scale * templ->origin_offset_y, 1);
+    cv::Mat final_origin = rot * original_origin;
+    return final_origin;
+}
+
+cv::Point3d PfcInit::DeProjectPoints(TemplateMatch *match_l, TemplateMatch *match_r)
 {
     cv::Mat p_l(2, 1, CV_64FC1);
     cv::Mat p_r(2, 1, CV_64FC1);
 
-    //Apply the same rotation matrix used to rotate the template to the base template origin offset
-    cv::Mat needle_origin_offset_mat = (cv::Mat_<double>(3,1) << templ.origin_offset_x, templ.origin_offset_y, 1);
-    cv::Point2d center((templ.initialRect.width - 1) / 2.0, (templ.initialRect.height - 1) / 2.0);
-    cv::Mat rot = getRotationMatrix2D(center, match_l->angle, match_l->scale);
-    cv::Rect2d bbox = cv::RotatedRect(cv::Point2d(), cv::Size2d(templ.initialRect.width, templ.initialRect.height), match_l->angle).boundingRect2f();
-    
-    /// adjust transformation matrix
-    rot.at<double>(0, 2) += bbox.width / 2.0 - templ.initialRect.width / 2.0;
-    rot.at<double>(1, 2) += bbox.height / 2.0 - templ.initialRect.height / 2.0;
-    cv::Mat needle_origin_offset_rot = rot * needle_origin_offset_mat;
+    cv::Mat needle_origin_offset_rot_l = getRotatedOrigin(match_l->angle,  match_l->scale, &templ);
 
-    p_l.at<double>(0) = match_l->rect.x + needle_origin_offset_rot.at<double>(0);
-    p_l.at<double>(1) = match_l->rect.y + needle_origin_offset_rot.at<double>(1);
+    p_l.at<double>(0) = match_l->rect.x + needle_origin_offset_rot_l.at<double>(0);
+    p_l.at<double>(1) = match_l->rect.y + needle_origin_offset_rot_l.at<double>(1);
 
-    p_r.at<double>(0) = match_r->rect.x + needle_origin_offset_rot.at<double>(0);
-    p_r.at<double>(1) = match_r->rect.y + needle_origin_offset_rot.at<double>(1);
+    match_l->needle_origin = p_l;
+
+    cv::Mat needle_origin_offset_rot_r = getRotatedOrigin(match_r->angle,  match_r->scale, &templ);
+
+    p_r.at<double>(0) = match_r->rect.x + needle_origin_offset_rot_r.at<double>(0);
+    p_r.at<double>(1) = match_r->rect.y + needle_origin_offset_rot_r.at<double>(1);
+
+    match_r->needle_origin = p_r;
+
+    cout << "(" << p_l.at<double>(0) << ", " << p_l.at<double>(1) << ") | (" << p_r.at<double>(0) << ", " << p_r.at<double>(1) << ")" << endl;
 
     cv::Mat P_r = (cv::Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -3.31225177808194, 
                                      0.0, 662.450355616388, 240.5, 0.0,
@@ -107,24 +135,11 @@ cv::Point3d PfcInit::DeProjectPoints(const TemplateMatch *match_l, const Templat
 }
 
 void PfcInit::drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color){
-    //Apply the same rotation matrix used to rotate the template to the base template origin offset
-    cv::Mat needle_origin_offset_mat = (cv::Mat_<double>(3,1) << templ.origin_offset_x, templ.origin_offset_y, 1);
-    cv::Point2d center((templ.initialRect.width - 1) / 2.0, (templ.initialRect.height - 1) / 2.0);
-    
-    double rot_angle = -match->angle;
-    if(match->angle < 180)
-        rot_angle = 360 - match->angle;
-    
-    cv::Mat rot = getRotationMatrix2D(center, rot_angle, match->scale);
-    cv::Rect2d bbox = cv::RotatedRect(cv::Point2d(), cv::Size2d(templ.initialRect.width, templ.initialRect.height), match->angle).boundingRect2f();
-    /// adjust transformation matrix
-    rot.at<double>(0, 2) += bbox.width / 2.0 - templ.initialRect.width / 2.0;
-    rot.at<double>(1, 2) += bbox.height / 2.0 - templ.initialRect.height / 2.0;
-    cv::Mat needle_origin_offset_rot = rot * needle_origin_offset_mat;
+    cv::Mat needle_origin = getRotatedOrigin(match->angle, match->scale, &templ);
 
     cv::circle(img, 
-            cv::Point(match->rect.x + needle_origin_offset_rot.at<double>(0), 
-                  match->rect.y + needle_origin_offset_rot.at<double>(1)),
+            cv::Point(match->needle_origin.at<double>(0), 
+                  match->needle_origin.at<double>(1)),
             0.1, color, 1, 8, 0);
 }
 
@@ -135,6 +150,9 @@ void PfcInit::displayResults()
     match_r.drawOnImage(right_image.raw, cv::Scalar::all(255));
     drawNeedleOrigin(left_image.raw, &match_l, cv::Scalar::all(255)); 
     drawNeedleOrigin(right_image.raw, &match_r, cv::Scalar::all(255)); 
+
+    match_l.printMatchSummary("Left");
+    match_r.printMatchSummary("Right");
     cout << "----------------------------------------------------------------------" << endl;
     cout << "Experimental Results" << endl;
     cout << "----------------------------------------------------------------------" << endl;
@@ -142,12 +160,18 @@ void PfcInit::displayResults()
 
     cv::namedWindow("left", cv::WINDOW_AUTOSIZE);
     cv::namedWindow("right", cv::WINDOW_AUTOSIZE);
+    cv::namedWindow("left template", cv::WINDOW_AUTOSIZE);
+    cv::namedWindow("right template", cv::WINDOW_AUTOSIZE);
     cv::imshow("left", left_image.raw);
     cv::imshow("right", right_image.raw);
+    cv::imshow("left template", match_l.templ);
+    cv::imshow("right template", match_r.templ);
+    cv::imwrite("raw_OUT.png", left_image.raw);
+    cv::imwrite("template_OUT.png", match_l.templ);
     cv::waitKey(0);
 }
 
-NeedlePose PfcInit::ReadTruePoseFromCSV()
+NeedlePose PfcInit::readTruePoseFromCSV()
 {
 	CSVReader reader("../positions/needle_positions.csv");
     vector<vector<string> > all_pose_data = reader.getData();
@@ -167,6 +191,41 @@ NeedlePose PfcInit::ReadTruePoseFromCSV()
     pose.setOrientation(q);
 
     return pose;
+}
+
+vector<string> PfcInit::getResultsVector()
+{
+    vector<string> results;
+    // Add pixel location guesses
+    results.push_back(to_string(match_l.rect.x));
+    results.push_back(to_string(match_l.rect.y));
+    results.push_back(to_string(match_r.rect.x));
+    results.push_back(to_string(match_r.rect.y));
+    //Add scalee guess
+    results.push_back(to_string(match_l.scale));
+    results.push_back(to_string(match_r.scale));
+    //Add location guess
+    results.push_back(to_string(pose.location.x));
+    results.push_back(to_string(pose.location.y));
+    results.push_back(to_string(pose.location.z));
+    //Add orientation guess
+    //Quaternion
+    Eigen::Quaternionf q = pose.getQuaternionOrientation();
+    results.push_back(to_string(q.x()));
+    results.push_back(to_string(q.y()));
+    results.push_back(to_string(q.z()));
+    results.push_back(to_string(q.w()));
+    //Euler Angles (mostly for human intuition)
+    Eigen::Vector3f e = pose.getEulerAngleOrientation();
+    results.push_back(to_string(e.x()));
+    results.push_back(to_string(e.y()));
+    results.push_back(to_string(e.z()));
+    //Add scores
+    vector<double> scores = scorePoseEstimation();
+    results.push_back(to_string(scores.at(0)));
+    results.push_back(to_string(scores.at(1)));
+
+    return results;
 }
 
 #endif

@@ -13,9 +13,11 @@ public:
     double scale; //scale matched at
     cv::Rect rect; //location and size of match
     cv::Mat result; //result image from opencv templatematch()
+    cv::Mat templ;
+    cv::Mat needle_origin;
 
     TemplateMatch(double angle, double score, double scale) : 
-        angle(angle), score(score), scale(scale), rect(0,0,0,0), result() 
+        angle(angle), score(score), scale(scale), rect(0,0,0,0), result(), templ() 
     {} 
 
     TemplateMatch() : 
@@ -25,7 +27,7 @@ public:
     double getAngleDegrees() { return angle; }
     double getAngleRadians() { return angle * pfc::deg2rad; }
 
-    void printMatchSummary();    
+    void printMatchSummary(std::string name);    
     void drawOnImage(cv::Mat& img, const cv::Scalar& color);
 };
 

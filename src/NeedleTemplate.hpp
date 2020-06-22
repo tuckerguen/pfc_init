@@ -17,9 +17,12 @@ public:
     int origin_offset_x;
     int origin_offset_y;
     cv::Rect2i initialRect;
-    cv::Mat templ;
+    cv::Mat templ; //Note: this is the original template that the object was initialized with, it is not modified
 
-    NeedleTemplate(const std::string& path, const cv::Rect2i& rect, int origin_offset_x, int origin_offset_y, double rotation);
+    pfc::match_params params;
+    NeedleTemplate(const std::string& path, const cv::Rect2i& rect, int origin_offset_x, int origin_offset_y, double rotation, pfc::match_params params);
+
+    // NeedleTemplate(const std::string& path, const cv::Rect2i& rect, int origin_offset_x, int origin_offset_y, double rotation);
     NeedleTemplate() : 
         origin_offset_x(52), origin_offset_y(4), initialRect(pfc::initial_rect), templ(cv::imread(pfc::templ_path, cv::IMREAD_COLOR)) 
     {
