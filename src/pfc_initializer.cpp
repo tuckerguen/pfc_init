@@ -1,12 +1,12 @@
 #ifndef PFC_INIT
 #define PFC_INIT
 
-#include "PfcInit.hpp"
-#include "NeedleImage.hpp"
-#include "NeedleTemplate.hpp"
-#include "TemplateMatch.hpp"
-#include "NeedlePose.hpp"
-#include "CSVReader.hpp"
+#include "pfc_initializer.h"
+#include "needle_image.h"
+#include "needle_template.h"
+#include "template_match.h"
+#include "needle_pose.h"
+#include "csv_reader.h"
 #include <string>
 #include <opencv2/core.hpp>
 #include <iostream>
@@ -16,7 +16,7 @@
 
 using namespace std;
 
-NeedlePose PfcInit::computeNeedlePose()
+NeedlePose PfcInitializer::computeNeedlePose()
 {
     match_l = templ.matchOverScaleAndRotation(left_image.image);
     match_r = templ.matchOverScaleAndRotation(right_image.image);
@@ -28,7 +28,7 @@ NeedlePose PfcInit::computeNeedlePose()
     return pose;
 }
 
-vector<double> PfcInit::scorePoseEstimation()
+vector<double> PfcInitializer::scorePoseEstimation()
 {
     NeedlePose true_pose = readTruePoseFromCSV();
 
@@ -63,8 +63,8 @@ cv::Mat getRotatedOrigin(double angle, double scale, NeedleTemplate* templ)
     angle = -angle;
 
     // Original template size
-    double cols = scale * templ->templ.cols;
-    double rows = scale * templ->templ.rows;
+    double cols = scale * templ->raw.cols;
+    double rows = scale * templ->raw.rows;
 
     //Get center of original image
     cv::Point2d center((cols-1)/2.0, (rows-1)/2.0);
@@ -78,12 +78,12 @@ cv::Mat getRotatedOrigin(double angle, double scale, NeedleTemplate* templ)
     rot.at<double>(1, 2) += bbox.height / 2.0 - rows / 2.0;
 
     //Scale the original origin to account for scale of template
-    cv::Mat original_origin = (cv::Mat_<double>(3,1) << scale * templ->origin_offset_x, scale * templ->origin_offset_y, 1);
+    cv::Mat original_origin = (cv::Mat_<double>(3,1) << scale * templ->origin.x, scale * templ->origin.y, 1);
     cv::Mat final_origin = rot * original_origin;
     return final_origin;
 }
 
-cv::Point3d PfcInit::DeProjectPoints(TemplateMatch *match_l, TemplateMatch *match_r)
+cv::Point3d PfcInitializer::DeProjectPoints(TemplateMatch *match_l, TemplateMatch *match_r)
 {
     cv::Mat p_l(2, 1, CV_64FC1);
     cv::Mat p_r(2, 1, CV_64FC1);
@@ -134,7 +134,7 @@ cv::Point3d PfcInit::DeProjectPoints(TemplateMatch *match_l, TemplateMatch *matc
     return result;
 }
 
-void PfcInit::drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color){
+void PfcInitializer::drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color){
     cv::Mat needle_origin = getRotatedOrigin(match->angle, match->scale, &templ);
 
     cv::circle(img, 
@@ -144,7 +144,7 @@ void PfcInit::drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar co
 }
 
 
-void PfcInit::displayResults()
+void PfcInitializer::displayResults()
 {
     match_l.drawOnImage(left_image.raw, cv::Scalar::all(255));
     match_r.drawOnImage(right_image.raw, cv::Scalar::all(255));
@@ -171,7 +171,7 @@ void PfcInit::displayResults()
     cv::waitKey(0);
 }
 
-NeedlePose PfcInit::readTruePoseFromCSV()
+NeedlePose PfcInitializer::readTruePoseFromCSV()
 {
 	CSVReader reader("../positions/needle_positions.csv");
     vector<vector<string> > all_pose_data = reader.getData();
@@ -193,7 +193,7 @@ NeedlePose PfcInit::readTruePoseFromCSV()
     return pose;
 }
 
-vector<string> PfcInit::getResultsVector()
+vector<string> PfcInitializer::getResultsVector()
 {
     vector<string> results;
     // Add pixel location guesses

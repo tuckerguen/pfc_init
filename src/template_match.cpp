@@ -1,7 +1,7 @@
 #ifndef TEMPLATE_MATCH
 #define TEMPLATE_MATCH
 
-#include "TemplateMatch.hpp"
+#include "template_match.h"
 #include <iostream>
 
 using namespace std;

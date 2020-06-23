@@ -7,8 +7,7 @@ namespace pfc {
     //Template parameters
     const std::string templ_path = "../imgs/raw/0_l_c_fatty.png";
     const cv::Rect2i initial_rect(287,205,105,56);
-    const int origin_offset_x = 54;
-    const int origin_offset_y = 9;
+    const cv::Point2d origin(52,9);
     const double initial_rotation = -176.6537;
 
     // Template Match Rotation Parameters
@@ -26,7 +25,7 @@ namespace pfc {
     const double rad2deg = 180.0 / M_PI;
 
     //HSV Filtering Parameters
-    const int low_h = 0, high_h = 5;
+    const int low_h = 0, high_h = 360;
     const int low_s = 0, high_s = 0;
     const int low_v = 0, high_v = 140;
 

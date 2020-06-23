@@ -1,12 +1,10 @@
+#include "needle_image.h"
+#include "needle_template.h"
+#include "template_match.h"
+#include "needle_pose.h"
+#include "pfc_initializer_constants.h"
 
-
-#include "NeedleImage.hpp"
-#include "NeedleTemplate.hpp"
-#include "TemplateMatch.hpp"
-#include "NeedlePose.hpp"
-#include "PfcInitConstants.hpp"
-
-class PfcInit
+class PfcInitializer
 {
 public:
     int pose_id;
@@ -17,11 +15,18 @@ public:
     TemplateMatch match_r;
     NeedlePose pose;
 
-    PfcInit(string left_image_path, string right_image_path, int pose_id, pfc::match_params params)
+    PfcInitializer(string left_image_path, string right_image_path, int pose_id, pfc::match_params params)
         : left_image(left_image_path), right_image(right_image_path), 
-            templ(pfc::templ_path, pfc::initial_rect, pfc::origin_offset_x, pfc::origin_offset_y, pfc::initial_rotation, params), 
+            templ(pfc::templ_path, pfc::initial_rect, pfc::origin, pfc::initial_rotation, params), 
             pose_id(pose_id)
     {}
+
+
+    // PfcInitializer(string left_image_path, string right_image_path, int pose_id, pfc::match_params params)
+    //     : left_image(left_image_path), right_image(right_image_path), 
+    //         templ(pfc::templ_path, pfc::initial_rect, pfc::origin.x, pfc::origin.y, pfc::initial_rotation, params), 
+    //         pose_id(pose_id)
+    // {}
 
     NeedlePose computeNeedlePose();
     cv::Point3d DeProjectPoints(TemplateMatch* match_l, TemplateMatch* match_r);

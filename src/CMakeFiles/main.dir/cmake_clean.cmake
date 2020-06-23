@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/main.cpp.o"
-  "CMakeFiles/main.dir/PfcInit.cpp.o"
-  "CMakeFiles/main.dir/NeedlePose.cpp.o"
-  "CMakeFiles/main.dir/NeedleImage.cpp.o"
-  "CMakeFiles/main.dir/NeedleTemplate.cpp.o"
-  "CMakeFiles/main.dir/TemplateMatch.cpp.o"
+  "CMakeFiles/main.dir/pfc_initializer.cpp.o"
+  "CMakeFiles/main.dir/needle_pose.cpp.o"
+  "CMakeFiles/main.dir/needle_image.cpp.o"
+  "CMakeFiles/main.dir/needle_template.cpp.o"
+  "CMakeFiles/main.dir/template_match.cpp.o"
   "main.pdb"
   "main"
 )

@@ -1,9 +1,9 @@
 #ifndef MAIN
 #define MAIN
 
-#include "PfcInit.hpp"
+#include "pfc_initializer.h"
 #include <string>
-#include "PfcInitConstants.hpp"
+#include "pfc_initializer_constants.h"
 #include <fstream>
 
 
@@ -31,24 +31,24 @@ vector<string> runForPoseAndType(int pose_id, string img_type)
     string left_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_l_c_" + img_type + ".png";
     string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_" + img_type + ".png";
 
-    // pfc::match_params params = {
-    //     pfc::min_rot.at(pose_id), 
-    //     pfc::max_rot.at(pose_id),
-    //     1,
-    //     pfc::min_scl.at(pose_id),
-    //     pfc::max_scl.at(pose_id),
-    //     1
-    // };
     pfc::match_params params = {
-        0, 
-        360,
+        pfc::min_rot.at(pose_id), 
+        pfc::max_rot.at(pose_id),
         1,
-        98,
-        200,
+        pfc::min_scl.at(pose_id),
+        pfc::max_scl.at(pose_id),
         1
     };
+    // pfc::match_params params = {
+    //     0, 
+    //     360,
+    //     1,
+    //     98,
+    //     200,
+    //     1
+    // };
 
-    PfcInit pfc(left_img_path, right_img_path, pose_id, params);
+    PfcInitializer pfc(left_img_path, right_img_path, pose_id, params);
 
     //Start timer
     double t = (double)cv::getTickCount();

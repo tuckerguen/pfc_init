@@ -1,57 +1,51 @@
 #ifndef NEEDLE_TEMPLATE
 #define NEEDLE_TEMPLATE
 
-#include "NeedleTemplate.hpp"
+#include "needle_template.h"
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <string>
 #include <iostream>
-#include "PfcInitConstants.hpp"
+#include "pfc_initializer_constants.h"
 #include <opencv2/calib3d.hpp>
 #include <opencv2/cudaimgproc.hpp>
 
 using namespace std;
 
-NeedleTemplate::NeedleTemplate(const string& path, const cv::Rect2i& rect, int origin_offset_x, int origin_offset_y, double rotation, pfc::match_params iparams)
-: origin_offset_x(origin_offset_x), origin_offset_y(origin_offset_y)
+// constructor
+NeedleTemplate::NeedleTemplate(const string& path, const cv::Rect2i& rect, cv::Point2d origin, double rotation, pfc::match_params iparams)
+: NeedleImage(path), origin(origin)
 {
+    // set params
     params = iparams;
-    cout << params.min_scale << endl << params.max_scale << endl;
 
-    //Load camera image to match
-    cv::Mat raw, img_HSV, segmented;
-    raw = cv::imread(path, cv::IMREAD_COLOR);
-    if (!raw.data)
-    {
-        cerr << "Loading image: " << path << " failed" << endl;
-        exit(0);
-    }
-
-    //Crop template image to just needle
+    //Crop both raw and preprocessed template images
     raw = raw(rect);
+    image = image(rect);
 
-    // Filter by HSV for needle
-    cvtColor(raw, img_HSV, cv::COLOR_BGR2HSV);
-    inRange(img_HSV, cv::Scalar(pfc::low_h, pfc::low_s, pfc::low_v), cv::Scalar(pfc::high_h, pfc::high_s, pfc::high_v), segmented);
-    rotate(rotation, segmented, templ);
-    initialRect = cv::Rect2i(0, 0, templ.cols, templ.rows);
+    // rotate template to align with ground truth 0 degree rotation
+    rotate(rotation, image, image);
+    // Center initial rect at top left of template image
+    initialRect = cv::Rect2i(0, 0, image.cols, image.rows);
 }
 
-void rotate(double degrees, const cv::Mat &src, cv::Mat &dst)
+//rotate an aimage by 
+void rotate(double angle, const cv::Mat &src, cv::Mat &dst)
 {
-    /// get rotation matrix for rotating the image around its center in pixel coordinates
+    // get center of original img
     cv::Point2d center((src.cols - 1) / 2.0, (src.rows - 1) / 2.0);
 
-    cv::Mat rot = getRotationMatrix2D(center, degrees, 1.0);
-    /// determine bounding rectangle, center not relevant
-    cv::Rect2d bbox = cv::RotatedRect(cv::Point2d(), src.size(), degrees).boundingRect2f();
-    /// adjust transformation matrix
+    // get rotation matrix for rotating the image around its center in pixel coordinates
+    cv::Mat rot = getRotationMatrix2D(center, angle, 1.0);
+    // calculate dimensions of rotated image, center not relevant
+    cv::Rect2d bbox = cv::RotatedRect(cv::Point2d(), src.size(), angle).boundingRect2f();
+
+    // apply translation to rotation matrix to shift center 
     rot.at<double>(0, 2) += bbox.width / 2.0 - src.cols / 2.0;
+
     rot.at<double>(1, 2) += bbox.height / 2.0 - src.rows / 2.0;
-
-    // cv::Mat needle_origin_offset_mat = (cv::Mat_<double>(3,1) << 52, 4, 1);
-
+    //apply matrix transformation
     warpAffine(src, dst, rot, bbox.size());
 }
 
@@ -67,7 +61,7 @@ TemplateMatch NeedleTemplate::matchOverScaleAndRotation(const cv::Mat& img)
         cv::Mat resized, rot_templ;
 
         //Use inter-linear in all cases (is faster than inter_area, similar results)
-        cv::resize(templ, resized, cv::Size(), scale, scale, cv::INTER_LINEAR);
+        cv::resize(image, resized, cv::Size(), scale, scale, cv::INTER_LINEAR);
 
         for (double rot_angle = params.min_rotation; rot_angle < params.max_rotation; rot_angle += params.rotation_increment)
         {

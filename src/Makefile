@@ -123,141 +123,6 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-NeedleImage.o: NeedleImage.cpp.o
-
-.PHONY : NeedleImage.o
-
-# target to build an object file
-NeedleImage.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedleImage.cpp.o
-.PHONY : NeedleImage.cpp.o
-
-NeedleImage.i: NeedleImage.cpp.i
-
-.PHONY : NeedleImage.i
-
-# target to preprocess a source file
-NeedleImage.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedleImage.cpp.i
-.PHONY : NeedleImage.cpp.i
-
-NeedleImage.s: NeedleImage.cpp.s
-
-.PHONY : NeedleImage.s
-
-# target to generate assembly for a file
-NeedleImage.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedleImage.cpp.s
-.PHONY : NeedleImage.cpp.s
-
-NeedlePose.o: NeedlePose.cpp.o
-
-.PHONY : NeedlePose.o
-
-# target to build an object file
-NeedlePose.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedlePose.cpp.o
-.PHONY : NeedlePose.cpp.o
-
-NeedlePose.i: NeedlePose.cpp.i
-
-.PHONY : NeedlePose.i
-
-# target to preprocess a source file
-NeedlePose.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedlePose.cpp.i
-.PHONY : NeedlePose.cpp.i
-
-NeedlePose.s: NeedlePose.cpp.s
-
-.PHONY : NeedlePose.s
-
-# target to generate assembly for a file
-NeedlePose.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedlePose.cpp.s
-.PHONY : NeedlePose.cpp.s
-
-NeedleTemplate.o: NeedleTemplate.cpp.o
-
-.PHONY : NeedleTemplate.o
-
-# target to build an object file
-NeedleTemplate.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedleTemplate.cpp.o
-.PHONY : NeedleTemplate.cpp.o
-
-NeedleTemplate.i: NeedleTemplate.cpp.i
-
-.PHONY : NeedleTemplate.i
-
-# target to preprocess a source file
-NeedleTemplate.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedleTemplate.cpp.i
-.PHONY : NeedleTemplate.cpp.i
-
-NeedleTemplate.s: NeedleTemplate.cpp.s
-
-.PHONY : NeedleTemplate.s
-
-# target to generate assembly for a file
-NeedleTemplate.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedleTemplate.cpp.s
-.PHONY : NeedleTemplate.cpp.s
-
-PfcInit.o: PfcInit.cpp.o
-
-.PHONY : PfcInit.o
-
-# target to build an object file
-PfcInit.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/PfcInit.cpp.o
-.PHONY : PfcInit.cpp.o
-
-PfcInit.i: PfcInit.cpp.i
-
-.PHONY : PfcInit.i
-
-# target to preprocess a source file
-PfcInit.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/PfcInit.cpp.i
-.PHONY : PfcInit.cpp.i
-
-PfcInit.s: PfcInit.cpp.s
-
-.PHONY : PfcInit.s
-
-# target to generate assembly for a file
-PfcInit.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/PfcInit.cpp.s
-.PHONY : PfcInit.cpp.s
-
-TemplateMatch.o: TemplateMatch.cpp.o
-
-.PHONY : TemplateMatch.o
-
-# target to build an object file
-TemplateMatch.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/TemplateMatch.cpp.o
-.PHONY : TemplateMatch.cpp.o
-
-TemplateMatch.i: TemplateMatch.cpp.i
-
-.PHONY : TemplateMatch.i
-
-# target to preprocess a source file
-TemplateMatch.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/TemplateMatch.cpp.i
-.PHONY : TemplateMatch.cpp.i
-
-TemplateMatch.s: TemplateMatch.cpp.s
-
-.PHONY : TemplateMatch.s
-
-# target to generate assembly for a file
-TemplateMatch.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/TemplateMatch.cpp.s
-.PHONY : TemplateMatch.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -285,6 +150,141 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+needle_image.o: needle_image.cpp.o
+
+.PHONY : needle_image.o
+
+# target to build an object file
+needle_image.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_image.cpp.o
+.PHONY : needle_image.cpp.o
+
+needle_image.i: needle_image.cpp.i
+
+.PHONY : needle_image.i
+
+# target to preprocess a source file
+needle_image.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_image.cpp.i
+.PHONY : needle_image.cpp.i
+
+needle_image.s: needle_image.cpp.s
+
+.PHONY : needle_image.s
+
+# target to generate assembly for a file
+needle_image.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_image.cpp.s
+.PHONY : needle_image.cpp.s
+
+needle_pose.o: needle_pose.cpp.o
+
+.PHONY : needle_pose.o
+
+# target to build an object file
+needle_pose.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_pose.cpp.o
+.PHONY : needle_pose.cpp.o
+
+needle_pose.i: needle_pose.cpp.i
+
+.PHONY : needle_pose.i
+
+# target to preprocess a source file
+needle_pose.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_pose.cpp.i
+.PHONY : needle_pose.cpp.i
+
+needle_pose.s: needle_pose.cpp.s
+
+.PHONY : needle_pose.s
+
+# target to generate assembly for a file
+needle_pose.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_pose.cpp.s
+.PHONY : needle_pose.cpp.s
+
+needle_template.o: needle_template.cpp.o
+
+.PHONY : needle_template.o
+
+# target to build an object file
+needle_template.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_template.cpp.o
+.PHONY : needle_template.cpp.o
+
+needle_template.i: needle_template.cpp.i
+
+.PHONY : needle_template.i
+
+# target to preprocess a source file
+needle_template.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_template.cpp.i
+.PHONY : needle_template.cpp.i
+
+needle_template.s: needle_template.cpp.s
+
+.PHONY : needle_template.s
+
+# target to generate assembly for a file
+needle_template.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_template.cpp.s
+.PHONY : needle_template.cpp.s
+
+pfc_initializer.o: pfc_initializer.cpp.o
+
+.PHONY : pfc_initializer.o
+
+# target to build an object file
+pfc_initializer.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pfc_initializer.cpp.o
+.PHONY : pfc_initializer.cpp.o
+
+pfc_initializer.i: pfc_initializer.cpp.i
+
+.PHONY : pfc_initializer.i
+
+# target to preprocess a source file
+pfc_initializer.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pfc_initializer.cpp.i
+.PHONY : pfc_initializer.cpp.i
+
+pfc_initializer.s: pfc_initializer.cpp.s
+
+.PHONY : pfc_initializer.s
+
+# target to generate assembly for a file
+pfc_initializer.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pfc_initializer.cpp.s
+.PHONY : pfc_initializer.cpp.s
+
+template_match.o: template_match.cpp.o
+
+.PHONY : template_match.o
+
+# target to build an object file
+template_match.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/template_match.cpp.o
+.PHONY : template_match.cpp.o
+
+template_match.i: template_match.cpp.i
+
+.PHONY : template_match.i
+
+# target to preprocess a source file
+template_match.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/template_match.cpp.i
+.PHONY : template_match.cpp.i
+
+template_match.s: template_match.cpp.s
+
+.PHONY : template_match.s
+
+# target to generate assembly for a file
+template_match.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/template_match.cpp.s
+.PHONY : template_match.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -294,24 +294,24 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... main"
-	@echo "... NeedleImage.o"
-	@echo "... NeedleImage.i"
-	@echo "... NeedleImage.s"
-	@echo "... NeedlePose.o"
-	@echo "... NeedlePose.i"
-	@echo "... NeedlePose.s"
-	@echo "... NeedleTemplate.o"
-	@echo "... NeedleTemplate.i"
-	@echo "... NeedleTemplate.s"
-	@echo "... PfcInit.o"
-	@echo "... PfcInit.i"
-	@echo "... PfcInit.s"
-	@echo "... TemplateMatch.o"
-	@echo "... TemplateMatch.i"
-	@echo "... TemplateMatch.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... needle_image.o"
+	@echo "... needle_image.i"
+	@echo "... needle_image.s"
+	@echo "... needle_pose.o"
+	@echo "... needle_pose.i"
+	@echo "... needle_pose.s"
+	@echo "... needle_template.o"
+	@echo "... needle_template.i"
+	@echo "... needle_template.s"
+	@echo "... pfc_initializer.o"
+	@echo "... pfc_initializer.i"
+	@echo "... pfc_initializer.s"
+	@echo "... template_match.o"
+	@echo "... template_match.i"
+	@echo "... template_match.s"
 .PHONY : help
 
 

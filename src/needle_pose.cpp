@@ -3,26 +3,30 @@
 
 #include <opencv2/imgproc.hpp>
 #include <eigen3/Eigen/Dense>
-#include "NeedlePose.hpp"
-#include "PfcInitConstants.hpp"
 #include <iostream>
+#include "needle_pose.h"
+#include "pfc_initializer_constants.h"
 
 using namespace std;
 
+//Return the orientation in quaternion representation
 Eigen::Quaternionf NeedlePose::getQuaternionOrientation()
 {
-    // double roll_radians = deg2rad * orientation.x();
-    // double pitch_radians = deg2rad * orientation.y();
-    double roll_radians = 0;
-    double pitch_radians = 0;
+    // convert orientation from degrees to radians
+    double roll_radians = pfc::deg2rad * orientation.x();
+    double pitch_radians = pfc::deg2rad * orientation.y();
     double yaw_radians = pfc::deg2rad * orientation.z();
+
+    // Convert euler angles to quaternion
     Eigen::Quaternionf q;
     q = Eigen::AngleAxisf(roll_radians, Eigen::Vector3f::UnitX())
         * Eigen::AngleAxisf(pitch_radians, Eigen::Vector3f::UnitY())
         * Eigen::AngleAxisf(yaw_radians, Eigen::Vector3f::UnitZ());
+    
     return q;
 }
 
+// Format and print the location and orientation
 void NeedlePose::print()
 {
     Eigen::Quaternionf q = getQuaternionOrientation();

@@ -81,144 +81,144 @@ CMakeFiles/main.dir/main.cpp.o.provides: CMakeFiles/main.dir/main.cpp.o.requires
 CMakeFiles/main.dir/main.cpp.o.provides.build: CMakeFiles/main.dir/main.cpp.o
 
 
-CMakeFiles/main.dir/PfcInit.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/PfcInit.cpp.o: PfcInit.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/PfcInit.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/PfcInit.cpp.o -c /home/tucker/research/pfc_init/src/PfcInit.cpp
+CMakeFiles/main.dir/pfc_initializer.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/pfc_initializer.cpp.o: pfc_initializer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/pfc_initializer.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/pfc_initializer.cpp.o -c /home/tucker/research/pfc_init/src/pfc_initializer.cpp
 
-CMakeFiles/main.dir/PfcInit.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/PfcInit.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/PfcInit.cpp > CMakeFiles/main.dir/PfcInit.cpp.i
+CMakeFiles/main.dir/pfc_initializer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/pfc_initializer.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/pfc_initializer.cpp > CMakeFiles/main.dir/pfc_initializer.cpp.i
 
-CMakeFiles/main.dir/PfcInit.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/PfcInit.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/PfcInit.cpp -o CMakeFiles/main.dir/PfcInit.cpp.s
+CMakeFiles/main.dir/pfc_initializer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/pfc_initializer.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/pfc_initializer.cpp -o CMakeFiles/main.dir/pfc_initializer.cpp.s
 
-CMakeFiles/main.dir/PfcInit.cpp.o.requires:
+CMakeFiles/main.dir/pfc_initializer.cpp.o.requires:
 
-.PHONY : CMakeFiles/main.dir/PfcInit.cpp.o.requires
+.PHONY : CMakeFiles/main.dir/pfc_initializer.cpp.o.requires
 
-CMakeFiles/main.dir/PfcInit.cpp.o.provides: CMakeFiles/main.dir/PfcInit.cpp.o.requires
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/PfcInit.cpp.o.provides.build
-.PHONY : CMakeFiles/main.dir/PfcInit.cpp.o.provides
+CMakeFiles/main.dir/pfc_initializer.cpp.o.provides: CMakeFiles/main.dir/pfc_initializer.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pfc_initializer.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/pfc_initializer.cpp.o.provides
 
-CMakeFiles/main.dir/PfcInit.cpp.o.provides.build: CMakeFiles/main.dir/PfcInit.cpp.o
-
-
-CMakeFiles/main.dir/NeedlePose.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/NeedlePose.cpp.o: NeedlePose.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/NeedlePose.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/NeedlePose.cpp.o -c /home/tucker/research/pfc_init/src/NeedlePose.cpp
-
-CMakeFiles/main.dir/NeedlePose.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/NeedlePose.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/NeedlePose.cpp > CMakeFiles/main.dir/NeedlePose.cpp.i
-
-CMakeFiles/main.dir/NeedlePose.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/NeedlePose.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/NeedlePose.cpp -o CMakeFiles/main.dir/NeedlePose.cpp.s
-
-CMakeFiles/main.dir/NeedlePose.cpp.o.requires:
-
-.PHONY : CMakeFiles/main.dir/NeedlePose.cpp.o.requires
-
-CMakeFiles/main.dir/NeedlePose.cpp.o.provides: CMakeFiles/main.dir/NeedlePose.cpp.o.requires
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedlePose.cpp.o.provides.build
-.PHONY : CMakeFiles/main.dir/NeedlePose.cpp.o.provides
-
-CMakeFiles/main.dir/NeedlePose.cpp.o.provides.build: CMakeFiles/main.dir/NeedlePose.cpp.o
+CMakeFiles/main.dir/pfc_initializer.cpp.o.provides.build: CMakeFiles/main.dir/pfc_initializer.cpp.o
 
 
-CMakeFiles/main.dir/NeedleImage.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/NeedleImage.cpp.o: NeedleImage.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/NeedleImage.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/NeedleImage.cpp.o -c /home/tucker/research/pfc_init/src/NeedleImage.cpp
+CMakeFiles/main.dir/needle_pose.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/needle_pose.cpp.o: needle_pose.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/needle_pose.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/needle_pose.cpp.o -c /home/tucker/research/pfc_init/src/needle_pose.cpp
 
-CMakeFiles/main.dir/NeedleImage.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/NeedleImage.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/NeedleImage.cpp > CMakeFiles/main.dir/NeedleImage.cpp.i
+CMakeFiles/main.dir/needle_pose.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/needle_pose.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/needle_pose.cpp > CMakeFiles/main.dir/needle_pose.cpp.i
 
-CMakeFiles/main.dir/NeedleImage.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/NeedleImage.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/NeedleImage.cpp -o CMakeFiles/main.dir/NeedleImage.cpp.s
+CMakeFiles/main.dir/needle_pose.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/needle_pose.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/needle_pose.cpp -o CMakeFiles/main.dir/needle_pose.cpp.s
 
-CMakeFiles/main.dir/NeedleImage.cpp.o.requires:
+CMakeFiles/main.dir/needle_pose.cpp.o.requires:
 
-.PHONY : CMakeFiles/main.dir/NeedleImage.cpp.o.requires
+.PHONY : CMakeFiles/main.dir/needle_pose.cpp.o.requires
 
-CMakeFiles/main.dir/NeedleImage.cpp.o.provides: CMakeFiles/main.dir/NeedleImage.cpp.o.requires
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedleImage.cpp.o.provides.build
-.PHONY : CMakeFiles/main.dir/NeedleImage.cpp.o.provides
+CMakeFiles/main.dir/needle_pose.cpp.o.provides: CMakeFiles/main.dir/needle_pose.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_pose.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/needle_pose.cpp.o.provides
 
-CMakeFiles/main.dir/NeedleImage.cpp.o.provides.build: CMakeFiles/main.dir/NeedleImage.cpp.o
-
-
-CMakeFiles/main.dir/NeedleTemplate.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/NeedleTemplate.cpp.o: NeedleTemplate.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/NeedleTemplate.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/NeedleTemplate.cpp.o -c /home/tucker/research/pfc_init/src/NeedleTemplate.cpp
-
-CMakeFiles/main.dir/NeedleTemplate.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/NeedleTemplate.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/NeedleTemplate.cpp > CMakeFiles/main.dir/NeedleTemplate.cpp.i
-
-CMakeFiles/main.dir/NeedleTemplate.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/NeedleTemplate.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/NeedleTemplate.cpp -o CMakeFiles/main.dir/NeedleTemplate.cpp.s
-
-CMakeFiles/main.dir/NeedleTemplate.cpp.o.requires:
-
-.PHONY : CMakeFiles/main.dir/NeedleTemplate.cpp.o.requires
-
-CMakeFiles/main.dir/NeedleTemplate.cpp.o.provides: CMakeFiles/main.dir/NeedleTemplate.cpp.o.requires
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/NeedleTemplate.cpp.o.provides.build
-.PHONY : CMakeFiles/main.dir/NeedleTemplate.cpp.o.provides
-
-CMakeFiles/main.dir/NeedleTemplate.cpp.o.provides.build: CMakeFiles/main.dir/NeedleTemplate.cpp.o
+CMakeFiles/main.dir/needle_pose.cpp.o.provides.build: CMakeFiles/main.dir/needle_pose.cpp.o
 
 
-CMakeFiles/main.dir/TemplateMatch.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/TemplateMatch.cpp.o: TemplateMatch.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/TemplateMatch.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/TemplateMatch.cpp.o -c /home/tucker/research/pfc_init/src/TemplateMatch.cpp
+CMakeFiles/main.dir/needle_image.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/needle_image.cpp.o: needle_image.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/needle_image.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/needle_image.cpp.o -c /home/tucker/research/pfc_init/src/needle_image.cpp
 
-CMakeFiles/main.dir/TemplateMatch.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/TemplateMatch.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/TemplateMatch.cpp > CMakeFiles/main.dir/TemplateMatch.cpp.i
+CMakeFiles/main.dir/needle_image.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/needle_image.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/needle_image.cpp > CMakeFiles/main.dir/needle_image.cpp.i
 
-CMakeFiles/main.dir/TemplateMatch.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/TemplateMatch.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/TemplateMatch.cpp -o CMakeFiles/main.dir/TemplateMatch.cpp.s
+CMakeFiles/main.dir/needle_image.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/needle_image.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/needle_image.cpp -o CMakeFiles/main.dir/needle_image.cpp.s
 
-CMakeFiles/main.dir/TemplateMatch.cpp.o.requires:
+CMakeFiles/main.dir/needle_image.cpp.o.requires:
 
-.PHONY : CMakeFiles/main.dir/TemplateMatch.cpp.o.requires
+.PHONY : CMakeFiles/main.dir/needle_image.cpp.o.requires
 
-CMakeFiles/main.dir/TemplateMatch.cpp.o.provides: CMakeFiles/main.dir/TemplateMatch.cpp.o.requires
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/TemplateMatch.cpp.o.provides.build
-.PHONY : CMakeFiles/main.dir/TemplateMatch.cpp.o.provides
+CMakeFiles/main.dir/needle_image.cpp.o.provides: CMakeFiles/main.dir/needle_image.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_image.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/needle_image.cpp.o.provides
 
-CMakeFiles/main.dir/TemplateMatch.cpp.o.provides.build: CMakeFiles/main.dir/TemplateMatch.cpp.o
+CMakeFiles/main.dir/needle_image.cpp.o.provides.build: CMakeFiles/main.dir/needle_image.cpp.o
+
+
+CMakeFiles/main.dir/needle_template.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/needle_template.cpp.o: needle_template.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/needle_template.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/needle_template.cpp.o -c /home/tucker/research/pfc_init/src/needle_template.cpp
+
+CMakeFiles/main.dir/needle_template.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/needle_template.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/needle_template.cpp > CMakeFiles/main.dir/needle_template.cpp.i
+
+CMakeFiles/main.dir/needle_template.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/needle_template.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/needle_template.cpp -o CMakeFiles/main.dir/needle_template.cpp.s
+
+CMakeFiles/main.dir/needle_template.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/needle_template.cpp.o.requires
+
+CMakeFiles/main.dir/needle_template.cpp.o.provides: CMakeFiles/main.dir/needle_template.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/needle_template.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/needle_template.cpp.o.provides
+
+CMakeFiles/main.dir/needle_template.cpp.o.provides.build: CMakeFiles/main.dir/needle_template.cpp.o
+
+
+CMakeFiles/main.dir/template_match.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/template_match.cpp.o: template_match.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/template_match.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/template_match.cpp.o -c /home/tucker/research/pfc_init/src/template_match.cpp
+
+CMakeFiles/main.dir/template_match.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/template_match.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/template_match.cpp > CMakeFiles/main.dir/template_match.cpp.i
+
+CMakeFiles/main.dir/template_match.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/template_match.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/template_match.cpp -o CMakeFiles/main.dir/template_match.cpp.s
+
+CMakeFiles/main.dir/template_match.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/template_match.cpp.o.requires
+
+CMakeFiles/main.dir/template_match.cpp.o.provides: CMakeFiles/main.dir/template_match.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/template_match.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/template_match.cpp.o.provides
+
+CMakeFiles/main.dir/template_match.cpp.o.provides.build: CMakeFiles/main.dir/template_match.cpp.o
 
 
 # Object files for target main
 main_OBJECTS = \
 "CMakeFiles/main.dir/main.cpp.o" \
-"CMakeFiles/main.dir/PfcInit.cpp.o" \
-"CMakeFiles/main.dir/NeedlePose.cpp.o" \
-"CMakeFiles/main.dir/NeedleImage.cpp.o" \
-"CMakeFiles/main.dir/NeedleTemplate.cpp.o" \
-"CMakeFiles/main.dir/TemplateMatch.cpp.o"
+"CMakeFiles/main.dir/pfc_initializer.cpp.o" \
+"CMakeFiles/main.dir/needle_pose.cpp.o" \
+"CMakeFiles/main.dir/needle_image.cpp.o" \
+"CMakeFiles/main.dir/needle_template.cpp.o" \
+"CMakeFiles/main.dir/template_match.cpp.o"
 
 # External object files for target main
 main_EXTERNAL_OBJECTS =
 
 main: CMakeFiles/main.dir/main.cpp.o
-main: CMakeFiles/main.dir/PfcInit.cpp.o
-main: CMakeFiles/main.dir/NeedlePose.cpp.o
-main: CMakeFiles/main.dir/NeedleImage.cpp.o
-main: CMakeFiles/main.dir/NeedleTemplate.cpp.o
-main: CMakeFiles/main.dir/TemplateMatch.cpp.o
+main: CMakeFiles/main.dir/pfc_initializer.cpp.o
+main: CMakeFiles/main.dir/needle_pose.cpp.o
+main: CMakeFiles/main.dir/needle_image.cpp.o
+main: CMakeFiles/main.dir/needle_template.cpp.o
+main: CMakeFiles/main.dir/template_match.cpp.o
 main: CMakeFiles/main.dir/build.make
 main: CMakeFiles/main.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable main"
@@ -230,11 +230,11 @@ CMakeFiles/main.dir/build: main
 .PHONY : CMakeFiles/main.dir/build
 
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/main.cpp.o.requires
-CMakeFiles/main.dir/requires: CMakeFiles/main.dir/PfcInit.cpp.o.requires
-CMakeFiles/main.dir/requires: CMakeFiles/main.dir/NeedlePose.cpp.o.requires
-CMakeFiles/main.dir/requires: CMakeFiles/main.dir/NeedleImage.cpp.o.requires
-CMakeFiles/main.dir/requires: CMakeFiles/main.dir/NeedleTemplate.cpp.o.requires
-CMakeFiles/main.dir/requires: CMakeFiles/main.dir/TemplateMatch.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/pfc_initializer.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/needle_pose.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/needle_image.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/needle_template.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/template_match.cpp.o.requires
 
 .PHONY : CMakeFiles/main.dir/requires
 

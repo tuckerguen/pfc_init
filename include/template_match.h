@@ -2,7 +2,7 @@
 #define TEMPLATE_MATCH_H
 
 #include <opencv2/imgproc.hpp>
-#include "PfcInitConstants.hpp"
+#include "pfc_initializer_constants.h"
 
 //A template match
 class TemplateMatch 
