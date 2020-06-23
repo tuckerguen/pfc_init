@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/CreateNeedleTemplate.dir/home/tucker/research/pfc_init/src/CreateNeedleTemplate.cpp.o  -o CreateNeedleTemplate  -L/usr/local/lib -rdynamic -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_features2d -Wl,-rpath,/usr/local/lib 

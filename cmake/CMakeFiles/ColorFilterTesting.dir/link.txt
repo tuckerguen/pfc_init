@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/ColorFilterTesting.dir/home/tucker/research/pfc_init/src/ColorFilterTesting.cpp.o  -o ColorFilterTesting  -L/usr/local/lib -rdynamic -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_features2d -Wl,-rpath,/usr/local/lib 

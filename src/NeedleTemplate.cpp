@@ -59,24 +59,7 @@ TemplateMatch NeedleTemplate::matchOverScaleAndRotation(const cv::Mat& img)
 {
     TemplateMatch bestMatch(params.min_rotation, -DBL_MAX, params.min_scale);
     double scale = params.min_scale / 100.0;
-    // for (int i = 0; i < ceil((pfc::max_scale - pfc::min_scale) / pfc::scale_increment); ++i)
-    // {
-    //     scale += ((double)pfc::scale_increment) / 100.0;
-    //     cout << "Progress: " << 1000 * (scale / (double)(pfc::max_scale - pfc::min_scale)) << " %" << endl;
-
-    //     cv::Mat resized, rot_templ;
-
-    //     //Use inter-linear in all cases (is faster than inter_area, similar results)
-    //     cv::resize(templ, resized, cv::Size(), scale, scale, cv::INTER_LINEAR);
-
-    //     for (double rot_angle = pfc::min_rotation; rot_angle < pfc::max_rotation; rot_angle += pfc::rotation_increment)
-    //     {
-    //         //Rotate template
-    //         rotate(rot_angle, resized, rot_templ);
-    //         //Match rotated template to image
-    //         match(img, rot_templ, &bestMatch, rot_angle, scale);
-    //     }
-    // }
+ 
     for (int i = 0; i < ceil((params.max_scale - params.min_scale) / params.scale_increment); ++i)
     {
         scale += ((double)params.scale_increment) / 100.0;

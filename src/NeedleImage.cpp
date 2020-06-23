@@ -25,8 +25,6 @@ NeedleImage::NeedleImage(string path)
     cv::cvtColor(raw, img_HSV, cv::COLOR_BGR2HSV);
     cv::inRange(img_HSV, cv::Scalar(pfc::low_h, pfc::low_s, pfc::low_v), cv::Scalar(pfc::high_h, pfc::high_s, pfc::high_v), image);
     cv::namedWindow("segmented image: " + path, cv::WINDOW_AUTOSIZE);
-    cv::imshow("segmented image: " + path, image);
-    cv::waitKey(0);
 }
 
 #endif

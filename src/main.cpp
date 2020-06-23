@@ -31,12 +31,20 @@ vector<string> runForPoseAndType(int pose_id, string img_type)
     string left_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_l_c_" + img_type + ".png";
     string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_" + img_type + ".png";
 
+    // pfc::match_params params = {
+    //     pfc::min_rot.at(pose_id), 
+    //     pfc::max_rot.at(pose_id),
+    //     1,
+    //     pfc::min_scl.at(pose_id),
+    //     pfc::max_scl.at(pose_id),
+    //     1
+    // };
     pfc::match_params params = {
-        pfc::min_rot.at(pose_id), 
-        pfc::max_rot.at(pose_id),
+        0, 
+        360,
         1,
-        pfc::min_scl.at(pose_id),
-        pfc::max_scl.at(pose_id),
+        98,
+        200,
         1
     };
 
