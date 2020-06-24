@@ -92,8 +92,6 @@ void PfcInitializer::displayResults()
     cv::imshow("right", right_image.raw);
     cv::imshow("left template", match_l.templ);
     cv::imshow("right template", match_r.templ);
-    cv::imwrite("raw_OUT.png", left_image.raw);
-    cv::imwrite("template_OUT.png", match_l.templ);
     cv::waitKey(0);
 
     cv::destroyAllWindows();
