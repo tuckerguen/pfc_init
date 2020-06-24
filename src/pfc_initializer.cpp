@@ -17,8 +17,29 @@
 
 using namespace std;
 
-NeedlePose PfcInitializer::computeNeedlePose()
+// Calculates needle pose from images (primary function for use in particle filter)
+// Stores pose in object
+void PfcInitializer::run(bool print_results)
 {
+    // Start timer
+    double t = (double)cv::getTickCount();
+
+    computeNeedlePose();
+    
+    //Stop timer
+    t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+
+    if(print_results)
+    {
+        cout << "Time: " << t << " s" << endl;
+        displayResults();
+    }
+}
+
+// Computes pose of needle from the left and right stereo images
+void PfcInitializer::computeNeedlePose()
+{
+    // Perform template match on left and right images
     match_l = templ.matchOverScaleAndRotation(left_image.image);
     match_r = templ.matchOverScaleAndRotation(right_image.image);
     
@@ -38,14 +59,13 @@ NeedlePose PfcInitializer::computeNeedlePose()
     p_r.at<double>(1) = match_r.rect.y + rotated_origin_r.at<double>(1);
     match_r.needle_origin = p_r;
     
-    //Deproject points and create needle pose object
+    // Get 3D location of needle
     cv::Point3d location = deProjectPoints(p_l, p_r);
-
+    // Get Euler angle orientation
     Eigen::Vector3f orientation(0.0, 0.0, match_l.getAngleDegrees());
-    pose = NeedlePose(location, orientation);
     
-    //TODO: This seems like weird design to store it in the object and then also return it?
-    return pose;
+    // Store location/orientation
+    pose = NeedlePose(location, orientation);
 }
 
 void PfcInitializer::displayResults()
@@ -60,6 +80,7 @@ void PfcInitializer::displayResults()
     cout << "----------------------------------------------------------------------" << endl;
     cout << "Experimental Results" << endl;
     cout << "----------------------------------------------------------------------" << endl;
+    
     pose.print();
 
     cv::namedWindow("left", cv::WINDOW_AUTOSIZE);
@@ -77,7 +98,7 @@ void PfcInitializer::displayResults()
     cv::destroyAllWindows();
 }
 
-vector<string> PfcInitializer::getResultsVector()
+vector<string> PfcInitializer::getResultsAsVector()
 {
     vector<string> results;
     // Add pixel location guesses
@@ -104,10 +125,6 @@ vector<string> PfcInitializer::getResultsVector()
     results.push_back(to_string(e.x()));
     results.push_back(to_string(e.y()));
     results.push_back(to_string(e.z()));
-    //Add scores
-    vector<double> scores = scorePoseEstimation(pose, pose_id);
-    results.push_back(to_string(scores.at(0)));
-    results.push_back(to_string(scores.at(1)));
 
     return results;
 }

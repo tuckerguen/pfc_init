@@ -38,8 +38,9 @@ void drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color, Need
  * 
  * @param pose The experimental pose to compare to truth
  * @param pose_id Id number used to lookup ground truth from csv
+ * @param print If function should print score to console
  */
-vector<double> scorePoseEstimation(NeedlePose pose, int pose_id);
+vector<double> scorePoseEstimation(NeedlePose pose, int pose_id, bool print);
 
 /**
  * @brief Returns pose data from ground truth pose csv file for given pose id

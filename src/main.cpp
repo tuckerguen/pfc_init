@@ -9,67 +9,61 @@
 
 using namespace std;
 
-vector<string> runForPoseAndType(int pose_id, string img_type);
-vector<vector<string>> runOnAllData();
+vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat);
+vector<vector<string>> runOnAllData(bool cheat);
 void writeDataListToCSV(vector<vector<string>> dataList);
 
 int main(int argc, char** argv)
 {
-    vector<string> results = runForPoseAndType(stoi(argv[1]), argv[2]);
-    for(int i = 0; i < results.size(); i++){
-        cout << results.at(i) << ", ";
-    }   
-    cout << endl;
+    vector<string> results = runForPoseAndType(stoi(argv[1]), argv[2], true);
+    
     // vector<vector<string>> data_list = {results};
     
-    // vector<vector<string>> data_list = runOnAllData();
+    // vector<vector<string>> data_list = runOnAllData(true);
     // writeDataListToCSV(data_list);
 }
 
-vector<string> runForPoseAndType(int pose_id, string img_type)
+vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat)
 {
     string left_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_l_c_" + img_type + ".png";
     string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_" + img_type + ".png";
 
     pfc::match_params params = {
-        pfc::min_rot.at(pose_id), 
-        pfc::max_rot.at(pose_id),
+        0, 
+        360,
         1,
-        pfc::min_scl.at(pose_id),
-        pfc::max_scl.at(pose_id),
+        98,
+        200,
         1
     };
-    // pfc::match_params params = {
-    //     0, 
-    //     360,
-    //     1,
-    //     98,
-    //     200,
-    //     1
-    // };
 
-    PfcInitializer pfc(left_img_path, right_img_path, pose_id, params);
+    if(cheat)
+    {
+        params = {
+            pfc::min_rot.at(pose_id), 
+            pfc::max_rot.at(pose_id),
+            1,
+            pfc::min_scl.at(pose_id),
+            pfc::max_scl.at(pose_id),
+            1
+        };
+    }
 
 
-    //TODO: Put this stuff in a run() function on PfcInitialzier
-    //You should be able to just create the object and do pfc.run
-    //Start timer
-    double t = (double)cv::getTickCount();
-    
-    pfc.computeNeedlePose();
+    PfcInitializer pfc(left_img_path, right_img_path, params);
+    pfc.run(true);
 
-    //Stop timer
-    t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-    cout << "Time: " << t << " s" << endl;
+    // Get results back as vector
+    vector<string> results = pfc.getResultsAsVector();
+    // Add pose score to results vector
+    vector<double> score = scorePoseEstimation(pfc.pose, pose_id, true);
+    results.push_back(to_string(score.at(0)));
+    results.push_back(to_string(score.at(1)));
 
-    scorePoseEstimation(pfc.pose, pfc.pose_id);
-    pfc.displayResults();
-
-    return pfc.getResultsVector();
-
+    return results;
 }
 
-vector<vector<string>> runOnAllData()
+vector<vector<string>> runOnAllData(bool cheat)
 {
     vector<vector<string> > dataList;
 
@@ -77,7 +71,7 @@ vector<vector<string>> runOnAllData()
         for(int j = 0; j < pfc::num_img_types; j++){
             string img_type = pfc::img_types.at(j);
             cout << "Running for: " << pose_id << ", " << img_type << endl;
-            vector<string> data = runForPoseAndType(pose_id, img_type);
+            vector<string> data = runForPoseAndType(pose_id, img_type, cheat);
             dataList.push_back(data);
         }
     }

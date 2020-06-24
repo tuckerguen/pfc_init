@@ -17,7 +17,6 @@ using namespace std;
 NeedleTemplate::NeedleTemplate(const string& path, const cv::Rect2i& rect, cv::Point2d origin, double rotation, pfc::match_params iparams)
 : NeedleImage(path), origin(origin)
 {
-    cout << origin << endl;
     // set params
     params = iparams;
 
@@ -96,9 +95,6 @@ void match(const cv::Mat &img, const cv:: Mat& templ, TemplateMatch *bestMatch, 
     cv::Point maxLoc;
     cv::Point matchLoc;
     cv::minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat());
-
-    // if (angle>135 && angle < 160)
-        // cout << angle << ": " << maxVal << endl;
 
     //If the new match is better than our previous best, record it
     if (bestMatch->score < maxVal)

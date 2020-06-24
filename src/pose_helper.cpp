@@ -86,7 +86,7 @@ void drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color, Need
 }
 
 //Prints and returns location and orientation error between given pose and ground truth
-vector<double> scorePoseEstimation(NeedlePose pose, int pose_id)
+vector<double> scorePoseEstimation(NeedlePose pose, int pose_id, bool print)
 {
     // Fetch ground truth pose
     NeedlePose true_pose = readTruePoseFromCSV(pose_id);
@@ -104,16 +104,19 @@ vector<double> scorePoseEstimation(NeedlePose pose, int pose_id)
     Eigen::Quaternionf qdiff = true_orientation.inverse() * result_orientation;
     double angle_err = 2*atan2(qdiff.vec().norm(), qdiff.w()) * pfc::rad2deg;
 
-    // Format and print results
-    cout << "----------------------------------------------------------------------" << endl;
-    cout << "Scoring Results" << endl;
-    cout << "----------------------------------------------------------------------" << endl;
-    cout << "True Pos: (x,y,z)   = (" << true_loc.x << ", " << true_loc.y << ", " << true_loc.z << ")" << endl;
-    cout << "True Rot: (x,y,z,w) = (" << true_orientation.x() << ", " << true_orientation.y() << ", " << true_orientation.z() << ", " << true_orientation.w() << ")" << endl;
+    if(print)
+    {
+        // Format and print results
+        cout << "----------------------------------------------------------------------" << endl;
+        cout << "Scoring Results" << endl;
+        cout << "----------------------------------------------------------------------" << endl;
+        cout << "True Pos: (x,y,z)   = (" << true_loc.x << ", " << true_loc.y << ", " << true_loc.z << ")" << endl;
+        cout << "True Rot: (x,y,z,w) = (" << true_orientation.x() << ", " << true_orientation.y() << ", " << true_orientation.z() << ", " << true_orientation.w() << ")" << endl;
 
 
-    cout << "Pos error (meters)  = " << loc_err << endl;
-    cout << "Rot error (degrees) = " << angle_err << endl;
+        cout << "Pos error (meters)  = " << loc_err << endl;
+        cout << "Rot error (degrees) = " << angle_err << endl;
+    }
 
     // Store and return locationa and orientation errors
     vector<double> results;
@@ -132,7 +135,7 @@ NeedlePose readTruePoseFromCSV(int pose_id)
     vector<string> pose_data = all_pose_data.at(pose_id);
 
     NeedlePose pose;
-    
+
     // store location
     pose.location.x = stod(pose_data.at(1));
     pose.location.y = stod(pose_data.at(2));

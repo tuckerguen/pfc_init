@@ -23,7 +23,6 @@ vector<vector<string> > CSVReader::getData()
 	// Loop over all rows in file
 	while (getline(csv, row))
 	{
-        cout << row << endl;
 		vector<string> data;
 
 		// Split row over delimeter and store

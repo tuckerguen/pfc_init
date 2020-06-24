@@ -4,24 +4,71 @@
 #include "needle_pose.h"
 #include "pfc_initializer_constants.h"
 
+/**
+ * @brief Class to localize needle from stereo images
+ */
 class PfcInitializer
 {
+private:
+    /**
+     * @brief Computes pose of needle from the left and right stereo images
+     */
+    void computeNeedlePose();
+
+    /**
+     * @brief Prints results of initilization to console
+     */
+    void displayResults();
+
 public:
-    int pose_id;
+    /**
+     * @brief Left stereo image
+     */
     NeedleImage left_image;
+
+    /**
+     * @brief Right stereo image
+     */
     NeedleImage right_image;
+
+    /**
+     * @brief Template used for template matching during localization
+     */
     NeedleTemplate templ;
+
+    /**
+     * @brief Template match data for left image
+     */
     TemplateMatch match_l;
+
+    /**
+     * @brief Template match data for right image
+     */
     TemplateMatch match_r;
+
+    /**
+     * @brief Computed needle pose
+     */
     NeedlePose pose;
 
-    PfcInitializer(string left_image_path, string right_image_path, int pose_id, pfc::match_params params)
+    /**
+     * @brief Constructor
+     * TODO: Doc this once we decided on fields
+     */
+    PfcInitializer(string left_image_path, string right_image_path, pfc::match_params params)
         : left_image(left_image_path), right_image(right_image_path), 
-            templ(pfc::templ_path, pfc::initial_rect, pfc::origin, pfc::initial_rotation, params), 
-            pose_id(pose_id)
+            templ(pfc::templ_path, pfc::initial_rect, pfc::origin, pfc::initial_rotation, params) 
     {}
 
-    NeedlePose computeNeedlePose();
-    void displayResults();
-    std::vector<string> getResultsVector();
+    /**
+     * @brief Runs the initializer, stores the needle pose in initializer
+     * 
+     * @param print_results If function should print results to console
+     */
+    void run(bool print_results);
+
+    /**
+     * @brief Returns the results of initialization as a vector
+     */
+    std::vector<string> getResultsAsVector();
 };
