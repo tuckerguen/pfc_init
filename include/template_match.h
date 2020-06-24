@@ -8,26 +8,82 @@
 class TemplateMatch 
 {
 public:
-    double angle; //angle matched at    
-    double score; //max matching value assigned by opencv templatematch()
-    double scale; //scale matched at
-    cv::Rect rect; //location and size of match
-    cv::Mat result; //result image from opencv templatematch()
+    /**
+     * @brief Angle (degrees) of rotation of the matching template (relative to original)
+     */
+    double angle;
+
+    /**
+     * @brief Match quality value returned by cv::matchTemplate()
+     */    
+    double score;
+
+    /**
+     * @brief Scale of matching template (relative to original)
+     */
+    double scale;
+
+    /**
+     * @brief Location of match and template dimensions at match
+     */
+    cv::Rect rect;
+
+    /**
+     * @brief Result image returned by cv::matchTemplate()
+     */
+    cv::Mat result; 
+
+    /**
+     * @brief Template used for match
+     */
     cv::Mat templ;
+
+    /**
+     * @brief 2x1 point represents (x,y) of needle origin in matched template
+     */
     cv::Mat needle_origin;
 
+    /**
+     * @brief Constructor
+     * 
+     * @param angle Angle (degrees) template was rotated at match
+     * @param score Match quality value given to match by cv::matchTemplate()
+     * @param scale Scale template was scaled by at match
+     */
     TemplateMatch(double angle, double score, double scale) : 
         angle(angle), score(score), scale(scale), rect(0,0,0,0), result(), templ() 
     {} 
 
+    /**
+     * @brief Default constructor (angle=0, score=-DBL_MAX, scale=1, rect=(0,0,0,0))
+     */
     TemplateMatch() : 
         angle(0), score(-DBL_MAX), scale(1), rect(0,0,0,0), result() 
     {} 
 
+    /**
+     * @brief Returns the match angle in degrees
+     */
     double getAngleDegrees() { return angle; }
+    
+    /**
+     * @brief Returns the match angle in radians
+     */
     double getAngleRadians() { return angle * pfc::deg2rad; }
 
+    /**
+     * @brief Format and print details of the match
+     * 
+     * @param name Title to be printed with the match (probably "right" or "left")
+     */
     void printMatchSummary(std::string name);    
+
+    /**
+     * @brief Draws the match bounding rectangle on the image
+     * 
+     * @param img Image to draw the match onto
+     * @param color Color of the rectangle
+     */
     void drawOnImage(cv::Mat& img, const cv::Scalar& color);
 };
 

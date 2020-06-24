@@ -9,29 +9,29 @@
  
 using namespace std;
  
-/*
-* Parses through csv file line by line and returns the data
-* in vector of vector of strings.
-*/
+// Reads all rows from csv into vector
 vector<vector<string> > CSVReader::getData()
 {
-	ifstream file(fileName);
-    if (file.fail()){
+	// Create file stream
+	ifstream csv(file_name);
+    if (csv.fail()){
         cout << "couldn't open file" << endl;
     }
 	vector<vector<string> > dataList;
  
-	string line = "";
-	// Iterate through each line and split the content using delimeter
-	while (getline(file, line))
+	string row = "";
+	// Loop over all rows in file
+	while (getline(csv, row))
 	{
-        cout << line << endl;
-		vector<string> vec;
-		boost::algorithm::split(vec, line, boost::is_any_of(delimeter));
-		dataList.push_back(vec);
+        cout << row << endl;
+		vector<string> data;
+
+		// Split row over delimeter and store
+		boost::algorithm::split(data, row, boost::is_any_of(delimeter));
+		dataList.push_back(data);
 	}
-	// Close the File
-	file.close();
+
+	csv.close();
  
 	return dataList;
 }

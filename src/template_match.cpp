@@ -1,11 +1,12 @@
 #ifndef TEMPLATE_MATCH
 #define TEMPLATE_MATCH
 
-#include "template_match.h"
 #include <iostream>
+#include "template_match.h"
 
 using namespace std;
 
+// Format and print details of the match
 void TemplateMatch::printMatchSummary(string name)
 {
     cout << "----------------------------------------------------------------------" << endl;
@@ -17,6 +18,7 @@ void TemplateMatch::printMatchSummary(string name)
     cout << "Scale: " << scale << endl;
 }
 
+// Draws the match bounding rectangle on the image
 void TemplateMatch::drawOnImage(cv::Mat& img, const cv::Scalar& color)
 {
     rectangle(img, rect, color, pfc::line_weight, pfc::line_type, pfc::shift);

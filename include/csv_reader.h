@@ -18,15 +18,30 @@ using namespace std;
  */
 class CSVReader
 {
-	string fileName;
+	/**
+	 * @brief Name of csv file to read from
+	 */
+	string file_name;
+
+	/**
+	 * @brief Data delimeter in file (probably ",")
+	 */
 	string delimeter;
  
 public:
-	CSVReader(string filename, string delm = ",") :
-			fileName(filename), delimeter(delm)
+	/**
+	 * @brief Constructor
+	 * 
+	 * @param filename Name of csv file to read from
+	 * @param delim Data delimeter in file (probably ",") 
+	 */ 
+	CSVReader(string filename, string delim = ",") :
+			file_name(filename), delimeter(delim)
 	{ }
  
-	// Function to fetch data from a CSV File
+	/**
+	 * @brief Reads all rows from csv into vector
+	 */
 	vector<vector<string> > getData();
 };
 

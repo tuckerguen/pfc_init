@@ -86,6 +86,24 @@ opencv2/imgproc.hpp
 pfc_initializer_constants.h
 ../include/pfc_initializer_constants.h
 
+/home/tucker/research/pfc_init/src/csv_reader.cpp
+fstream
+-
+vector
+-
+iterator
+-
+string
+-
+algorithm
+-
+iostream
+-
+boost/algorithm/string.hpp
+-
+csv_reader.h
+/home/tucker/research/pfc_init/src/csv_reader.h
+
 /home/tucker/research/pfc_init/src/main.cpp
 string
 -
@@ -97,6 +115,26 @@ pfc_initializer.h
 /home/tucker/research/pfc_init/src/pfc_initializer.h
 pose_helper.h
 /home/tucker/research/pfc_init/src/pose_helper.h
+
+/home/tucker/research/pfc_init/src/needle_template.cpp
+needle_template.h
+/home/tucker/research/pfc_init/src/needle_template.h
+opencv2/core.hpp
+-
+opencv2/imgproc.hpp
+-
+opencv2/highgui.hpp
+-
+string
+-
+iostream
+-
+pfc_initializer_constants.h
+/home/tucker/research/pfc_init/src/pfc_initializer_constants.h
+opencv2/calib3d.hpp
+-
+opencv2/cudaimgproc.hpp
+-
 
 /home/tucker/research/pfc_init/src/pfc_initializer.cpp
 pfc_initializer.h
@@ -145,4 +183,10 @@ csv_reader.h
 /home/tucker/research/pfc_init/src/csv_reader.h
 needle_pose.h
 /home/tucker/research/pfc_init/src/needle_pose.h
+
+/home/tucker/research/pfc_init/src/template_match.cpp
+iostream
+-
+template_match.h
+/home/tucker/research/pfc_init/src/template_match.h
 

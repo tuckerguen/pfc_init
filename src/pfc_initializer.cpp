@@ -77,8 +77,6 @@ void PfcInitializer::displayResults()
     cv::destroyAllWindows();
 }
 
-
-
 vector<string> PfcInitializer::getResultsVector()
 {
     vector<string> results;
