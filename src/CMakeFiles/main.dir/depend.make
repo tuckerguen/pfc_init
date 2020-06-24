@@ -9,6 +9,7 @@ CMakeFiles/main.dir/main.cpp.o: ../include/needle_pose.h
 CMakeFiles/main.dir/main.cpp.o: ../include/needle_template.h
 CMakeFiles/main.dir/main.cpp.o: ../include/pfc_initializer.h
 CMakeFiles/main.dir/main.cpp.o: ../include/pfc_initializer_constants.h
+CMakeFiles/main.dir/main.cpp.o: ../include/pose_helper.h
 CMakeFiles/main.dir/main.cpp.o: ../include/template_match.h
 CMakeFiles/main.dir/main.cpp.o: main.cpp
 

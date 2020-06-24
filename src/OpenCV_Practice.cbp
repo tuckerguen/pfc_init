@@ -72,6 +72,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/tucker/research/pfc_init/src/csv_reader.cpp">
+			<Option target="main"/>
+		</Unit>
 		<Unit filename="/home/tucker/research/pfc_init/src/main.cpp">
 			<Option target="main"/>
 		</Unit>

@@ -84,3 +84,69 @@ void drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color, Need
                   match->needle_origin.at<double>(1)),
             0.1, color, 1, 8, 0);
 }
+
+//Prints and returns location and orientation error between given pose and ground truth
+vector<double> scorePoseEstimation(NeedlePose pose, int pose_id)
+{
+    // Fetch ground truth pose
+    NeedlePose true_pose = readTruePoseFromCSV(pose_id);
+
+    //Convert to point3d 
+    cv::Point3d true_loc = true_pose.location;
+    cv::Point3d result_loc = pose.location;
+    //Calc euclidean dist between points
+    double loc_err = cv::norm(result_loc - true_loc);
+
+    // Convert to quaternion
+    Eigen::Quaternionf true_orientation = true_pose.getQuaternionOrientation();
+    Eigen::Quaternionf result_orientation = pose.getQuaternionOrientation();  
+    // Calc angle between quaternions in angle-axis representation
+    Eigen::Quaternionf qdiff = true_orientation.inverse() * result_orientation;
+    double angle_err = 2*atan2(qdiff.vec().norm(), qdiff.w()) * pfc::rad2deg;
+
+    // Format and print results
+    cout << "----------------------------------------------------------------------" << endl;
+    cout << "Scoring Results" << endl;
+    cout << "----------------------------------------------------------------------" << endl;
+    cout << "True Pos: (x,y,z)   = (" << true_loc.x << ", " << true_loc.y << ", " << true_loc.z << ")" << endl;
+    cout << "True Rot: (x,y,z,w) = (" << true_orientation.x() << ", " << true_orientation.y() << ", " << true_orientation.z() << ", " << true_orientation.w() << ")" << endl;
+
+
+    cout << "Pos error (meters)  = " << loc_err << endl;
+    cout << "Rot error (degrees) = " << angle_err << endl;
+
+    // Store and return locationa and orientation errors
+    vector<double> results;
+    results.push_back(loc_err);
+    results.push_back(angle_err);
+    return results;
+}
+
+//Returns pose data from ground truth pose csv file for given pose id
+NeedlePose readTruePoseFromCSV(int pose_id)
+{
+	CSVReader reader("../positions/needle_positions.csv");
+    // Read all rows into vector
+    vector<vector<string> > all_pose_data = reader.getData();
+    // Select row for pose by pose_id
+    vector<string> pose_data = all_pose_data.at(pose_id);
+
+    NeedlePose pose;
+    
+    // store location
+    pose.location.x = stod(pose_data.at(1));
+    pose.location.y = stod(pose_data.at(2));
+    pose.location.z = stod(pose_data.at(3));
+
+    //Store orientation
+    Eigen::Quaternionf q;
+    q.x() = stod(pose_data.at(4));
+    q.y() = stod(pose_data.at(5));
+    q.z() = stod(pose_data.at(6));
+    q.w() = stod(pose_data.at(7));
+
+    pose.setOrientation(q);
+
+    return pose;
+}
+

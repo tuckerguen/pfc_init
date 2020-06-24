@@ -48,35 +48,6 @@ NeedlePose PfcInitializer::computeNeedlePose()
     return pose;
 }
 
-vector<double> PfcInitializer::scorePoseEstimation()
-{
-    NeedlePose true_pose = readTruePoseFromCSV();
-
-    cv::Point3d true_loc = true_pose.location;
-    cv::Point3d result_loc = pose.location;
-    double loc_err = cv::norm(result_loc - true_loc);
-
-    Eigen::Quaternionf true_orientation = true_pose.getQuaternionOrientation();
-    Eigen::Quaternionf result_orientation = pose.getQuaternionOrientation();  
-    Eigen::Quaternionf qdiff = true_orientation.inverse() * result_orientation;
-    double angle_err = 2*atan2(qdiff.vec().norm(), qdiff.w()) * pfc::rad2deg;
-
-    cout << "----------------------------------------------------------------------" << endl;
-    cout << "Scoring Results" << endl;
-    cout << "----------------------------------------------------------------------" << endl;
-    cout << "True Pos: (x,y,z)   = (" << true_loc.x << ", " << true_loc.y << ", " << true_loc.z << ")" << endl;
-    cout << "True Rot: (x,y,z,w) = (" << true_orientation.x() << ", " << true_orientation.y() << ", " << true_orientation.z() << ", " << true_orientation.w() << ")" << endl;
-
-
-    cout << "Pos error (meters)  = " << loc_err << endl;
-    cout << "Rot error (degrees) = " << angle_err << endl;
-
-    vector<double> results;
-    results.push_back(loc_err);
-    results.push_back(angle_err);
-    return results;
-}
-
 void PfcInitializer::displayResults()
 {
     match_l.drawOnImage(left_image.raw, cv::Scalar::all(255));
@@ -106,27 +77,7 @@ void PfcInitializer::displayResults()
     cv::destroyAllWindows();
 }
 
-NeedlePose PfcInitializer::readTruePoseFromCSV()
-{
-	CSVReader reader("../positions/needle_positions.csv");
-    vector<vector<string> > all_pose_data = reader.getData();
-    vector<string> pose_data = all_pose_data.at(pose_id);
 
-    NeedlePose pose;
-    pose.location.x = stod(pose_data.at(1));
-    pose.location.y = stod(pose_data.at(2));
-    pose.location.z = stod(pose_data.at(3));
-
-    Eigen::Quaternionf q;
-    q.x() = stod(pose_data.at(4));
-    q.y() = stod(pose_data.at(5));
-    q.z() = stod(pose_data.at(6));
-    q.w() = stod(pose_data.at(7));
-
-    pose.setOrientation(q);
-
-    return pose;
-}
 
 vector<string> PfcInitializer::getResultsVector()
 {
@@ -156,7 +107,7 @@ vector<string> PfcInitializer::getResultsVector()
     results.push_back(to_string(e.y()));
     results.push_back(to_string(e.z()));
     //Add scores
-    vector<double> scores = scorePoseEstimation();
+    vector<double> scores = scorePoseEstimation(pose, pose_id);
     results.push_back(to_string(scores.at(0)));
     results.push_back(to_string(scores.at(1)));
 

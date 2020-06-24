@@ -10,6 +10,7 @@ CMakeFiles/main.dir/main.cpp.o
  ../include/needle_template.h
  ../include/pfc_initializer.h
  ../include/pfc_initializer_constants.h
+ ../include/pose_helper.h
  ../include/template_match.h
  /home/tucker/research/pfc_init/src/main.cpp
 CMakeFiles/main.dir/needle_image.cpp.o

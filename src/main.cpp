@@ -1,10 +1,11 @@
 #ifndef MAIN
 #define MAIN
 
-#include "pfc_initializer.h"
 #include <string>
-#include "pfc_initializer_constants.h"
 #include <fstream>
+#include "pfc_initializer_constants.h"
+#include "pfc_initializer.h"
+#include "pose_helper.h"
 
 using namespace std;
 
@@ -61,7 +62,7 @@ vector<string> runForPoseAndType(int pose_id, string img_type)
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
     cout << "Time: " << t << " s" << endl;
 
-    pfc.scorePoseEstimation();
+    scorePoseEstimation(pfc.pose, pfc.pose_id);
     pfc.displayResults();
 
     return pfc.getResultsVector();

@@ -22,8 +22,6 @@ public:
     {}
 
     NeedlePose computeNeedlePose();
-    vector<double> scorePoseEstimation();
     void displayResults();
-    NeedlePose readTruePoseFromCSV();
     std::vector<string> getResultsVector();
 };

@@ -7,7 +7,7 @@
 #include "needle_pose.h"
 
 /**
- * @brief returns 3D location of point given two pixel space points from endoscope stereo camera
+ * @brief Returns 3D location of point given two pixel space points from endoscope stereo camera
  * 
  * @param p_l Location of point in left image
  * @param p_r Location of point in right image
@@ -15,7 +15,7 @@
 cv::Point3d deProjectPoints(const cv::Mat& p_l, const cv::Mat& p_r);
 
 /**
- * @brief returns coordinate location of needle in template after rotation and scaling transformation
+ * @brief Returns coordinate location of needle in template after rotation and scaling transformation
  * 
  * @param angle Template was rotated by
  * @param scale Template was scaled to
@@ -32,5 +32,20 @@ cv::Mat getRotatedOrigin(double angle, double scale, NeedleTemplate* templ);
  * @param templ The needle template used in matching
  */
 void drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color, NeedleTemplate* templ);
+
+/**
+ * @brief Prints and returns location and orientation error between given pose and ground truth
+ * 
+ * @param pose The experimental pose to compare to truth
+ * @param pose_id Id number used to lookup ground truth from csv
+ */
+vector<double> scorePoseEstimation(NeedlePose pose, int pose_id);
+
+/**
+ * @brief Returns pose data from ground truth pose csv file for given pose id
+ * 
+ * @param pose_id The id number of the pose data to return
+ */
+NeedlePose readTruePoseFromCSV(int pose_id);
 
 #endif
