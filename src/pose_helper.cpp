@@ -15,13 +15,13 @@ cv::Point3d deProjectPoints(const cv::Mat& p_l, const cv::Mat& p_r)
 {
     // Left camera intrinsic matrix
     cv::Mat P_l = (cv::Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, 0.0, 
-                                     0.0, 662.450355616388, 240.5, 0.0, 
-                                     0.0, 0.0, 1.0, 0.0);
+                                             0.0, 662.450355616388, 240.5, 0.0, 
+                                             0.0, 0.0, 1.0, 0.0);
  
     // Right camera intrinsic matrix
     cv::Mat P_r = (cv::Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -3.31225177808194, 
-                                     0.0, 662.450355616388, 240.5, 0.0,
-                                     0.0, 0.0, 1.0, 0.0);   
+                                             0.0, 662.450355616388, 240.5, 0.0,
+                                             0.0, 0.0, 1.0, 0.0);   
 
     // Create points vector
     vector<cv::Mat> points;
@@ -47,7 +47,7 @@ cv::Point3d deProjectPoints(const cv::Mat& p_l, const cv::Mat& p_r)
 }
 
 // returns coordinate location of needle in template after rotation and scaling transformation
-cv::Mat getRotatedOrigin(double angle, double scale, NeedleTemplate* templ)
+cv::Mat getRotatedOrigin(double angle, double scale, const NeedleTemplate* templ)
 {
     // "Correct" angle is clockwise, we rotate counter clockwise
     angle = -angle;

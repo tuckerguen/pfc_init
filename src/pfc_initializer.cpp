@@ -1,6 +1,3 @@
-#ifndef PFC_INIT
-#define PFC_INIT
-
 #include "pfc_initializer.h"
 #include "needle_image.h"
 #include "needle_template.h"
@@ -52,6 +49,7 @@ void PfcInitializer::computeNeedlePose()
     cv::Mat rotated_origin_l = getRotatedOrigin(match_l.angle,  match_l.scale, &templ);
     p_l.at<double>(0) = match_l.rect.x + rotated_origin_l.at<double>(0);
     p_l.at<double>(1) = match_l.rect.y + rotated_origin_l.at<double>(1);
+
     match_l.needle_origin = p_l;
 
     // Compute pixel space origin in right image
@@ -127,5 +125,3 @@ vector<string> PfcInitializer::getResultsAsVector()
 
     return results;
 }
-
-#endif

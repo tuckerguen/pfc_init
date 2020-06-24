@@ -10,37 +10,46 @@ class NeedleImage
 {
 public:
     /**
-     * @brief the original image before preprocessing
+     * @brief Original image before preprocessing
      */
     cv::Mat raw;
 
     /**
-     * @brief the image after preprocessing (used for template matching)
+     * @brief Image after preprocessing (used for template matching)
      */
     cv::Mat image;  
 
     /**
-     * @brief path to the image
+     * @brief Path to the image
      */
     std::string path;
 
     /**
-     * @brief filters needle from the background in the raw image 
+     * @brief Filters needle from the background in the raw image 
      */
     void filterRaw();
     
     /**
-     * @brief the explicit constructor
+     * @brief Explicit constructor
      * 
      * @param path Path to the image 
      */
     explicit NeedleImage(const std::string path);
 
     /**
-     * @brief the deconstructor
+     * @brief Deconstructor
      */
     ~NeedleImage()
     {};
 };
+
+/**
+ * @brief Rotates an image counterclockwise by angle degrees
+ * 
+ * @param src Input image to rotate
+ * @param dst Output, rotated image
+ * @param angle Number of degrees to rotate
+ */
+void rotate(const cv::Mat &src, cv::Mat &dst, double angle);
 
 #endif

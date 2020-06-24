@@ -1,6 +1,3 @@
-#ifndef NEEDLE_POSE
-#define NEEDLE_POSE
-
 #include <opencv2/imgproc.hpp>
 #include <eigen3/Eigen/Dense>
 #include <iostream>
@@ -34,5 +31,3 @@ void NeedlePose::print()
     cout << "Rot: (x,y,z,w) = (" << q.x() << ", " << q.y() << ", " << q.z() << ", " << q.w() << ")" << endl;
     cout << "Rot: (r,p,y)   = (" << orientation.x() << ", " << orientation.y() << ", " << orientation.z() << ")" << endl;
 }
-
-#endif

@@ -1,6 +1,3 @@
-#ifndef TEMPLATE_MATCH
-#define TEMPLATE_MATCH
-
 #include <iostream>
 #include "template_match.h"
 
@@ -23,5 +20,3 @@ void TemplateMatch::drawOnImage(cv::Mat& img, const cv::Scalar& color)
 {
     rectangle(img, rect, color, pfc::line_weight, pfc::line_type, pfc::shift);
 }
-
-#endif

@@ -21,7 +21,7 @@ cv::Point3d deProjectPoints(const cv::Mat& p_l, const cv::Mat& p_r);
  * @param scale Template was scaled to
  * @param templ Template used for match (gives initial origin and template size)
  */
-cv::Mat getRotatedOrigin(double angle, double scale, NeedleTemplate* templ);
+cv::Mat getRotatedOrigin(double angle, double scale, const NeedleTemplate* templ);
 
 /**
  * @brief draws needle origin on image, given match info and rotated/scaled template

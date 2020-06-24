@@ -1,6 +1,3 @@
-#ifndef MAIN
-#define MAIN
-
 #include <string>
 #include <fstream>
 #include "pfc_initializer_constants.h"
@@ -156,5 +153,3 @@ void writeDataListToCSV(vector<vector<string>> dataList)
         data_file << "\n";
     }
 }
-
-#endif

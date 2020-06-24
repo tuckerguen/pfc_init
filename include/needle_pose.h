@@ -27,7 +27,7 @@ public:
     cv::Point3d location;
     
     /**
-     * @brief constructor
+     * @brief Constructor
      * 
      * @param location 3D location (meters)
      * @param orientation Euler angle orientation (degreees)
@@ -37,21 +37,21 @@ public:
     {}
 
     /**
-     * @brief default constructor (location=(0,0,0), orientation=(0,0,0))
+     * @brief Default constructor (location=(0,0,0), orientation=(0,0,0))
      */
     NeedlePose():
         location(cv::Point3d(0,0,0)), orientation(Eigen::Vector3f(0,0,0))
     {}
 
     /**
-     * @brief set orientation 
+     * @brief Set orientation 
      * 
      * @param new_orientation New orientation in euler angle representation (degrees
      */
     void setOrientation(Eigen::Vector3f new_orientation) { orientation = new_orientation;}
     
     /**
-     * @brief set orientation 
+     * @brief Set orientation 
      * 
      * @param q Orientation in quaternion representation
      */
@@ -63,17 +63,17 @@ public:
     }
 
     /**
-     * @brief returns orientation in euler angle representation (degrees)
+     * @brief Returns orientation in euler angle representation (degrees)
      */
     Eigen::Vector3f getEulerAngleOrientation() { return orientation; };
 
     /**
-     * @brief returns orientation in quaternion representation
+     * @brief Returns orientation in quaternion representation
      */
     Eigen::Quaternionf getQuaternionOrientation();
 
     /**
-     * @brief prints summary of pose to console
+     * @brief Prints summary of pose to console
      * 
      * @todo maybe change to toString() and allow user to print it
      */

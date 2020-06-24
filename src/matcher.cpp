@@ -34,7 +34,7 @@ TemplateMatch matchOverScaleAndRotation(const cv::Mat& img, const NeedleTemplate
         for (double rot_angle = min_rot; rot_angle < max_rot; rot_angle += rot_inc)
         {
             //Rotate template
-            rotate(rot_angle, resized, rot_templ);
+            rotate(resized, rot_templ, rot_angle);
             //Match rotated template to image
             matchAndCompare(img, rot_templ, &bestMatch, rot_angle, scale);
         }
@@ -46,11 +46,8 @@ TemplateMatch matchOverScaleAndRotation(const cv::Mat& img, const NeedleTemplate
 // Run template match and store results if this match is better than bestMatch
 void matchAndCompare(const cv::Mat &img, const cv:: Mat& templ, TemplateMatch *bestMatch, double angle, double scale)
 {
-    /// Create the result matrix
+    // Create the result matrix
     cv::Mat result;
-    int result_cols = img.cols - templ.cols + 1;
-    int result_rows = img.rows - templ.rows + 1;
-    result.create(result_rows, result_cols, CV_32FC1);
     
     //Match using TM_CCOEFF_NORMED
     cv::matchTemplate(img, templ, result, cv::TM_CCOEFF_NORMED);
