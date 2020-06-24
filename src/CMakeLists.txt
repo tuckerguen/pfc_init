@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project( OpenCV_Practice )
+project( PFC_INIT )
 set (CMAKE_CXX_STANDARD 11)
 
 set(OpenCV_INCLUDE_DIRS

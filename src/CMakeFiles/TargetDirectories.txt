@@ -1,3 +1,0 @@
-/home/tucker/research/pfc_init/src/CMakeFiles/rebuild_cache.dir
-/home/tucker/research/pfc_init/src/CMakeFiles/main.dir
-/home/tucker/research/pfc_init/src/CMakeFiles/edit_cache.dir
