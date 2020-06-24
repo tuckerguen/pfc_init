@@ -29,11 +29,9 @@ public:
     // {}
 
     NeedlePose computeNeedlePose();
-    cv::Point3d DeProjectPoints(TemplateMatch* match_l, TemplateMatch* match_r);
     vector<double> scorePoseEstimation();
     void drawNeedleOrigin(cv::Mat&img, TemplateMatch* match, cv::Scalar color);
     void displayResults();
     NeedlePose readTruePoseFromCSV();
     std::vector<string> getResultsVector();
 };
-    cv::Mat getRotatedOrigin(double angle, double scale, NeedleTemplate* templ);

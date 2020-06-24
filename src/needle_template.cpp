@@ -17,6 +17,7 @@ using namespace std;
 NeedleTemplate::NeedleTemplate(const string& path, const cv::Rect2i& rect, cv::Point2d origin, double rotation, pfc::match_params iparams)
 : NeedleImage(path), origin(origin)
 {
+    cout << origin << endl;
     // set params
     params = iparams;
 
@@ -26,11 +27,13 @@ NeedleTemplate::NeedleTemplate(const string& path, const cv::Rect2i& rect, cv::P
 
     // rotate template to align with ground truth 0 degree rotation
     rotate(rotation, image, image);
+    rotate(rotation, raw, raw);
+
     // Center initial rect at top left of template image
     initialRect = cv::Rect2i(0, 0, image.cols, image.rows);
 }
 
-//rotate an aimage by 
+//rotate an image by angle degrees
 void rotate(double angle, const cv::Mat &src, cv::Mat &dst)
 {
     // get center of original img

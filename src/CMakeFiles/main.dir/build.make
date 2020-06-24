@@ -81,9 +81,33 @@ CMakeFiles/main.dir/main.cpp.o.provides: CMakeFiles/main.dir/main.cpp.o.requires
 CMakeFiles/main.dir/main.cpp.o.provides.build: CMakeFiles/main.dir/main.cpp.o
 
 
+CMakeFiles/main.dir/pose_helper.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/pose_helper.cpp.o: pose_helper.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/pose_helper.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/pose_helper.cpp.o -c /home/tucker/research/pfc_init/src/pose_helper.cpp
+
+CMakeFiles/main.dir/pose_helper.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/pose_helper.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tucker/research/pfc_init/src/pose_helper.cpp > CMakeFiles/main.dir/pose_helper.cpp.i
+
+CMakeFiles/main.dir/pose_helper.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/pose_helper.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tucker/research/pfc_init/src/pose_helper.cpp -o CMakeFiles/main.dir/pose_helper.cpp.s
+
+CMakeFiles/main.dir/pose_helper.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/pose_helper.cpp.o.requires
+
+CMakeFiles/main.dir/pose_helper.cpp.o.provides: CMakeFiles/main.dir/pose_helper.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pose_helper.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/pose_helper.cpp.o.provides
+
+CMakeFiles/main.dir/pose_helper.cpp.o.provides.build: CMakeFiles/main.dir/pose_helper.cpp.o
+
+
 CMakeFiles/main.dir/pfc_initializer.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/pfc_initializer.cpp.o: pfc_initializer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/pfc_initializer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/pfc_initializer.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/pfc_initializer.cpp.o -c /home/tucker/research/pfc_init/src/pfc_initializer.cpp
 
 CMakeFiles/main.dir/pfc_initializer.cpp.i: cmake_force
@@ -107,7 +131,7 @@ CMakeFiles/main.dir/pfc_initializer.cpp.o.provides.build: CMakeFiles/main.dir/pf
 
 CMakeFiles/main.dir/needle_pose.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/needle_pose.cpp.o: needle_pose.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/needle_pose.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/needle_pose.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/needle_pose.cpp.o -c /home/tucker/research/pfc_init/src/needle_pose.cpp
 
 CMakeFiles/main.dir/needle_pose.cpp.i: cmake_force
@@ -131,7 +155,7 @@ CMakeFiles/main.dir/needle_pose.cpp.o.provides.build: CMakeFiles/main.dir/needle
 
 CMakeFiles/main.dir/needle_image.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/needle_image.cpp.o: needle_image.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/needle_image.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/needle_image.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/needle_image.cpp.o -c /home/tucker/research/pfc_init/src/needle_image.cpp
 
 CMakeFiles/main.dir/needle_image.cpp.i: cmake_force
@@ -155,7 +179,7 @@ CMakeFiles/main.dir/needle_image.cpp.o.provides.build: CMakeFiles/main.dir/needl
 
 CMakeFiles/main.dir/needle_template.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/needle_template.cpp.o: needle_template.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/needle_template.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/needle_template.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/needle_template.cpp.o -c /home/tucker/research/pfc_init/src/needle_template.cpp
 
 CMakeFiles/main.dir/needle_template.cpp.i: cmake_force
@@ -179,7 +203,7 @@ CMakeFiles/main.dir/needle_template.cpp.o.provides.build: CMakeFiles/main.dir/ne
 
 CMakeFiles/main.dir/template_match.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/template_match.cpp.o: template_match.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/template_match.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main.dir/template_match.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/template_match.cpp.o -c /home/tucker/research/pfc_init/src/template_match.cpp
 
 CMakeFiles/main.dir/template_match.cpp.i: cmake_force
@@ -204,6 +228,7 @@ CMakeFiles/main.dir/template_match.cpp.o.provides.build: CMakeFiles/main.dir/tem
 # Object files for target main
 main_OBJECTS = \
 "CMakeFiles/main.dir/main.cpp.o" \
+"CMakeFiles/main.dir/pose_helper.cpp.o" \
 "CMakeFiles/main.dir/pfc_initializer.cpp.o" \
 "CMakeFiles/main.dir/needle_pose.cpp.o" \
 "CMakeFiles/main.dir/needle_image.cpp.o" \
@@ -214,6 +239,7 @@ main_OBJECTS = \
 main_EXTERNAL_OBJECTS =
 
 main: CMakeFiles/main.dir/main.cpp.o
+main: CMakeFiles/main.dir/pose_helper.cpp.o
 main: CMakeFiles/main.dir/pfc_initializer.cpp.o
 main: CMakeFiles/main.dir/needle_pose.cpp.o
 main: CMakeFiles/main.dir/needle_image.cpp.o
@@ -221,7 +247,7 @@ main: CMakeFiles/main.dir/needle_template.cpp.o
 main: CMakeFiles/main.dir/template_match.cpp.o
 main: CMakeFiles/main.dir/build.make
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tucker/research/pfc_init/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -230,6 +256,7 @@ CMakeFiles/main.dir/build: main
 .PHONY : CMakeFiles/main.dir/build
 
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/main.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/pose_helper.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/pfc_initializer.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/needle_pose.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/needle_image.cpp.o.requires

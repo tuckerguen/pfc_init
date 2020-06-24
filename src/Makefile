@@ -258,6 +258,33 @@ pfc_initializer.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pfc_initializer.cpp.s
 .PHONY : pfc_initializer.cpp.s
 
+pose_helper.o: pose_helper.cpp.o
+
+.PHONY : pose_helper.o
+
+# target to build an object file
+pose_helper.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pose_helper.cpp.o
+.PHONY : pose_helper.cpp.o
+
+pose_helper.i: pose_helper.cpp.i
+
+.PHONY : pose_helper.i
+
+# target to preprocess a source file
+pose_helper.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pose_helper.cpp.i
+.PHONY : pose_helper.cpp.i
+
+pose_helper.s: pose_helper.cpp.s
+
+.PHONY : pose_helper.s
+
+# target to generate assembly for a file
+pose_helper.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pose_helper.cpp.s
+.PHONY : pose_helper.cpp.s
+
 template_match.o: template_match.cpp.o
 
 .PHONY : template_match.o
@@ -309,6 +336,9 @@ help:
 	@echo "... pfc_initializer.o"
 	@echo "... pfc_initializer.i"
 	@echo "... pfc_initializer.s"
+	@echo "... pose_helper.o"
+	@echo "... pose_helper.i"
+	@echo "... pose_helper.s"
 	@echo "... template_match.o"
 	@echo "... template_match.i"
 	@echo "... template_match.s"

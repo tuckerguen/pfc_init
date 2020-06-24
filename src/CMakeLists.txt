@@ -27,6 +27,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})
 
 add_executable(main main.cpp 
+  pose_helper.cpp
   pfc_initializer.cpp 
   needle_pose.cpp 
   needle_image.cpp 

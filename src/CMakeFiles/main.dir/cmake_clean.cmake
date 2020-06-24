@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/main.cpp.o"
+  "CMakeFiles/main.dir/pose_helper.cpp.o"
   "CMakeFiles/main.dir/pfc_initializer.cpp.o"
   "CMakeFiles/main.dir/needle_pose.cpp.o"
   "CMakeFiles/main.dir/needle_image.cpp.o"

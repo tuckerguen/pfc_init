@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/tucker/research/pfc_init/src/needle_pose.cpp" "/home/tucker/research/pfc_init/src/CMakeFiles/main.dir/needle_pose.cpp.o"
   "/home/tucker/research/pfc_init/src/needle_template.cpp" "/home/tucker/research/pfc_init/src/CMakeFiles/main.dir/needle_template.cpp.o"
   "/home/tucker/research/pfc_init/src/pfc_initializer.cpp" "/home/tucker/research/pfc_init/src/CMakeFiles/main.dir/pfc_initializer.cpp.o"
+  "/home/tucker/research/pfc_init/src/pose_helper.cpp" "/home/tucker/research/pfc_init/src/CMakeFiles/main.dir/pose_helper.cpp.o"
   "/home/tucker/research/pfc_init/src/template_match.cpp" "/home/tucker/research/pfc_init/src/CMakeFiles/main.dir/template_match.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
