@@ -34,7 +34,7 @@ public:
      * 
      * @param path Path to the image 
      */
-    explicit NeedleImage(const std::string path);
+    explicit NeedleImage(const std::string& path);
 
     /**
      * @brief Deconstructor

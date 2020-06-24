@@ -1,8 +1,5 @@
-#include <fstream>
 #include <vector>
-#include <iterator>
 #include <string>
-#include <algorithm>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 #include "csv_reader.h"

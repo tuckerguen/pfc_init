@@ -41,7 +41,7 @@ public:
      * @param rotation Initial rotation of raw image to align final template with ground truth 0 rotation
      * @param iparams Min/max rotation and scale parameters
      */
-    NeedleTemplate(const std::string& path, const cv::Rect2i& rect, cv::Point2d origin, double rotation, pfc::match_params iparams);
+    NeedleTemplate(const std::string& path, const cv::Rect2i& rect, const cv::Point2d& origin, double rotation, pfc::match_params iparams);
 
     /**
      * @brief Default constructor (origin=(52,9), rect=(287,205,105,56), img_path="../imgs/raw/0_l_c_fatty.png")

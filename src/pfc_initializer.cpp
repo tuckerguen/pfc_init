@@ -1,22 +1,18 @@
-#include "pfc_initializer.h"
-#include "needle_image.h"
-#include "needle_template.h"
-#include "template_match.h"
-#include "needle_pose.h"
-#include "csv_reader.h"
 #include <string>
-#include <opencv2/core.hpp>
 #include <iostream>
+#include <opencv2/core.hpp>
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Core>
-#include <opencv2/sfm/triangulation.hpp>
 #include "pose_helper.h"
 #include "matcher.h"
+#include "pfc_initializer.h"
+#include "needle_template.h"
+#include "needle_pose.h"
 
 using namespace std;
 
 // Calculates needle pose from images (primary function for use in particle filter)
-// Stores pose in object
+// Stores pose in this object
 void PfcInitializer::run(bool print_results)
 {
     // Start timer

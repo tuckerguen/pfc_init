@@ -79,10 +79,10 @@ void drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color, Need
     cv::Mat needle_origin = getRotatedOrigin(match->angle, match->scale, templ);
 
     // Draw point
-    cv::circle(img, 
-            cv::Point(match->needle_origin.at<double>(0), 
+    cv::circle(img,
+            cv::Point(match->needle_origin.at<double>(0),
                   match->needle_origin.at<double>(1)),
-            0.1, color, 1, 8, 0);
+            0, color, 1, 8, 0);
 }
 
 //Prints and returns location and orientation error between given pose and ground truth

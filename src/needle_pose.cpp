@@ -1,4 +1,3 @@
-#include <opencv2/imgproc.hpp>
 #include <eigen3/Eigen/Dense>
 #include <iostream>
 #include "needle_pose.h"

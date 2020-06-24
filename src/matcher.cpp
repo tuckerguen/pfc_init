@@ -1,8 +1,6 @@
 #include "needle_image.h"
 #include "needle_template.h"
 #include "template_match.h"
-#include "needle_pose.h"
-#include "pfc_initializer_constants.h"
 #include "matcher.h"
 
 // Template match template on base image over range of scales and rotations

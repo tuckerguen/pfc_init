@@ -76,7 +76,7 @@ public:
      * 
      * @param name Title to be printed with the match (probably "right" or "left")
      */
-    void printMatchSummary(std::string name);    
+    void printMatchSummary(const std::string& name);
 
     /**
      * @brief Draws the match bounding rectangle on the image

@@ -4,7 +4,7 @@
 using namespace std;
 
 // Format and print details of the match
-void TemplateMatch::printMatchSummary(string name)
+void TemplateMatch::printMatchSummary(const string& name)
 {
     cout << "----------------------------------------------------------------------" << endl;
     cout << "Match Summary: " + name << endl;
