@@ -15,12 +15,69 @@ void writeDataListToCSV(vector<vector<string>> dataList);
 
 int main(int argc, char** argv)
 {
-    // vector<string> results = runForPoseAndType(stoi(argv[1]), argv[2], true);
+    if(argc == 5)
+    {
+        string cheat_str = argv[3];
+        string print_str = argv[4];
+        
+        bool print = true;
+        bool cheat = true;
 
-    // // vector<vector<string>> data_list = {results};
-    
-    vector<vector<string>> data_list = runOnAllData(true, false);
-    writeDataListToCSV(data_list);
+        if(cheat_str == "false")
+            cheat = false;
+        else if(cheat_str != "true")
+        {
+            cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
+            cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
+            return 0; 
+        }
+
+        if(print_str == "false")
+            print = false;
+        else if(print_str != "true")
+        {
+            cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
+            cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
+            return 0; 
+        }
+
+        vector<string> results = runForPoseAndType(stoi(argv[1]), argv[2], cheat, print);
+    }
+    else if (argc == 3)
+    {
+        string cheat_str = argv[1];
+        string print_str = argv[2];
+        
+        bool print = true;
+        bool cheat = true;
+
+        if(cheat_str == "false")
+            cheat = false;
+        else if(cheat_str != "true")
+        {
+            cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
+            cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
+            return 0; 
+        }
+
+        if(print_str == "false")
+            print = false;
+        else if(print_str != "true")
+        {
+            cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
+            cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
+            return 0; 
+        }
+
+        vector<vector<string>> data_list = runOnAllData(cheat, print);
+        writeDataListToCSV(data_list);
+    }
+    else
+    {
+        cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
+        cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
+        return 0;
+    }
 }
 
 vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print)
