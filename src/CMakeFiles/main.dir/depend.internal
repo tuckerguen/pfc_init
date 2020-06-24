@@ -13,6 +13,14 @@ CMakeFiles/main.dir/main.cpp.o
  ../include/pose_helper.h
  ../include/template_match.h
  /home/tucker/research/pfc_init/src/main.cpp
+CMakeFiles/main.dir/matcher.cpp.o
+ ../include/matcher.h
+ ../include/needle_image.h
+ ../include/needle_pose.h
+ ../include/needle_template.h
+ ../include/pfc_initializer_constants.h
+ ../include/template_match.h
+ /home/tucker/research/pfc_init/src/matcher.cpp
 CMakeFiles/main.dir/needle_image.cpp.o
  ../include/needle_image.h
  ../include/pfc_initializer_constants.h
@@ -29,6 +37,7 @@ CMakeFiles/main.dir/needle_template.cpp.o
  /home/tucker/research/pfc_init/src/needle_template.cpp
 CMakeFiles/main.dir/pfc_initializer.cpp.o
  ../include/csv_reader.h
+ ../include/matcher.h
  ../include/needle_image.h
  ../include/needle_pose.h
  ../include/needle_template.h

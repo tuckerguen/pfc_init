@@ -14,6 +14,7 @@
 #include <eigen3/Eigen/Core>
 #include <opencv2/sfm/triangulation.hpp>
 #include "pose_helper.h"
+#include "matcher.h"
 
 using namespace std;
 
@@ -40,8 +41,8 @@ void PfcInitializer::run(bool print_results)
 void PfcInitializer::computeNeedlePose()
 {
     // Perform template match on left and right images
-    match_l = templ.matchOverScaleAndRotation(left_image.image);
-    match_r = templ.matchOverScaleAndRotation(right_image.image);
+    match_l = matchOverScaleAndRotation(left_image.image, &templ);
+    match_r = matchOverScaleAndRotation(right_image.image, &templ);
     
     //Initialize left and right needle pixel locations
     cv::Mat p_l(2, 1, CV_64FC1);

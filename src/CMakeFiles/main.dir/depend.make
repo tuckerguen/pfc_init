@@ -13,6 +13,14 @@ CMakeFiles/main.dir/main.cpp.o: ../include/pose_helper.h
 CMakeFiles/main.dir/main.cpp.o: ../include/template_match.h
 CMakeFiles/main.dir/main.cpp.o: main.cpp
 
+CMakeFiles/main.dir/matcher.cpp.o: ../include/matcher.h
+CMakeFiles/main.dir/matcher.cpp.o: ../include/needle_image.h
+CMakeFiles/main.dir/matcher.cpp.o: ../include/needle_pose.h
+CMakeFiles/main.dir/matcher.cpp.o: ../include/needle_template.h
+CMakeFiles/main.dir/matcher.cpp.o: ../include/pfc_initializer_constants.h
+CMakeFiles/main.dir/matcher.cpp.o: ../include/template_match.h
+CMakeFiles/main.dir/matcher.cpp.o: matcher.cpp
+
 CMakeFiles/main.dir/needle_image.cpp.o: ../include/needle_image.h
 CMakeFiles/main.dir/needle_image.cpp.o: ../include/pfc_initializer_constants.h
 CMakeFiles/main.dir/needle_image.cpp.o: needle_image.cpp
@@ -28,6 +36,7 @@ CMakeFiles/main.dir/needle_template.cpp.o: ../include/template_match.h
 CMakeFiles/main.dir/needle_template.cpp.o: needle_template.cpp
 
 CMakeFiles/main.dir/pfc_initializer.cpp.o: ../include/csv_reader.h
+CMakeFiles/main.dir/pfc_initializer.cpp.o: ../include/matcher.h
 CMakeFiles/main.dir/pfc_initializer.cpp.o: ../include/needle_image.h
 CMakeFiles/main.dir/pfc_initializer.cpp.o: ../include/needle_pose.h
 CMakeFiles/main.dir/pfc_initializer.cpp.o: ../include/needle_template.h

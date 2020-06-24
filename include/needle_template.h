@@ -57,14 +57,8 @@ public:
      */
     ~NeedleTemplate()
     {};
-
-
-    //TODO: Pack parameters into a MatchingParameters struct or something
-    TemplateMatch matchOverScaleAndRotation(const cv::Mat& base_img);
 };
 
-//TODO: Move this to a different file? Probably doesn't make sense here
-void match(const cv::Mat &img, const cv::Mat& templ, TemplateMatch *bestMatch, double angle, double scale);
 void rotate(double degrees, const cv::Mat &src, cv::Mat &dst);
 
 

@@ -177,6 +177,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+matcher.o: matcher.cpp.o
+
+.PHONY : matcher.o
+
+# target to build an object file
+matcher.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/matcher.cpp.o
+.PHONY : matcher.cpp.o
+
+matcher.i: matcher.cpp.i
+
+.PHONY : matcher.i
+
+# target to preprocess a source file
+matcher.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/matcher.cpp.i
+.PHONY : matcher.cpp.i
+
+matcher.s: matcher.cpp.s
+
+.PHONY : matcher.s
+
+# target to generate assembly for a file
+matcher.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/matcher.cpp.s
+.PHONY : matcher.cpp.s
+
 needle_image.o: needle_image.cpp.o
 
 .PHONY : needle_image.o
@@ -354,6 +381,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... matcher.o"
+	@echo "... matcher.i"
+	@echo "... matcher.s"
 	@echo "... needle_image.o"
 	@echo "... needle_image.i"
 	@echo "... needle_image.s"

@@ -78,6 +78,9 @@
 		<Unit filename="/home/tucker/research/pfc_init/src/main.cpp">
 			<Option target="main"/>
 		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/matcher.cpp">
+			<Option target="main"/>
+		</Unit>
 		<Unit filename="/home/tucker/research/pfc_init/src/needle_image.cpp">
 			<Option target="main"/>
 		</Unit>

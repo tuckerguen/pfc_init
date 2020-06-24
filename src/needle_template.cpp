@@ -32,6 +32,7 @@ NeedleTemplate::NeedleTemplate(const string& path, const cv::Rect2i& rect, cv::P
     initialRect = cv::Rect2i(0, 0, image.cols, image.rows);
 }
 
+//TODO: Make this a member function
 //rotate an image by angle degrees
 void rotate(double angle, const cv::Mat &src, cv::Mat &dst)
 {
@@ -49,69 +50,6 @@ void rotate(double angle, const cv::Mat &src, cv::Mat &dst)
     rot.at<double>(1, 2) += bbox.height / 2.0 - src.rows / 2.0;
     //apply matrix transformation
     warpAffine(src, dst, rot, bbox.size());
-}
-
-TemplateMatch NeedleTemplate::matchOverScaleAndRotation(const cv::Mat& img)
-{
-    TemplateMatch bestMatch(params.min_rotation, -DBL_MAX, params.min_scale);
-    double scale = params.min_scale / 100.0;
- 
-    for (int i = 0; i < ceil((params.max_scale - params.min_scale) / params.scale_increment); ++i)
-    {
-        scale += ((double)params.scale_increment) / 100.0;
-
-        cv::Mat resized, rot_templ;
-
-        //Use inter-linear in all cases (is faster than inter_area, similar results)
-        cv::resize(image, resized, cv::Size(), scale, scale, cv::INTER_LINEAR);
-
-        for (double rot_angle = params.min_rotation; rot_angle < params.max_rotation; rot_angle += params.rotation_increment)
-        {
-            //Rotate template
-            rotate(rot_angle, resized, rot_templ);
-            //Match rotated template to image
-            match(img, rot_templ, &bestMatch, rot_angle, scale);
-        }
-    }
-
-    return bestMatch;
-}
-
-void match(const cv::Mat &img, const cv:: Mat& templ, TemplateMatch *bestMatch, double angle, double scale)
-{
-    /// Create the result matrix
-    cv::Mat result;
-    int result_cols = img.cols - templ.cols + 1;
-    int result_rows = img.rows - templ.rows + 1;
-    result.create(result_rows, result_cols, CV_32FC1);
-    
-    //Match using TM_CCOEFF_NORMED
-    cv::matchTemplate(img, templ, result, cv::TM_CCOEFF_NORMED);
-
-    /// Localizing the best match with minMaxLoc
-    double minVal;
-    double maxVal;
-    cv::Point minLoc;
-    cv::Point maxLoc;
-    cv::Point matchLoc;
-    cv::minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat());
-
-    //If the new match is better than our previous best, record it
-    if (bestMatch->score < maxVal)
-    {
-        bestMatch->score = maxVal;
-        if(angle > 180.0)
-            bestMatch->angle = 360 - angle;
-        else
-            bestMatch->angle = -angle;
-        bestMatch->scale = scale;
-        bestMatch->rect.x = maxLoc.x;
-        bestMatch->rect.y = maxLoc.y;
-        bestMatch->rect.width = templ.cols;
-        bestMatch->rect.height = templ.rows;
-        bestMatch->result = result;
-        bestMatch->templ = templ;
-    }
 }
 
 #endif

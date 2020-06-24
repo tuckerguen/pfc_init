@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/csv_reader.cpp.o"
   "CMakeFiles/main.dir/main.cpp.o"
+  "CMakeFiles/main.dir/matcher.cpp.o"
   "CMakeFiles/main.dir/needle_image.cpp.o"
   "CMakeFiles/main.dir/needle_pose.cpp.o"
   "CMakeFiles/main.dir/needle_template.cpp.o"

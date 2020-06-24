@@ -34,6 +34,7 @@ add_executable(main main.cpp
   template_match.cpp
   pose_helper.cpp
   csv_reader.cpp
+  matcher.cpp
         )
 
 target_link_libraries(main ${OpenCV_LIBS})
