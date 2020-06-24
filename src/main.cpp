@@ -6,7 +6,6 @@
 #include "pfc_initializer_constants.h"
 #include <fstream>
 
-
 using namespace std;
 
 vector<string> runForPoseAndType(int pose_id, string img_type);
@@ -50,6 +49,9 @@ vector<string> runForPoseAndType(int pose_id, string img_type)
 
     PfcInitializer pfc(left_img_path, right_img_path, pose_id, params);
 
+
+    //TODO: Put this stuff in a run() function on PfcInitialzier
+    //You should be able to just create the object and do pfc.run
     //Start timer
     double t = (double)cv::getTickCount();
     

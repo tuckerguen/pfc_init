@@ -77,22 +77,12 @@ vector<double> PfcInitializer::scorePoseEstimation()
     return results;
 }
 
-void PfcInitializer::drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color){
-    cv::Mat needle_origin = getRotatedOrigin(match->angle, match->scale, &templ);
-
-    cv::circle(img, 
-            cv::Point(match->needle_origin.at<double>(0), 
-                  match->needle_origin.at<double>(1)),
-            0.1, color, 1, 8, 0);
-}
-
-
 void PfcInitializer::displayResults()
 {
     match_l.drawOnImage(left_image.raw, cv::Scalar::all(255));
     match_r.drawOnImage(right_image.raw, cv::Scalar::all(255));
-    drawNeedleOrigin(left_image.raw, &match_l, cv::Scalar::all(255)); 
-    drawNeedleOrigin(right_image.raw, &match_r, cv::Scalar::all(255)); 
+    drawNeedleOrigin(left_image.raw, &match_l, cv::Scalar::all(255), &templ); 
+    drawNeedleOrigin(right_image.raw, &match_r, cv::Scalar::all(255), &templ); 
 
     match_l.printMatchSummary("Left");
     match_r.printMatchSummary("Right");
@@ -112,6 +102,8 @@ void PfcInitializer::displayResults()
     cv::imwrite("raw_OUT.png", left_image.raw);
     cv::imwrite("template_OUT.png", match_l.templ);
     cv::waitKey(0);
+
+    cv::destroyAllWindows();
 }
 
 NeedlePose PfcInitializer::readTruePoseFromCSV()

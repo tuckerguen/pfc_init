@@ -34,6 +34,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/home/tucker/research/pfc_init/src/../include"/>
 					<Add directory="/usr/local/include/opencv2"/>
 				</Compiler>
 				<MakeCommands>
@@ -50,6 +51,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/home/tucker/research/pfc_init/src/../include"/>
 					<Add directory="/usr/local/include/opencv2"/>
 				</Compiler>
 				<MakeCommands>
@@ -70,37 +72,25 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/tucker/research/pfc_init/src/NeedleImage.cpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/NeedleImage.hpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/NeedlePose.cpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/NeedlePose.hpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/NeedleTemplate.cpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/NeedleTemplate.hpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/PfcInit.cpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/PfcInit.hpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/TemplateMatch.cpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/home/tucker/research/pfc_init/src/TemplateMatch.hpp">
-			<Option target="main"/>
-		</Unit>
 		<Unit filename="/home/tucker/research/pfc_init/src/main.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/needle_image.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/needle_pose.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/needle_template.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/pfc_initializer.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/pose_helper.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/tucker/research/pfc_init/src/template_match.cpp">
 			<Option target="main"/>
 		</Unit>
 		<Unit filename="/home/tucker/research/pfc_init/src/CMakeLists.txt">

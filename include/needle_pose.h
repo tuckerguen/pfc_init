@@ -29,8 +29,8 @@ public:
     /**
      * @brief constructor
      * 
-     * @param 3D location (meters)
-     * @param Euler angle orientation (degreees)
+     * @param location 3D location (meters)
+     * @param orientation Euler angle orientation (degreees)
      */
     NeedlePose(cv::Point3d location, Eigen::Vector3f orientation) :
         location(location), orientation(orientation) 
@@ -46,14 +46,14 @@ public:
     /**
      * @brief set orientation 
      * 
-     * @param orientation in euler angle representation (degrees
+     * @param new_orientation New orientation in euler angle representation (degrees
      */
     void setOrientation(Eigen::Vector3f new_orientation) { orientation = new_orientation;}
     
     /**
      * @brief set orientation 
      * 
-     * @param orientation in quaternion representation
+     * @param q Orientation in quaternion representation
      */
     void setOrientation(Eigen::Quaternionf q) { 
         // convert to euler angles

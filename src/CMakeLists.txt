@@ -27,12 +27,14 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})
 
 add_executable(main main.cpp 
-  pose_helper.cpp
-  pfc_initializer.cpp 
+  pfc_initializer.cpp
   needle_pose.cpp 
   needle_image.cpp 
   needle_template.cpp 
-  template_match.cpp)
+  template_match.cpp
+  pose_helper.cpp
+  csv_reader.cpp
+        )
 
 target_link_libraries(main ${OpenCV_LIBS})
 

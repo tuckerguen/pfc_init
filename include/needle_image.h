@@ -32,7 +32,7 @@ public:
     /**
      * @brief the explicit constructor
      * 
-     * @param the path to the image 
+     * @param path Path to the image 
      */
     explicit NeedleImage(const std::string path);
 
