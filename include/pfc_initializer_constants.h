@@ -7,7 +7,7 @@ namespace pfc {
     //Template parameters
     const std::string templ_path = "../imgs/raw/0_l_c_fatty.png";
     const cv::Rect2i initial_rect(287,205,105,56);
-    const cv::Point2d origin(54,9);
+    const cv::Point2d origin(52,4);
     const double initial_rotation = -176.6537;
 
     // Template Match Rotation Parameters
