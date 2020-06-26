@@ -57,7 +57,8 @@ void PfcInitializer::computeNeedlePose()
     // Get 3D location of needle
     cv::Point3d location = deProjectPoints(p_l, p_r);
     // Get Euler angle orientation
-    Eigen::Vector3f orientation(0.0, 0.0, match_l.getAngleDegrees());
+    double average_yaw = (match_l.getAngleDegrees() + match_r.getAngleDegrees()) / 2.0;
+    Eigen::Vector3f orientation(0.0, 0.0, average_yaw);
     
     // Store location/orientation
     pose = NeedlePose(location, orientation);
