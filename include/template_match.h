@@ -55,6 +55,20 @@ public:
     {} 
 
     /**
+     * @brief Constructor
+     * 
+     * @param angle  Angle (degrees) template was rotated at match
+     * @param score  Match quality value given to match by cv::matchTemplate()
+     * @param scale  Scale template was scaled by at match
+     * @param rect   Rectangle representing bounds of template in matched image
+     * @param result Result image returned by cv::matchTemplate()
+     * @param templ  Template used in match
+     */
+    TemplateMatch(double angle, double score, double scale, cv::Rect2i rect, cv::Mat result, cv::Mat templ) : 
+        angle(angle), score(score), scale(scale), rect(rect), result(result), templ(templ) 
+    {} 
+
+    /**
      * @brief Default constructor (angle=0, score=-DBL_MAX, scale=1, rect=(0,0,0,0))
      */
     TemplateMatch() : 

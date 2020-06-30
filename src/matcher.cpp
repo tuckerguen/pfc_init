@@ -6,6 +6,13 @@
 // Template match template on base image over range of scales and rotations
 TemplateMatch matchOverScaleAndRotation(const cv::Mat& img, const NeedleTemplate* templ)
 {
+    // Note: this "params" setup isn't necessary for final implementation.
+    // This is only used to "cheat" the system by allowing for known poses
+    // to have their scale and rotation bounds preloaded from the 
+    // PfcInitConstants.hpp file. In a final implementation, the 
+    // rotation and scaling ranges and increments would just be
+    // referenced directly from the PfcInitConstants.hpp file, or 
+    // some other configuration file
     double min_rot = templ->params.min_rotation;
     double max_rot = templ->params.max_rotation;
     double rot_inc = templ->params.rotation_increment;
@@ -14,7 +21,7 @@ TemplateMatch matchOverScaleAndRotation(const cv::Mat& img, const NeedleTemplate
     double scl_inc = templ->params.scale_increment;
 
     // initialize best match with minimum rot, scale, score
-    TemplateMatch bestMatch(min_rot, -DBL_MAX, min_scl);
+    TemplateMatch best_match(min_rot, -DBL_MAX, min_scl);
     
     // Reduce scale from % to decimal
     double scale = min_scl / 100.0;
@@ -33,17 +40,25 @@ TemplateMatch matchOverScaleAndRotation(const cv::Mat& img, const NeedleTemplate
         {
             //Rotate template
             rotate(resized, rot_templ, rot_angle);
+
             //Match rotated template to image
-            matchAndCompare(img, rot_templ, &bestMatch, rot_angle, scale);
+            TemplateMatch new_match = match(img, rot_templ, rot_angle, scale);
+     
+            //If the new match is better than our previous best, record it
+            if (best_match.score < new_match.score)
+            {
+                best_match = new_match;
+            }
         }
     }
 
-    return bestMatch;
+    return best_match;
 }
 
 // Run template match and store results if this match is better than bestMatch
-void matchAndCompare(const cv::Mat &img, const cv:: Mat& templ, TemplateMatch *bestMatch, double angle, double scale)
+TemplateMatch match(const cv::Mat &img, const cv:: Mat& templ, double angle, double scale)
 {
+
     // Create the result matrix
     cv::Mat result;
     
@@ -58,20 +73,18 @@ void matchAndCompare(const cv::Mat &img, const cv:: Mat& templ, TemplateMatch *b
     cv::Point matchLoc;
     cv::minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat());
 
-    //If the new match is better than our previous best, record it
-    if (bestMatch->score < maxVal)
+    // Create template match 
+    cv::Rect2i rect(maxLoc.x, maxLoc.y, templ.cols, templ.rows);
+
+    TemplateMatch match = 
     {
-        bestMatch->score = maxVal;
-        if(angle > 180.0)
-            bestMatch->angle = 360 - angle;
-        else
-            bestMatch->angle = -angle;
-        bestMatch->scale = scale;
-        bestMatch->rect.x = maxLoc.x;
-        bestMatch->rect.y = maxLoc.y;
-        bestMatch->rect.width = templ.cols;
-        bestMatch->rect.height = templ.rows;
-        bestMatch->result = result;
-        bestMatch->templ = templ;
-    }
+        angle > 180 ? (360 - angle) : -angle, 
+        maxVal,
+        scale,
+        rect,
+        result,
+        templ
+    };
+
+    return match;
 }

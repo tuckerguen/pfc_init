@@ -11,14 +11,10 @@ TemplateMatch matchOverScaleAndRotation(const cv::Mat& base_img, const NeedleTem
 
 
 /**
- * @brief Run template match and store results if this match is better than bestMatch
+ * @brief Run template match and return a match object storing match details
  * 
  * @param img The base image to match template to
  * @param templ The template to match onto the image
- * @param bestMatch The current best match (by score)
- * @param angle Angle of rotation or template (degrees)
- * @param scale Scale of template
  */
-void matchAndCompare(const cv::Mat &img, const cv::Mat& templ, TemplateMatch *bestMatch, double angle, double scale);
-
+TemplateMatch match(const cv::Mat &img, const cv:: Mat& templ, double angle, double scale);
 
