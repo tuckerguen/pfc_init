@@ -26,6 +26,8 @@ include_directories("../include/")
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})
 
+find_package (Threads)
+
 add_executable(main main.cpp 
   pfc_initializer.cpp
   needle_pose.cpp 
@@ -35,8 +37,9 @@ add_executable(main main.cpp
   pose_helper.cpp
   csv_reader.cpp
   matcher.cpp
-        )
+)
 
 target_link_libraries(main ${OpenCV_LIBS})
+target_link_libraries (main Threads::Threads)
 
 

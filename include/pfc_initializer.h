@@ -13,7 +13,7 @@ private:
     /**
      * @brief Computes pose of needle from the left and right stereo images
      */
-    void computeNeedlePose();
+    void computeNeedlePose(bool multi_thread);
 
     /**
      * @brief Prints results of initilization to console
@@ -53,7 +53,7 @@ public:
 
     /**
      * @brief Constructor
-     * TODO: Doc this once we decided on fields
+     * TODO: Doc this once we decide on fields
      */
     PfcInitializer(string left_image_path, string right_image_path, pfc::match_params params)
         : left_image(left_image_path), right_image(right_image_path), 
@@ -64,8 +64,9 @@ public:
      * @brief Runs the initializer, stores the needle pose in initializer
      * 
      * @param print_results If function should print results to console
+     * @param multi_thread Use threaded version of match
      */
-    void run(bool print_results);
+    void run(bool print_results, bool multi_thread);
 
     /**
      * @brief Returns the results of initialization as a vector

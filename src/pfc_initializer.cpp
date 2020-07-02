@@ -13,12 +13,12 @@ using namespace std;
 
 // Calculates needle pose from images (primary function for use in particle filter)
 // Stores pose in this object
-void PfcInitializer::run(bool print_results)
+void PfcInitializer::run(bool print_results, bool multi_thread)
 {
     // Start timer
     double t = (double)cv::getTickCount();
 
-    computeNeedlePose();
+    computeNeedlePose(multi_thread);
     
     //Stop timer
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
@@ -31,11 +31,19 @@ void PfcInitializer::run(bool print_results)
 }
 
 // Computes pose of needle from the left and right stereo images
-void PfcInitializer::computeNeedlePose()
+void PfcInitializer::computeNeedlePose(bool multi_thread)
 {
     // Perform template match on left and right images
-    match_l = matchOverScaleAndRotation(left_image.image, &templ);
-    match_r = matchOverScaleAndRotation(right_image.image, &templ);
+    if(multi_thread)
+    {
+        match_l = matchThreaded(left_image.image, templ);
+        match_r = matchThreaded(right_image.image, templ);
+    }
+    else
+    {
+        match_l = match(left_image.image, templ);
+        match_r = match(right_image.image, templ);
+    }
     
     //Initialize left and right needle pixel locations
     cv::Mat p_l(2, 1, CV_64FC1);

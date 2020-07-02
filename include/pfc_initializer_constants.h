@@ -39,16 +39,16 @@ namespace pfc {
     const int num_img_types = 4;
     const std::vector<std::string> img_types = {"fatty", "marked", "red", "tan"};
     const std::vector<double> min_rot = {
-        174, 140, 159, 212, 212, 248, 174, 198, 165, 89
+        150, 140, 159, 212, 212, 248, 174, 198, 165, 89
     };
     const std::vector<double> max_rot = {
-        179, 145, 164, 217, 217, 253, 179, 203, 170, 94
+        190, 145, 164, 217, 217, 253, 179, 203, 170, 94
     };
     const std::vector<int> min_scl = {
-        98, 98, 135, 105, 90, 90, 190, 107, 139, 116
+        80, 98, 135, 105, 90, 90, 190, 107, 139, 116
     };
     const std::vector<int> max_scl = {
-        102, 102, 145, 115, 100, 100, 200, 117, 149, 126
+        120, 102, 145, 115, 100, 100, 200, 117, 149, 126
     };
 
 

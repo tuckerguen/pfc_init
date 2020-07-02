@@ -6,78 +6,62 @@
 
 using namespace std;
 
-vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print);
-vector<vector<string>> runOnAllData(bool cheat, bool print);
+vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print, bool thread);
+vector<vector<string>> runOnAllData(bool cheat, bool print, bool thread);
 void writeDataListToCSV(vector<vector<string>> dataList);
+bool processArgBool(string str);
+
+string use_msg_one = "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)> <thread(t/f)>" ;
+string use_msg_all = "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)> <thread(t/f)>";
+
+bool processArgBool(string str)
+{
+    if(str == "false")
+        return false;
+    else if(str != "true")
+    {
+        cout << use_msg_one << endl;
+        cout <<  use_msg_all<< endl;
+    }
+    return true;
+}
 
 int main(int argc, char** argv)
-{
-    if(argc == 5)
+{ 
+    if(argc == 6)
     {
         string cheat_str = argv[3];
         string print_str = argv[4];
+        string thread_str = argv[5];
         
-        bool print = true;
-        bool cheat = true;
+        bool print = processArgBool(print_str);
+        bool cheat = processArgBool(cheat_str);
+        bool thread = processArgBool(thread_str);
 
-        if(cheat_str == "false")
-            cheat = false;
-        else if(cheat_str != "true")
-        {
-            cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
-            cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
-            return 0; 
-        }
-
-        if(print_str == "false")
-            print = false;
-        else if(print_str != "true")
-        {
-            cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
-            cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
-            return 0; 
-        }
-
-        vector<string> results = runForPoseAndType(stoi(argv[1]), argv[2], cheat, print);
+        vector<string> results = runForPoseAndType(stoi(argv[1]), argv[2], cheat, print, thread);
     }
-    else if (argc == 3)
+    else if (argc == 4)
     {
         string cheat_str = argv[1];
         string print_str = argv[2];
+        string thread_str = argv[3];
         
-        bool print = true;
-        bool cheat = true;
+        bool print = processArgBool(print_str);
+        bool cheat = processArgBool(cheat_str);
+        bool thread = processArgBool(thread_str);
 
-        if(cheat_str == "false")
-            cheat = false;
-        else if(cheat_str != "true")
-        {
-            cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
-            cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
-            return 0; 
-        }
-
-        if(print_str == "false")
-            print = false;
-        else if(print_str != "true")
-        {
-            cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
-            cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
-            return 0; 
-        }
-
-        vector<vector<string>> data_list = runOnAllData(cheat, print);
+        vector<vector<string>> data_list = runOnAllData(cheat, print, thread);
         writeDataListToCSV(data_list);
     }
     else
     {
-        cout << "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)>" << endl;
-        cout << "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)>" << endl;
+        cout << use_msg_one << endl;
+        cout << use_msg_all << endl;
         return 0;
     }
 }
 
-vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print)
+vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print, bool thread)
 {
     string left_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_l_c_" + img_type + ".png";
     string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_" + img_type + ".png";
@@ -87,7 +71,7 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
         360,
         1,
         98,
-        200,
+        120,
         1
     };
 
@@ -105,7 +89,7 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
 
 
     PfcInitializer pfc(left_img_path, right_img_path, params);
-    pfc.run(print);
+    pfc.run(print, thread);
 
     // Get results back as vector
     vector<string> results = pfc.getResultsAsVector();
@@ -117,7 +101,7 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
     return results;
 }
 
-vector<vector<string>> runOnAllData(bool cheat, bool print)
+vector<vector<string>> runOnAllData(bool cheat, bool print, bool thread)
 {
     vector<vector<string> > dataList;
 
@@ -125,7 +109,7 @@ vector<vector<string>> runOnAllData(bool cheat, bool print)
         for(int j = 0; j < pfc::num_img_types; j++){
             string img_type = pfc::img_types.at(j);
             cout << "Running for: " << pose_id << ", " << img_type << endl;
-            vector<string> data = runForPoseAndType(pose_id, img_type, cheat, print);
+            vector<string> data = runForPoseAndType(pose_id, img_type, cheat, print, thread);
             dataList.push_back(data);
         }
     }

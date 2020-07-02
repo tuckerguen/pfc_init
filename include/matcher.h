@@ -7,8 +7,16 @@
  * @param base_img Image to match template to
  * @param templ Needle template object with template to match with and scale/rotation parameters
  */
-TemplateMatch matchOverScaleAndRotation(const cv::Mat& base_img, const NeedleTemplate* templ);
+TemplateMatch match(const cv::Mat& base_img, const NeedleTemplate templ);
 
+/**
+ * @brief Equivalent to match, but scale range is divided amongst a number of parallel threads. 
+ * The number of threads is the number of useable cpu cores returned by get_nprocs() from sys/sysinfo.h
+ * 
+ * @param base_img Image to match template to
+ * @param templ Needle template object with template to match with and scale/rotation parameters
+ */
+TemplateMatch matchThreaded(const cv::Mat& img, NeedleTemplate templ);
 
 /**
  * @brief Run template match and return a match object storing match details
@@ -16,5 +24,5 @@ TemplateMatch matchOverScaleAndRotation(const cv::Mat& base_img, const NeedleTem
  * @param img The base image to match template to
  * @param templ The template to match onto the image
  */
-TemplateMatch match(const cv::Mat &img, const cv:: Mat& templ, double angle, double scale);
+TemplateMatch getMatch(const cv::Mat &img, const cv:: Mat& templ, double angle, double scale);
 

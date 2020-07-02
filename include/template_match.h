@@ -75,6 +75,8 @@ public:
         angle(0), score(-DBL_MAX), scale(1), rect(0,0,0,0), result() 
     {} 
 
+    // TemplateMatch(TemplateMatch &&) = default;
+
     /**
      * @brief Returns the match angle in degrees
      */
