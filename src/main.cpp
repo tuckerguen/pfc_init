@@ -1,3 +1,7 @@
+#include <chrono>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 #include <string>
 #include <fstream>
 #include "pfc_initializer_constants.h"
@@ -13,6 +17,12 @@ bool processArgBool(string str);
 
 string use_msg_one = "use (run on one img type and pose): ./main <pose_id> <img_type> <cheat(true/false)> <print(true/false)> <thread(t/f)>" ;
 string use_msg_all = "use (run on all img types and poses): ./main <cheat(true/false)> <print(true/false)> <thread(t/f)>";
+vector<string> csv_key
+{ 
+    "l_rect.x", "l_rect.y", "r_rect.x", "r_rect.y", "l_scale", "r_scale", 
+    "loc.x", "loc.y", "loc.z", "rot_quat.x", "rot_quat.y", "rot_quat.z", "rot_quat.w",
+    "rot.roll", "rot.pitch", "rot.yaw", "pos_err", "rot_err"
+};
 
 bool processArgBool(string str)
 {
@@ -39,6 +49,8 @@ int main(int argc, char** argv)
         bool thread = processArgBool(thread_str);
 
         vector<string> results = runForPoseAndType(stoi(argv[1]), argv[2], cheat, print, thread);
+	    vector<vector<string>> data_list;
+	    data_list.push_back(results);
     }
     else if (argc == 4)
     {
@@ -51,6 +63,7 @@ int main(int argc, char** argv)
         bool thread = processArgBool(thread_str);
 
         vector<vector<string>> data_list = runOnAllData(cheat, print, thread);
+        data_list.insert(data_list.begin(), csv_key);
         writeDataListToCSV(data_list);
     }
     else
@@ -69,10 +82,10 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
     pfc::match_params params = {
         0, 
         360,
-        1,
-        98,
-        120,
-        1
+        3,
+        80,
+	    200,
+        10
     };
 
     if(cheat)
@@ -80,10 +93,10 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
         params = {
             pfc::min_rot.at(pose_id), 
             pfc::max_rot.at(pose_id),
-            1,
+            3,
             pfc::min_scl.at(pose_id),
             pfc::max_scl.at(pose_id),
-            1
+            10
         };
     }
 
@@ -104,6 +117,8 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
 vector<vector<string>> runOnAllData(bool cheat, bool print, bool thread)
 {
     vector<vector<string> > dataList;
+    double rot_err_sum=0;
+    double pos_err_sum=0;
 
     for(int pose_id = 0; pose_id < pfc::num_poses; pose_id++){
         for(int j = 0; j < pfc::num_img_types; j++){
@@ -111,15 +126,31 @@ vector<vector<string>> runOnAllData(bool cheat, bool print, bool thread)
             cout << "Running for: " << pose_id << ", " << img_type << endl;
             vector<string> data = runForPoseAndType(pose_id, img_type, cheat, print, thread);
             dataList.push_back(data);
+            pos_err_sum += stod(data.at(16));
+            rot_err_sum += stod(data.at(17));
         }
     }
+
+    double avg_rot_err = rot_err_sum / dataList.size();
+    double avg_pos_err = pos_err_sum / dataList.size();
+    dataList.push_back(vector<string>{ "avg_pos_err:" , to_string(avg_pos_err)});
+    dataList.push_back(vector<string>{ "avg_rot_err", to_string(avg_rot_err)});
+   	printf("avg pos error = %f\n", avg_pos_err);
+   	printf("avg rot error = %f\n", avg_rot_err);	    
+    
     return dataList;
 }
 
 void writeDataListToCSV(vector<vector<string>> dataList)
 {
     ofstream data_file;
-    data_file.open("../result_data/pfcinit_performance_data.csv");
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d-%X");
+    string time = ss.str();
+    data_file.open("../result_data/pfcinit_performance_data_" + time + ".csv");
     
     if (data_file.fail()){
         cout << "couldn't open file" << endl;

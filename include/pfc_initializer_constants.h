@@ -18,7 +18,7 @@ namespace pfc {
     // Template Match Scaling Parameters
     const int min_scale = 96;         //minimum template scale to try to match (in %)
     const int max_scale = 102;        //maximum template scale to try to match (in %)
-    const double scale_increment = 1; //% scale to increase by on each iteration
+    const double scale_increment = 3; //% scale to increase by on each iteration
 
     //Degree 2 radians conversion constant
     const double deg2rad = M_PI / 180.0;
