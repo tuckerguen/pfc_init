@@ -24,7 +24,7 @@ To run on all poses and image types:
 ```{bash}
 > ./main <cheat(true/false)> <print(true/false)> <multi_thread(true/false)>
 ```
-*Note: will write all results to the result_data/pfcinit_performance_data.csv file*  
+*Note: will write all results to the result_data/pfcinit_performance_data_{current date time}.csv file*  
 
 Ex:
 ```
