@@ -1,12 +1,29 @@
 #include <future>
 #include <sys/sysinfo.h>
+#include <queue>
+#include <algorithm>
 #include "needle_image.h"
 #include "needle_template.h"
 #include "template_match.h"
 #include "matcher.h"
+#include <sstream>
+#include <iterator>
+
+template <typename T, typename C>
+vector<T> pq_to_vector(priority_queue<T, vector<T>, C> pq)
+{
+    vector<T> vec;
+    while(!pq.empty())
+    {
+        T elem = pq.top();
+        vec.push_back(elem);
+        pq.pop();
+    }
+    return vec;
+}
 
 // Template match template on base image over range of scales and rotations
-TemplateMatch match(const cv::Mat& img, const NeedleTemplate templ)
+vector<TemplateMatch> match(const cv::Mat& img, const NeedleTemplate templ)
 {
     // Note: this "params" setup isn't necessary for final implementation.
     // This is only used to "cheat" the system by allowing for known poses
@@ -22,8 +39,9 @@ TemplateMatch match(const cv::Mat& img, const NeedleTemplate templ)
     double max_scl = templ.params.max_scale;
     double scl_inc = templ.params.scale_increment;
 
-    // initialize best match with minimum rot, scale, score
-    TemplateMatch best_match(min_rot, -DBL_MAX, min_scl);
+    // Priority queue to keep track of top n matches (as min heap to give
+    // efficient check of minimum score in group)
+    priority_queue<TemplateMatch, vector<TemplateMatch>, TemplateMatchComparator > best_matches;
     
     // Reduce scale from % to decimal
     double scale = min_scl / 100.0;
@@ -45,23 +63,35 @@ TemplateMatch match(const cv::Mat& img, const NeedleTemplate templ)
 
             //Match rotated template to image
             TemplateMatch new_match = getMatch(img, rot_templ, rot_angle, scale);
-     
-            //If the new match is better than our previous best, record it
-            if (best_match.score < new_match.score)
+
+            // If queue not full
+            if (best_matches.size() < templ.params.num_matches)
             {
-                best_match = new_match;
+                // Insert match
+                best_matches.push(new_match);
             }
+            // If queue full and score is better than min score
+            else if (new_match.score > best_matches.top().score)
+            {
+                // Delete the smallest score match
+                best_matches.pop();
+                // Add the new better match
+                best_matches.push(new_match);
+            }
+            // Otherwise reject the match since it isn't in the top n scores
+
         }
     }
-    return best_match;
+
+    return pq_to_vector(best_matches);
 }
 
 // Equivalent to match but splitting scale range amongst # of parallel threads
-TemplateMatch matchThreaded(const cv::Mat& img, NeedleTemplate templ)
+vector<TemplateMatch> matchThreaded(const cv::Mat& img, NeedleTemplate templ)
 {
     // Init thread matches and thread return values (futures)
-    std::vector<TemplateMatch> matches;
-    std::vector<std::future<TemplateMatch>> futures;
+    priority_queue<TemplateMatch, vector<TemplateMatch>, TemplateMatchComparator> best_matches;
+    std::vector<std::future<vector<TemplateMatch>>> futures;
 
     // Get scale range
     double min_scl = templ.params.min_scale;
@@ -96,22 +126,30 @@ TemplateMatch matchThreaded(const cv::Mat& img, NeedleTemplate templ)
 
     // Extract matches from futures
     for (auto &fut : futures) {
-        TemplateMatch m = fut.get();
-        matches.push_back(m);
-    }
-
-    // Get best match from all matches
-    int best_index = 0;
-    for(int i = 1; i < matches.size(); i++)
-    {
-        if(matches.at(best_index).score < matches.at(i).score)
+        vector<TemplateMatch> thread_matches = fut.get();
+        
+        for(int i = 0; i < thread_matches.size(); i++)
         {
-            best_index = i;
+            TemplateMatch m = thread_matches.at(i);
+            // If queue not full
+            if (best_matches.size() < templ.params.num_matches)
+            {
+                // Insert match
+                best_matches.push(m);
+            }
+            // If queue full and score is better than min score
+            else if (m.score > best_matches.top().score)
+            {
+                // Delete the smallest score match
+                best_matches.pop();
+                // Add the new better match
+                best_matches.push(m);
+            }
+            // Otherwise reject the match since it isn't in the top n scores
         }
     }
 
-    TemplateMatch best_match = matches.at(best_index);
-    return best_match;
+    return pq_to_vector(best_matches);
 }
 
 // Run template match and store results if this match is better than bestMatch

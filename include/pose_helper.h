@@ -31,7 +31,7 @@ cv::Mat getRotatedOrigin(double angle, double scale, const NeedleTemplate* templ
  * @param color Color of the origin point to be drawn
  * @param templ The needle template used in matching
  */
-void drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color, NeedleTemplate* templ);
+void drawNeedleOrigin(cv::Mat& img, TemplateMatch* match, cv::Scalar color);
 
 /**
  * @brief Prints and returns location and orientation error between given pose and ground truth

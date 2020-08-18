@@ -34,6 +34,7 @@ namespace pfc {
     const int line_type = 8;
     const int shift = 0;
 
+
     //Dataset info
     const int num_poses = 10;
     const int num_img_types = 4;
@@ -62,6 +63,8 @@ namespace pfc {
         int min_scale;         //minimum template scale to try to match (in %)
         int max_scale;        //maximum template scale to try to match (in %)
         double scale_increment; //% scale to increase by on each iteration
+
+        int num_matches; // The top n matches to keep and propose
     };
 }
 

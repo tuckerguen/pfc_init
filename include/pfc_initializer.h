@@ -3,6 +3,8 @@
 #include "template_match.h"
 #include "needle_pose.h"
 #include "pfc_initializer_constants.h"
+#include <queue>
+#include <vector>
 
 /**
  * @brief Class to localize needle from stereo images
@@ -39,17 +41,17 @@ public:
     /**
      * @brief Template match data for left image
      */
-    TemplateMatch match_l;
+    vector<TemplateMatch> l_matches;
 
     /**
      * @brief Template match data for right image
      */
-    TemplateMatch match_r;
+    vector<TemplateMatch> r_matches;
 
     /**
      * @brief Computed needle pose
      */
-    NeedlePose pose;
+    std::vector<NeedlePose> poses;
 
     /**
      * @brief Constructor

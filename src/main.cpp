@@ -80,12 +80,13 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
     string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_" + img_type + ".png";
 
     pfc::match_params params = {
-        0, 
-        360,
-        3,
-        80,
-	    200,
-        10
+        0,  // start deg 
+        360, //end deg 
+        5, // rot increment
+	    80, // min scl
+        200, // max scl
+        10, // scl increment
+        5 // top n matches to keep
     };
 
     if(cheat)
@@ -96,7 +97,8 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
             3,
             pfc::min_scl.at(pose_id),
             pfc::max_scl.at(pose_id),
-            10
+            5,
+            5
         };
     }
 
@@ -104,14 +106,17 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
     PfcInitializer pfc(left_img_path, right_img_path, params);
     pfc.run(print, thread);
 
-    // Get results back as vector
-    vector<string> results = pfc.getResultsAsVector();
-    // Add pose score to results vector
-    vector<double> score = scorePoseEstimation(pfc.pose, pose_id, print);
-    results.push_back(to_string(score.at(0)));
-    results.push_back(to_string(score.at(1)));
+    return vector<string>();
 
-    return results;
+    // TODO: Uncomment once finished making these functions work with all matches
+    // Get results back as vector
+    // vector<string> results = pfc.getResultsAsVector();
+    // // Add pose score to results vector
+    // vector<double> score = scorePoseEstimation(pfc.pose, pose_id, print);
+    // results.push_back(to_string(score.at(0)));
+    // results.push_back(to_string(score.at(1)));
+
+    // return results;
 }
 
 vector<vector<string>> runOnAllData(bool cheat, bool print, bool thread)

@@ -103,4 +103,13 @@ public:
     void drawOnImage(cv::Mat& img, const cv::Scalar& color);
 };
 
+class TemplateMatchComparator 
+{ 
+public: 
+    int operator() (const TemplateMatch& t1, const TemplateMatch& t2) 
+    { 
+        return t1.score > t2.score; 
+    } 
+}; 
+
 #endif
