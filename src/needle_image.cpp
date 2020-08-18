@@ -39,10 +39,10 @@ void NeedleImage::filterRaw()
     // Run canny edge detection
     cv::Canny( detected_edges, image, low_threshold, max_low_threshold, kernel_size);
     
-    // Display for debugging
-    cv::namedWindow("edge detected");
-    cv::imshow("edge detected",image);
-    cv::waitKey(0);
+    // Display image for debugging
+    // cv::namedWindow("edge detected");
+    // cv::imshow("edge detected",image);
+    // cv::waitKey(0);
 }
 
 //TODO: Make this a member function

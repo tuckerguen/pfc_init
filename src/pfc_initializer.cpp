@@ -110,7 +110,7 @@ void PfcInitializer::displayResults()
     {
         cout << "Candidate Point " + to_string(i) << endl;
         poses.at(i).print();
-        scorePoseEstimation(poses.at(i), 0, true);      
+        scorePoseEstimation(poses.at(i), 4, true);      
         cout << "----------------------------------------------------------------------" << endl;
     }
 

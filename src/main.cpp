@@ -82,11 +82,11 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
     pfc::match_params params = {
         0,  // start deg 
         360, //end deg 
-        5, // rot increment
+        10, // rot increment
 	    80, // min scl
         200, // max scl
         10, // scl increment
-        5 // top n matches to keep
+        10 // top n matches to keep
     };
 
     if(cheat)
