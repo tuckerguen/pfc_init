@@ -105,15 +105,6 @@ vector<double> scorePoseEstimation(NeedlePose pose, int pose_id, bool print)
     if(print)
     {
         // Format and print results
-        // cout << "----------------------------------------------------------------------" << endl;
-        // cout << "Scoring Results" << endl;
-        // cout << "----------------------------------------------------------------------" << endl;
-        // cout << "True Pos: (x,y,z)   = (" << true_loc.x << ", " << true_loc.y << ", " << true_loc.z << ")" << endl;
-        // cout << "True Rot: (x,y,z,w) = (" << true_orientation.x() << ", " << true_orientation.y() << ", " << true_orientation.z() << ", " << true_orientation.w() << ")" << endl;
-        // cout << "Pos error (meters)  = " << loc_err << endl;
-        // cout << "Rot error (degrees) = " << angle_err << endl;
-
-        // Compact print
         printf("(p_err=%f, r_err=%f)\n", loc_err, angle_err);
     }
 

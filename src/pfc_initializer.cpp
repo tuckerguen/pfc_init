@@ -14,7 +14,7 @@ using namespace std;
 
 // Calculates needle pose from images (primary function for use in particle filter)
 // Stores pose in this object
-void PfcInitializer::run(bool print_results, bool multi_thread)
+void PfcInitializer::run(bool print_results, bool multi_thread, int pose_id)
 {
     // Start timer
     double t = (double)cv::getTickCount();
@@ -27,7 +27,7 @@ void PfcInitializer::run(bool print_results, bool multi_thread)
     if(print_results)
     {
         cout << "Time: " << t << " s" << endl;
-        displayResults();
+        displayResults(pose_id);
     }
 }
 
@@ -85,7 +85,7 @@ void PfcInitializer::computeNeedlePose(bool multi_thread)
     }
 }
 
-void PfcInitializer::displayResults()
+void PfcInitializer::displayResults(int pose_id)
 {
     // Draw matches onto images
     for(int i = 0; i < l_matches.size(); i++)
@@ -94,23 +94,15 @@ void PfcInitializer::displayResults()
         TemplateMatch match_r = r_matches.at(i);
         match_l.drawOnImage(left_image.raw, cv::Scalar::all(255));
         match_r.drawOnImage(right_image.raw, cv::Scalar::all(255));
-        drawNeedleOrigin(left_image.raw, &match_l, cv::Scalar::all(255)); 
-        drawNeedleOrigin(right_image.raw, &match_r, cv::Scalar::all(255)); 
-
-        // We don't really need to know the pixel space coodinates
-        // match_l.printMatchSummary("Left");
-        // match_r.printMatchSummary("Right");
+        drawNeedleOrigin(left_image.raw, &match_l, cv::Scalar(0,255,255)); 
+        drawNeedleOrigin(right_image.raw, &match_r, cv::Scalar(0,255,255)); 
     }
-
-    // cout << "----------------------------------------------------------------------" << endl;
-    // cout << "Experimental Results" << endl;
-    // cout << "----------------------------------------------------------------------" << endl;
 
     for(int i = 0; i < poses.size(); i++)
     {
         cout << "Candidate Point " + to_string(i) << endl;
         poses.at(i).print();
-        scorePoseEstimation(poses.at(i), 4, true);      
+        scorePoseEstimation(poses.at(i), pose_id, true);      
         cout << "----------------------------------------------------------------------" << endl;
     }
 
@@ -127,35 +119,40 @@ void PfcInitializer::displayResults()
     cv::destroyAllWindows();
 }
 
-// TODO: Make this work with all matches
-vector<string> PfcInitializer::getResultsAsVector()
+vector<vector<string>> PfcInitializer::getResultsAsVector(int pose_id)
 {
-    vector<string> results;
+    vector<vector<string>> results;
 
     // Add pixel location guesses
-    // results.push_back(to_string(match_l.rect.x));
-    // results.push_back(to_string(match_l.rect.y));
-    // results.push_back(to_string(match_r.rect.x));
-    // results.push_back(to_string(match_r.rect.y));
-    // //Add scalee guess
-    // results.push_back(to_string(match_l.scale));
-    // results.push_back(to_string(match_r.scale));
-    // //Add location guess
-    // results.push_back(to_string(pose.location.x));
-    // results.push_back(to_string(pose.location.y));
-    // results.push_back(to_string(pose.location.z));
-    // //Add orientation guess
-    // //Quaternion
-    // Eigen::Quaternionf q = pose.getQuaternionOrientation();
-    // results.push_back(to_string(q.x()));
-    // results.push_back(to_string(q.y()));
-    // results.push_back(to_string(q.z()));
-    // results.push_back(to_string(q.w()));
-    // //Euler Angles (mostly for human intuition)
-    // Eigen::Vector3f e = pose.getEulerAngleOrientation();
-    // results.push_back(to_string(e.x()));
-    // results.push_back(to_string(e.y()));
-    // results.push_back(to_string(e.z()));
+    for(int i = 0; i < l_matches.size(); i++)
+    {
+        TemplateMatch match_l = l_matches.at(i);
+        TemplateMatch match_r = r_matches.at(i);
+        NeedlePose pose = poses.at(i);
+
+        //Add location guess
+        results.at(i).push_back(to_string(pose.location.x));
+        results.at(i).push_back(to_string(pose.location.y));
+        results.at(i).push_back(to_string(pose.location.z));
+
+        //Add orientation guess
+        //Quaternion
+        Eigen::Quaternionf q = pose.getQuaternionOrientation();
+        results.at(i).push_back(to_string(q.x()));
+        results.at(i).push_back(to_string(q.y()));
+        results.at(i).push_back(to_string(q.z()));
+        results.at(i).push_back(to_string(q.w()));
+
+        //Euler Angles orientation guess
+        // Eigen::Vector3f e = pose.getEulerAngleOrientation();
+        // results.at(i).push_back(to_string(e.x()));
+        // results.at(i).push_back(to_string(e.y()));
+        // results.at(i).push_back(to_string(e.z()));
+        
+        vector<double> score = scorePoseEstimation(pose, pose_id, false);
+        results.at(i).push_back(to_string(score.at(0)));
+        results.at(i).push_back(to_string(score.at(1))); 
+    }
 
     return results;
 }

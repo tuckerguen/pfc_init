@@ -26,10 +26,5 @@ Eigen::Quaternionf NeedlePose::getQuaternionOrientation()
 void NeedlePose::print()
 {
     Eigen::Quaternionf q = getQuaternionOrientation();
-    // cout << "Pos: (x,y,z)   = (" << location.x << ", " << location.y << ", " << location.z << ")" << endl;
-    // cout << "Rot: (x,y,z,w) = (" << q.x() << ", " << q.y() << ", " << q.z() << ", " << q.w() << ")" << endl;
-    // cout << "Rot: (r,p,y)   = (" << orientation.x() << ", " << orientation.y() << ", " << orientation.z() << ")" << endl;
-    
-    // Compact print
     printf("(x,y,z)=(%f,%f,%f)\n(r,p,y)=(%f,%f,%f)\n", location.x, location.y, location.z, orientation.x(), orientation.y(), orientation.z());
 }

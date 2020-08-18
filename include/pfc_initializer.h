@@ -20,7 +20,7 @@ private:
     /**
      * @brief Prints results of initilization to console
      */
-    void displayResults();
+    void displayResults(int pose_id);
 
 public:
     /**
@@ -68,10 +68,10 @@ public:
      * @param print_results If function should print results to console
      * @param multi_thread Use threaded version of match
      */
-    void run(bool print_results, bool multi_thread);
+    void run(bool print_results, bool multi_thread, int pose_id);
 
     /**
      * @brief Returns the results of initialization as a vector
      */
-    std::vector<string> getResultsAsVector();
+    std::vector<std::vector<string>> getResultsAsVector(int pose_id);
 };

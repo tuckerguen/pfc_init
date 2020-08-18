@@ -10,7 +10,7 @@
 
 using namespace std;
 
-vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print, bool thread);
+vector<vector<string>> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print, bool thread);
 vector<vector<string>> runOnAllData(bool cheat, bool print, bool thread);
 void writeDataListToCSV(vector<vector<string>> dataList);
 bool processArgBool(string str);
@@ -48,9 +48,9 @@ int main(int argc, char** argv)
         bool cheat = processArgBool(cheat_str);
         bool thread = processArgBool(thread_str);
 
-        vector<string> results = runForPoseAndType(stoi(argv[1]), argv[2], cheat, print, thread);
+        vector<vector<string>> results = runForPoseAndType(stoi(argv[1]), argv[2], cheat, print, thread);
 	    vector<vector<string>> data_list;
-	    data_list.push_back(results);
+	    data_list = results;
     }
     else if (argc == 4)
     {
@@ -74,7 +74,7 @@ int main(int argc, char** argv)
     }
 }
 
-vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print, bool thread)
+vector<vector<string>> runForPoseAndType(int pose_id, string img_type, bool cheat, bool print, bool thread)
 {
     string left_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_l_c_" + img_type + ".png";
     string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_" + img_type + ".png";
@@ -82,7 +82,7 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
     pfc::match_params params = {
         0,  // start deg 
         360, //end deg 
-        10, // rot increment
+        5, // rot increment
 	    80, // min scl
         200, // max scl
         10, // scl increment
@@ -104,19 +104,12 @@ vector<string> runForPoseAndType(int pose_id, string img_type, bool cheat, bool 
 
 
     PfcInitializer pfc(left_img_path, right_img_path, params);
-    pfc.run(print, thread);
-
-    return vector<string>();
+    pfc.run(print, thread, pose_id);
 
     // TODO: Uncomment once finished making these functions work with all matches
     // Get results back as vector
-    // vector<string> results = pfc.getResultsAsVector();
-    // // Add pose score to results vector
-    // vector<double> score = scorePoseEstimation(pfc.pose, pose_id, print);
-    // results.push_back(to_string(score.at(0)));
-    // results.push_back(to_string(score.at(1)));
-
-    // return results;
+    vector<vector<string>> results = pfc.getResultsAsVector(pose_id);
+    return results;
 }
 
 vector<vector<string>> runOnAllData(bool cheat, bool print, bool thread)
@@ -129,10 +122,11 @@ vector<vector<string>> runOnAllData(bool cheat, bool print, bool thread)
         for(int j = 0; j < pfc::num_img_types; j++){
             string img_type = pfc::img_types.at(j);
             cout << "Running for: " << pose_id << ", " << img_type << endl;
-            vector<string> data = runForPoseAndType(pose_id, img_type, cheat, print, thread);
-            dataList.push_back(data);
-            pos_err_sum += stod(data.at(16));
-            rot_err_sum += stod(data.at(17));
+            vector<vector<string>> data = runForPoseAndType(pose_id, img_type, cheat, print, thread);
+            //TODO: Make this work with the multiple candidate points
+            // dataList.at(j).push_back(data);
+            // pos_err_sum += stod(data.at(16));
+            // rot_err_sum += stod(data.at(17));
         }
     }
 
