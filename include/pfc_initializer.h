@@ -71,7 +71,8 @@ public:
     void run(bool print_results, bool multi_thread, int pose_id);
 
     /**
-     * @brief Returns the results of initialization as a vector
+     * @brief Returns the results of initialization as a vector of vectors
+     * Each sub vector is a candidate point
      */
     std::vector<std::vector<string>> getResultsAsVector(int pose_id);
 };
