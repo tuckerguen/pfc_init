@@ -43,6 +43,10 @@ public:
      */
     NeedleTemplate(const std::string& path, const cv::Rect2i& rect, const cv::Point2d& origin, double rotation, pfc::match_params iparams);
 
+
+    // void GenerateTemplate(double rotx, double roty, double rotz, double scale);
+
+
     /**
      * @brief Default constructor (origin=(52,9), rect=(287,205,105,56), img_path="../imgs/raw/0_l_c_fatty.png")
      */

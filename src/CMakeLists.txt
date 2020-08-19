@@ -39,7 +39,10 @@ add_executable(main main.cpp
   matcher.cpp
 )
 
+add_executable(NeedleGenerator NeedleGeneration/NeedleGenerator.cpp)
+
 target_link_libraries(main ${OpenCV_LIBS})
 target_link_libraries (main Threads::Threads)
 
+target_link_libraries(NeedleGenerator ${OpenCV_LIBS})
 
