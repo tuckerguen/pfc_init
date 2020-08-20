@@ -14,7 +14,7 @@ using namespace std;
 /**
  * @brief Needle image used as template in template matching
  */
-class NeedleTemplate : public NeedleImage
+class NeedleTemplate
 {
 public:
     /**
@@ -23,38 +23,45 @@ public:
     cv::Point2d origin;
 
     /**
-     * @brief Initial rect used to crop the raw image to template size
+     * @brief the image of the template
      */
-    cv::Rect2i initialRect;
+    cv::Mat image;
 
     /**
      * @brief Max/min rotation and scale parameters to speed up testing (temporary implementation, only for testing)
      */
     pfc::match_params params;
 
+    int resolution;
+
+    bool left;
+
+
+    void GenerateTemplate(float z, float a, float b, float y);
+
     /**
      * @brief Needle template constructor
      * 
-     * @param path Raw image path
-     * @param rect Rectangle used to crop the raw image
-     * @param origin Pixel coordinate origin of needle in template
-     * @param rotation Initial rotation of raw image to align final template with ground truth 0 rotation
-     * @param iparams Min/max rotation and scale parameters
      */
-    NeedleTemplate(const std::string& path, const cv::Rect2i& rect, const cv::Point2d& origin, double rotation, pfc::match_params iparams);
+    NeedleTemplate(pfc::match_params params, double z, double a, double b, double y, int resolution, bool left)
+    : params(params), resolution(resolution), left(left)
+    {
+        GenerateTemplate(z, a, b, y);
+    }
 
+    NeedleTemplate(pfc::match_params params, bool left)
+    : params(params), resolution(params.resolution), left(left)
+    {
+        GenerateTemplate(params.min_z, params.yaw_range.start, params.pitch_range.start, params.roll_range.start);
+    }
 
-    // void GenerateTemplate(double rotx, double roty, double rotz, double scale);
-
-
-    /**
-     * @brief Default constructor (origin=(52,9), rect=(287,205,105,56), img_path="../imgs/raw/0_l_c_fatty.png")
-     */
-    NeedleTemplate() : 
-        NeedleImage(pfc::templ_path), origin(52,9), initialRect(pfc::initial_rect)
-        {
-            cout << "Initializing needle template with default constructor" << endl;
-        }
+    // /**
+    //  * @brief Default constructor
+    //  */
+    // NeedleTemplate()
+    // {
+    //     GenerateTemplate(0.15, 0, 0, 0, 10, true);
+    // }
 
     /**
      * @brief Deconstructor
@@ -62,5 +69,8 @@ public:
     ~NeedleTemplate()
     {};
 };
+
+cv::Point2d CalcUVPoint(const cv::Mat& p, const cv::Mat& transform, const cv::Mat& projection);
+
 
 #endif

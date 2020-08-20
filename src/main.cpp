@@ -80,28 +80,26 @@ vector<vector<string>> runForPoseAndType(int pose_id, string img_type, bool chea
     string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_" + img_type + ".png";
 
     pfc::match_params params = {
-        0,  // start deg 
-        360, //end deg 
-        5, // rot increment
-	    80, // min scl
-        200, // max scl
-        10, // scl increment
-        10 // top n matches to keep
+        cv::Range(0,360), 10, //yaw
+        cv::Range(0,90), 30, //pitch
+        cv::Range(0,90), 30, //roll
+        0.09, 0.18, 0.01, //z
+        1, // # candidate points to return
+        20, // # points in needle line
     };
 
     if(cheat)
     {
-        params = {
-            pfc::min_rot.at(pose_id), 
-            pfc::max_rot.at(pose_id),
-            3,
-            pfc::min_scl.at(pose_id),
-            pfc::max_scl.at(pose_id),
-            5,
-            5
-        };
+        // params = {
+        //     pfc::min_rot.at(pose_id), 
+        //     pfc::max_rot.at(pose_id),
+        //     3,
+        //     pfc::min_scl.at(pose_id),
+        //     pfc::max_scl.at(pose_id),
+        //     5,
+        //     5
+        // };
     }
-
 
     PfcInitializer pfc(left_img_path, right_img_path, params);
     pfc.run(print, thread, pose_id);

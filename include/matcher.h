@@ -8,7 +8,7 @@
  * @param base_img Image to match template to
  * @param templ Needle template object with template to match with and scale/rotation parameters
  */
-vector<TemplateMatch> match(const cv::Mat& base_img, const NeedleTemplate templ);
+vector<TemplateMatch> match(const cv::Mat& base_img, NeedleTemplate templ);
 
 /**
  * @brief Equivalent to match, but scale range is divided amongst a number of parallel threads. 
@@ -25,5 +25,5 @@ vector<TemplateMatch> matchThreaded(const cv::Mat& img, NeedleTemplate templ);
  * @param img The base image to match template to
  * @param templ The template to match onto the image
  */
-TemplateMatch getMatch(const cv::Mat &img, const cv:: Mat& templ, double angle, double scale);
+TemplateMatch getMatch(const cv::Mat &img, const cv:: Mat& templ);
 

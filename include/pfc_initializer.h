@@ -36,7 +36,8 @@ public:
     /**
      * @brief Template used for template matching during localization
      */
-    NeedleTemplate templ;
+    NeedleTemplate left_templ;
+    NeedleTemplate right_templ;
 
     /**
      * @brief Template match data for left image
@@ -58,8 +59,7 @@ public:
      * TODO: Doc this once we decide on fields
      */
     PfcInitializer(string left_image_path, string right_image_path, pfc::match_params params)
-        : left_image(left_image_path), right_image(right_image_path), 
-            templ(pfc::templ_path, pfc::initial_rect, pfc::origin, pfc::initial_rotation, params) 
+        : left_image(left_image_path), right_image(right_image_path), left_templ(params, true), right_templ(params, false) 
     {}
 
     /**

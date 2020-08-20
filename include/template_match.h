@@ -8,20 +8,20 @@
 class TemplateMatch 
 {
 public:
-    /**
-     * @brief Angle (degrees) of rotation of the matching template (relative to original)
-     */
-    double angle;
+    // We don't really need this since the z location gets computed at the
+    // deprojection step. But keep it here for now to compare to the 
+    // computed value
+    double z;
 
+    double yaw;
+    double pitch;
+    double roll;
+    
     /**
      * @brief Match quality value returned by cv::matchTemplate()
      */    
     double score;
 
-    /**
-     * @brief Scale of matching template (relative to original)
-     */
-    double scale;
 
     /**
      * @brief Location of match and template dimensions at match
@@ -38,41 +38,35 @@ public:
      */
     cv::Mat templ;
 
-    /**
-     * @brief 2x1 point represents (x,y) of needle origin in matched template
-     */
-    cv::Mat needle_origin;
+    double ox,oy;
+    cv::Point2d origin;
 
     /**
      * @brief Constructor
      * 
-     * @param angle Angle (degrees) template was rotated at match
      * @param score Match quality value given to match by cv::matchTemplate()
-     * @param scale Scale template was scaled by at match
      */
-    TemplateMatch(double angle, double score, double scale) : 
-        angle(angle), score(score), scale(scale), rect(0,0,0,0), result(), templ() 
+    TemplateMatch(double z, double yaw, double pitch, double roll, double score) : 
+        z(z), yaw(yaw), pitch(pitch), roll(roll), score(score), rect(0,0,0,0), result(), templ() 
     {} 
 
     /**
      * @brief Constructor
      * 
-     * @param angle  Angle (degrees) template was rotated at match
      * @param score  Match quality value given to match by cv::matchTemplate()
-     * @param scale  Scale template was scaled by at match
      * @param rect   Rectangle representing bounds of template in matched image
      * @param result Result image returned by cv::matchTemplate()
      * @param templ  Template used in match
      */
-    TemplateMatch(double angle, double score, double scale, cv::Rect2i rect, cv::Mat result, cv::Mat templ) : 
-        angle(angle), score(score), scale(scale), rect(rect), result(result), templ(templ) 
+    TemplateMatch(double score, cv::Rect2i rect, cv::Mat result, cv::Mat templ) : 
+        score(score), rect(rect), result(result), templ(templ) 
     {} 
 
     /**
      * @brief Default constructor (angle=0, score=-DBL_MAX, scale=1, rect=(0,0,0,0))
      */
     TemplateMatch() : 
-        angle(0), score(-DBL_MAX), scale(1), rect(0,0,0,0), result() 
+        score(-DBL_MAX), z(0.15), rect(0,0,0,0), result() 
     {} 
 
     // TemplateMatch(TemplateMatch &&) = default;
@@ -80,12 +74,12 @@ public:
     /**
      * @brief Returns the match angle in degrees
      */
-    double getAngleDegrees() { return angle; }
+    cv::Vec3d getAngleDegrees() { return cv::Vec3d(yaw, pitch, roll); }
     
     /**
      * @brief Returns the match angle in radians
      */
-    double getAngleRadians() { return angle * pfc::deg2rad; }
+    cv::Vec3d getAngleRadians() { return cv::Vec3d(yaw, pitch, roll) * pfc::deg2rad; }
 
     /**
      * @brief Format and print details of the match

@@ -37,13 +37,13 @@ void PfcInitializer::computeNeedlePose(bool multi_thread)
     // Perform template match on left and right images
     if(multi_thread)
     {
-        l_matches = matchThreaded(left_image.image, templ);
-        r_matches = matchThreaded(right_image.image, templ);
+        l_matches = matchThreaded(left_image.image, left_templ);
+        r_matches = matchThreaded(right_image.image, right_templ);
     }
     else
     {
-        l_matches = match(left_image.image, templ);
-        r_matches = match(right_image.image, templ);
+        l_matches = match(left_image.image, left_templ);
+        r_matches = match(right_image.image, right_templ);
     }
 
     if(l_matches.size() != r_matches.size())
@@ -61,24 +61,25 @@ void PfcInitializer::computeNeedlePose(bool multi_thread)
         //Initialize left and right needle pixel location vectors
         cv::Mat p_l(2, 1, CV_64FC1);
         cv::Mat p_r(2, 1, CV_64FC1);
-        
-        // Compute pixel space origin in left image
-        cv::Mat rotated_origin_l = getRotatedOrigin(match_l->angle,  match_l->scale, &templ);
-        p_l.at<double>(0) = match_l->rect.x + rotated_origin_l.at<double>(0);
-        p_l.at<double>(1) = match_l->rect.y + rotated_origin_l.at<double>(1);
-        match_l->needle_origin = p_l;
 
-        // Compute pixel space origin in right image
-        cv::Mat rotated_origin_r = getRotatedOrigin(match_r->angle, match_r->scale, &templ);
-        p_r.at<double>(0) = match_r->rect.x + rotated_origin_r.at<double>(0);
-        p_r.at<double>(1) = match_r->rect.y + rotated_origin_r.at<double>(1);
-        match_r->needle_origin = p_r;
+        p_l.at<double>(0) = match_l->origin.x;
+        p_l.at<double>(1) = match_l->origin.y;
+    
+        p_r.at<double>(0) = match_r->origin.x;
+        p_r.at<double>(1) = match_r->origin.y;
         
         // Get 3D location of needle
         cv::Point3d location = deProjectPoints(p_l, p_r);
         // Get Euler angle orientation
-        double average_yaw = (match_l->getAngleDegrees() + match_r->getAngleDegrees()) / 2.0;
-        Eigen::Vector3f orientation(0.0, 0.0, average_yaw);
+        cv::Vec3d left_orientation = match_l->getAngleDegrees();
+        cv::Vec3d right_orientation = match_r->getAngleDegrees();
+
+        // Average out orientation values between left and right calculation
+        double avg_yaw = (left_orientation[0] + right_orientation[0]) / 2.0;
+        double avg_pitch = (left_orientation[1] + right_orientation[1]) / 2.0;
+        double avg_roll = (left_orientation[2] + right_orientation[2]) / 2.0;
+        
+        Eigen::Vector3f orientation(avg_roll, avg_pitch, avg_yaw);
 
         // Store location/orientation
         poses.push_back(NeedlePose(location, orientation));
@@ -94,8 +95,9 @@ void PfcInitializer::displayResults(int pose_id)
         TemplateMatch match_r = r_matches.at(i);
         match_l.drawOnImage(left_image.raw, cv::Scalar::all(255));
         match_r.drawOnImage(right_image.raw, cv::Scalar::all(255));
-        drawNeedleOrigin(left_image.raw, &match_l, cv::Scalar(0,255,255)); 
-        drawNeedleOrigin(right_image.raw, &match_r, cv::Scalar(0,255,255)); 
+        drawNeedleOrigin(left_image.raw, match_l.origin, cv::Scalar(0,255,255)); 
+        drawNeedleOrigin(right_image.raw, match_r.origin, cv::Scalar(0,255,255)); 
+        cout << match_l.z << endl;
     }
 
     for(int i = 0; i < poses.size(); i++)
@@ -112,8 +114,8 @@ void PfcInitializer::displayResults(int pose_id)
     cv::namedWindow("right template", cv::WINDOW_AUTOSIZE);
     cv::imshow("left", left_image.raw);
     cv::imshow("right", right_image.raw);
-    // cv::imshow("left template", match_l.templ);
-    // cv::imshow("right template", match_r.templ);
+    cv::imshow("left template", l_matches.at(0).templ);
+    cv::imshow("right template", l_matches.at(0).templ);
     cv::waitKey(0);
 
     cv::destroyAllWindows();

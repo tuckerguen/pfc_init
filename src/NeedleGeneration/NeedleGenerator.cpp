@@ -7,51 +7,72 @@
 #include "pfc_initializer_constants.h"
 
 using namespace std;
+cv::Mat GenerateTemplate(float z, float a, float b, float y, int resolution, bool left);
 
 int main(int argc, char* argv[])
 {
-    int resolution = stoi(argv[6]);
+    // for(int i = 9; i < 18; i ++){
+        cv::Mat templ_l = GenerateTemplate(0.177,pfc::deg2rad*176.5, 0, 0, 10, true);
+        cv::Mat templ_r = GenerateTemplate(0.177, pfc::deg2rad*176.5, 0, 0, 10, false);
 
-    cv::Point2d needle_arc_l[resolution + 1];
-    cv::Point2d needle_arc_r[resolution + 1];
+        cv::namedWindow("left");
+        cv::namedWindow("right");
+        cv::imshow("left", templ_l);
+        cv::imshow("right", templ_r);
+        cv::waitKey(0);
+    // }
     
-    double radius = stod(argv[1]);
+}
 
-    Eigen::Matrix<double, 3, 4> projection;
-    Eigen::Matrix4d needle_transformation;
+cv::Mat GenerateTemplate(float z, float a, float b, float y, int resolution, bool left)
+{
+    // Array of needle points
+    cv::Point2d needle_arc[resolution + 2];
+
+    double radius = 0.0128;
 
     // Projection matrices
-    Eigen::Matrix<double, 3, 4>P_l;
-    Eigen::Matrix<double, 3, 4> P_r;
-    
-    P_l << 662.450355616388, 0.0, 320.5, 0.0, 
-            0.0, 662.450355616388, 240.5, 0.0, 
-            0.0, 0.0, 1.0, 0.0;
+    cv::Mat projection = left ? pfc::P_l : pfc::P_r;
 
-    P_r << 662.450355616388, 0.0, 320.5, -3.31225177808194, 
-            0.0, 662.450355616388, 240.5, 0.0,
-            0.0, 0.0, 1.0, 0.0;   
-
-    // Transformation parameters
-    // Location. For generating template, it can be centered, we only 
-    // need to use z axis to control scale of the needle
-    float tz = stod(argv[5]);
-    // Rotation. a=yaw, b=pitch=, y=roll
-    float a = stod(argv[2])*pfc::deg2rad, b = stod(argv[3])*pfc::deg2rad, y = stod(argv[4])*pfc::deg2rad;
-    // Assign to transformation matrix
+    // Transformation Matrix
     // https://en.wikipedia.org/wiki/Rotation_matrix#General_rotations
-    needle_transformation << cos(a)*cos(b), cos(a)*sin(b)*sin(y)-sin(a)*cos(y), cos(a)*sin(b)*cos(y)+sin(a)*sin(y),  0,
-                             sin(a)*cos(b), sin(a)*sin(b)*sin(y)+cos(a)*cos(y), sin(a)*sin(b)*cos(y)-cos(a)*sin(y),  0,
-                                   -sin(b),                      cos(b)*sin(y),                      cos(b)*cos(y), tz,
-                                         0,                                  0,                                  0,  1; 
+    cv::Mat transform = (cv::Mat_<double>(4,4) << 
+        cos(a)*cos(b), cos(a)*sin(b)*sin(y)-sin(a)*cos(y), cos(a)*sin(b)*cos(y)+sin(a)*sin(y),  0,
+        sin(a)*cos(b), sin(a)*sin(b)*sin(y)+cos(a)*cos(y), sin(a)*sin(b)*cos(y)-cos(a)*sin(y),  0,
+              -sin(b),                      cos(b)*sin(y),                      cos(b)*cos(y),  z,
+                    0,                                  0,                                  0,  1); 
     
-    cout << needle_transformation << endl;
+    // To determine bounding box of needle for cropping
+    double leftmost=640, rightmost=0, upmost=480, downmost=0;
+    double boundary = 5;
 
-    for(int i = 0; i <= resolution; i++)
+    cv::Mat needle_arc_origin = (cv::Mat_<double>(4,1) <<
+        0.0,
+        0.0,
+        0.0,
+        1.0
+    );
+
+    //Transform based on needle origin location
+    cv::Mat needle_arc_origin_tf = transform * needle_arc_origin;
+
+    //Transform into u, v
+    cv::Mat needle_arc_origin_uv = projection * needle_arc_origin_tf;
+
+    double u = needle_arc_origin_uv.at<double>(0) / needle_arc_origin_uv.at<double>(2);
+    double v = needle_arc_origin_uv.at<double>(1) / needle_arc_origin_uv.at<double>(2);
+
+    needle_arc[0].x = u;
+    needle_arc[0].y = v; 
+
+    // cout << projection << endl << transform << endl;
+
+
+    for(int i = 1; i <= resolution; i++)
     {
         double turn_amt = i * M_PI / resolution;
 
-        Eigen::Vector4d needle_arc_pt = Eigen::Vector4d(
+        cv::Mat needle_arc_pt = (cv::Mat_<double>(4,1) <<
             radius * cos(turn_amt),
             radius * sin(turn_amt),
             0.0,
@@ -59,47 +80,48 @@ int main(int argc, char* argv[])
         );
 
         //Transform based on needle origin location
-        Eigen::Vector4d needle_arc_pt_tf = needle_transformation * needle_arc_pt;
+        cv::Mat needle_arc_pt_tf = transform * needle_arc_pt;
 
         //Transform into u, v
-        Eigen::Vector3d needle_arc_pt_uv_l = P_l * needle_arc_pt_tf;
-        Eigen::Vector3d needle_arc_pt_uv_r = P_r * needle_arc_pt_tf;
+        cv::Mat needle_arc_pt_uv = projection * needle_arc_pt_tf;
 
-        double u_l = needle_arc_pt_uv_l.x() / needle_arc_pt_uv_l.z();
-        double v_l = needle_arc_pt_uv_l.y() / needle_arc_pt_uv_l.z();
+        double u = needle_arc_pt_uv.at<double>(0) / needle_arc_pt_uv.at<double>(2);
+        double v = needle_arc_pt_uv.at<double>(1) / needle_arc_pt_uv.at<double>(2);
 
-        double u_r = needle_arc_pt_uv_r.x() / needle_arc_pt_uv_r.z();
-        double v_r = needle_arc_pt_uv_r.y() / needle_arc_pt_uv_r.z();
+        needle_arc[i].x = u;
+        needle_arc[i].y = v; 
 
-        needle_arc_l[i].x = u_l;
-        needle_arc_l[i].y = v_l; 
-
-        needle_arc_r[i].x = u_r;
-        needle_arc_r[i].y = v_r; 
-
-        cout << u_l << ", " << v_l <<  endl;
-        cout << u_r << ", " << v_r <<  endl;
+        // Track the needle boundaries
+        if(u < leftmost)
+            leftmost = u;
+        if(u > rightmost)
+            rightmost = u;
+        if(v < upmost)
+            upmost = v;
+        if(v > downmost)
+            downmost = v;
     }
 
-    // Draw into templates
-    cv::Mat templ_l(cv::Size(640, 480), CV_64FC1, cv::Scalar(0));
-    cv::Mat templ_r(cv::Size(640, 480), CV_64FC1, cv::Scalar(0));
+    // Draw into template
+    cv::Mat templ(cv::Size(640, 480), CV_64FC1, cv::Scalar(0));
     
-    for(int i = 1; i <= resolution; i++)
+    for(int i = 2; i <= resolution; i++)
     {
-        cv::Point2d p_l1 = needle_arc_l[i-1];
-        cv::Point2d p_l2 = needle_arc_l[i];
+        cv::Point2d p1 = needle_arc[i-1];
+        cv::Point2d p2 = needle_arc[i];
 
-        cv::Point2d p_r1 = needle_arc_r[i-1];
-        cv::Point2d p_r2 = needle_arc_r[i];
-
-        cv::line(templ_l, p_l1, p_l2, cv::Scalar(255), 1, 8, 0);
-        cv::line(templ_r, p_r1, p_r2, cv::Scalar(255), 1, 8, 0);
+        cv::line(templ, p1, p2, cv::Scalar(255), 1, 8, 0);
     }
+    cv::circle(templ, needle_arc[0], 2, cv::Scalar(255),1,8, 0);
 
-    cv::namedWindow("left");
-    cv::namedWindow("right");
-    cv::imshow("left", templ_l);
-    cv::imshow("right", templ_r);
-    cv::waitKey(0);
+    // Crop image to only include the needle
+    upmost = floor(upmost); leftmost = floor(leftmost); 
+    downmost = ceil(downmost);  rightmost=ceil(rightmost);
+
+    cv::Range rows(upmost-boundary, downmost+boundary);
+    cv::Range cols(leftmost-boundary, rightmost+boundary);
+    templ = templ(rows, cols);
+    cout << templ.cols << ":, " << templ.rows << endl;
+
+    return templ;
 }

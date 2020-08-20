@@ -34,6 +34,38 @@ namespace pfc {
     const int line_type = 8;
     const int shift = 0;
 
+    // Template Generation, needle radius
+    const double radius = 0.0128;
+
+    //Camera Projection Matrices
+    // Left camera 
+    const cv::Mat P_l = (cv::Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, 0.0, 
+                                             0.0, 662.450355616388, 240.5, 0.0, 
+                                             0.0, 0.0, 1.0, 0.0); 
+    // Right camera 
+    const cv::Mat P_r = (cv::Mat_<double>(3, 4) << 662.450355616388, 0.0, 320.5, -3.31225177808194, 
+                                             0.0, 662.450355616388, 240.5, 0.0,
+                                             0.0, 0.0, 1.0, 0.0);   
+
+
+    struct match_params{
+        // Template Match Rotation Parameters
+        // TODO: Change to not use range (is meant to be used as range of matrices)
+        cv::Range yaw_range;
+        double yaw_inc;
+        cv::Range pitch_range;
+        double pitch_inc;
+        cv::Range roll_range;
+        double roll_inc;
+
+        double min_z;
+        double max_z;
+        double z_inc; //% scale to increase by on each iteration
+
+        int num_matches; // The top n matches to keep as candidate points
+        int resolution; // # points in needle line
+    };
+
 
     //Dataset info
     const int num_poses = 10;
@@ -52,20 +84,6 @@ namespace pfc {
         120, 102, 145, 115, 100, 100, 200, 117, 149, 126
     };
 
-
-    struct match_params{
-        // Template Match Rotation Parameters
-        double min_rotation;
-        double max_rotation;   //Max number of degrees to rotate template
-        double rotation_increment; //Number of degrees to rotate template each iteration
-
-        // Template Match Scaling Parameters
-        int min_scale;         //minimum template scale to try to match (in %)
-        int max_scale;        //maximum template scale to try to match (in %)
-        double scale_increment; //% scale to increase by on each iteration
-
-        int num_matches; // The top n matches to keep and propose
-    };
 }
 
 #endif
