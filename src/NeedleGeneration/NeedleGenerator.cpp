@@ -12,8 +12,8 @@ cv::Mat GenerateTemplate(float z, float a, float b, float y, int resolution, boo
 int main(int argc, char* argv[])
 {
     // for(int i = 9; i < 18; i ++){
-        cv::Mat templ_l = GenerateTemplate(0.177,pfc::deg2rad*176.5, 0, 0, 10, true);
-        cv::Mat templ_r = GenerateTemplate(0.177, pfc::deg2rad*176.5, 0, 0, 10, false);
+        cv::Mat templ_l = GenerateTemplate(0.177,pfc::deg2rad*176.5, 45, 0, 10, true);
+        cv::Mat templ_r = GenerateTemplate(0.177, pfc::deg2rad*176.5, 45, 0, 10, false);
 
         cv::namedWindow("left");
         cv::namedWindow("right");

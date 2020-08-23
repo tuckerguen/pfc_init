@@ -93,8 +93,9 @@ void PfcInitializer::displayResults(int pose_id)
     {
         TemplateMatch match_l = l_matches.at(i);
         TemplateMatch match_r = r_matches.at(i);
-        match_l.drawOnImage(left_image.raw, cv::Scalar::all(255));
-        match_r.drawOnImage(right_image.raw, cv::Scalar::all(255));
+        int color_inc = 255/l_matches.size();
+        match_l.drawOnImage(left_image.raw, cv::Scalar(i*color_inc, 255-i*color_inc, 180));
+        match_r.drawOnImage(right_image.raw, cv::Scalar(i*color_inc, 255-i*color_inc, 180));
         drawNeedleOrigin(left_image.raw, match_l.origin, cv::Scalar(0,255,255)); 
         drawNeedleOrigin(right_image.raw, match_r.origin, cv::Scalar(0,255,255)); 
         cout << match_l.z << endl;

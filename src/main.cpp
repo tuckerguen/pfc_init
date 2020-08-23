@@ -81,11 +81,11 @@ vector<vector<string>> runForPoseAndType(int pose_id, string img_type, bool chea
 
     pfc::match_params params = {
         cv::Range(0,360), 10, //yaw
-        cv::Range(0,90), 30, //pitch
-        cv::Range(0,90), 30, //roll
+        cv::Range(0,80), 20, //pitch
+        cv::Range(0,80), 20, //roll
         0.09, 0.18, 0.01, //z
-        1, // # candidate points to return
-        20, // # points in needle line
+        10, // # candidate points to return
+        10, // # points in needle line
     };
 
     if(cheat)
