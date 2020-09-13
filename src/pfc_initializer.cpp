@@ -98,7 +98,6 @@ void PfcInitializer::displayResults(int pose_id)
         match_r.drawOnImage(right_image.raw, cv::Scalar(i*color_inc, 255-i*color_inc, 180));
         drawNeedleOrigin(left_image.raw, match_l.origin, cv::Scalar(0,255,255)); 
         drawNeedleOrigin(right_image.raw, match_r.origin, cv::Scalar(0,255,255)); 
-        cout << match_l.z << endl;
     }
 
     for(int i = 0; i < poses.size(); i++)

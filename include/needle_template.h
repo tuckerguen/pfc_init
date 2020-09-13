@@ -52,7 +52,7 @@ public:
     NeedleTemplate(pfc::match_params params, bool left)
     : params(params), resolution(params.resolution), left(left)
     {
-        GenerateTemplate(params.min_z, params.yaw_range.start, params.pitch_range.start, params.roll_range.start);
+        GenerateTemplate(params.min_z, params.min_yaw, params.pitch_range.start, params.roll_range.start);
     }
 
     // /**

@@ -1,8 +1,8 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
+#include <opencv2/sfm/triangulation.hpp>
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Core>
-#include <opencv2/sfm/triangulation.hpp>
 #include "template_match.h"
 #include "pose_helper.h"
 #include "csv_reader.h"
@@ -27,7 +27,7 @@ cv::Point3d deProjectPoints(const cv::Mat& p_l, const cv::Mat& p_r)
     cv::Mat results;
     // Compute 3D location given points and projection matrices
     cv::sfm::triangulatePoints(points, projections, results);
-
+    
     // Format results
     cv::Point3d result;
     result.x = results.at<double>(0);

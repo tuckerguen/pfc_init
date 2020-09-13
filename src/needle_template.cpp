@@ -69,7 +69,7 @@ void NeedleTemplate::GenerateTemplate(float z, float a, float b, float y)
         cv::Point2d p1 = needle_arc[i-1];
         cv::Point2d p2 = needle_arc[i];
 
-        cv::line(templ, p1, p2, cv::Scalar(255), 1, 8, 0);
+        cv::line(templ, p1, p2, cv::Scalar(255), 2, 8, 0);
     }
 
     // Crop image to only include the needle
@@ -79,17 +79,17 @@ void NeedleTemplate::GenerateTemplate(float z, float a, float b, float y)
     cv::Range cols(leftmost-buffer, rightmost+buffer);
 
     templ = templ(rows, cols);
-    
+    image = templ;
     //Adjust origin to be relative to new size
     origin.x -= leftmost;
     origin.y -= upmost;
 
     // TODO: Better way to make template compatible with edge detection?
-    cv::Mat detected_edges;
-    // Blur the image before edge detection
-    cv::blur( templ, detected_edges,  cv::Size(3,3) );
-    // Run canny edge detection
-    cv::Canny( detected_edges, image, 40, 120, 3);
+    // cv::Mat detected_edges;
+    // // Blur the image before edge detection
+    // cv::blur( templ, detected_edges,  cv::Size(3,3) );
+    // // Run canny edge detection
+    // cv::Canny( detected_edges, image, 40, 120, 3);
 
     // cv::namedWindow("templ");
     // cv::imshow("templ", image);

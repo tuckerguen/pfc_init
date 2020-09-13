@@ -25,6 +25,9 @@ vector<T> pq_to_vector(priority_queue<T, vector<T>, C> pq)
 // Template match template on base image over range of scales and rotations
 vector<TemplateMatch> match(const cv::Mat& img, NeedleTemplate templ)
 {
+    // Record matching time
+    double t = (double)cv::getTickCount();
+
     // Note: this "params" setup isn't necessary for final implementation.
     // This is only used to "cheat" the system by allowing for known poses
     // to have their scale and rotation bounds preloaded from the 
@@ -32,7 +35,7 @@ vector<TemplateMatch> match(const cv::Mat& img, NeedleTemplate templ)
     // rotation and scaling ranges and increments would just be
     // referenced directly from the PfcInitConstants.hpp file, or 
     // some other configuration file
-    double min_a = templ.params.yaw_range.start, max_a = templ.params.yaw_range.end;
+    double min_a = templ.params.min_yaw, max_a = templ.params.max_yaw;
     double a_inc = templ.params.yaw_inc;
     double min_b = templ.params.pitch_range.start, max_b = templ.params.pitch_range.end;
     double b_inc = templ.params.pitch_inc;
@@ -108,10 +111,12 @@ vector<TemplateMatch> match(const cv::Mat& img, NeedleTemplate templ)
             // ta = ((double)cv::getTickCount() - ta) / cv::getTickFrequency();
             // cout << "a step time: " << ta << " s" << endl;
         }
-        tz = ((double)cv::getTickCount() - tz) / cv::getTickFrequency();
-        cout << "Z step time: " << tz << " s" << endl;
+        // tz = ((double)cv::getTickCount() - tz) / cv::getTickFrequency();
+        // cout << "Z step time: " << tz << " s" << endl;
     }
 
+    t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+    cout << "thread time: " << t << " s" << endl;
     return pq_to_vector(best_matches);
 }
 
@@ -123,34 +128,36 @@ vector<TemplateMatch> matchThreaded(const cv::Mat& img, NeedleTemplate templ)
     std::vector<std::future<vector<TemplateMatch>>> futures;
 
     // Get z range
-    double min_z = templ.params.min_z;
-    double max_z = templ.params.max_z;
-    double z_inc = templ.params.z_inc;
+    double max_yaw = templ.params.max_yaw;
+    double min_yaw = templ.params.min_yaw;
+    double yaw_inc = templ.params.yaw_inc;
 
     // Calc num threads and scale increment between sequential threads
     int num_threads = get_nprocs();
+    // cout << num_threads << endl;
     
-    double thread_inc = ((max_z - min_z) / (double)num_threads);
+    double thread_inc = ((max_yaw - min_yaw) / (double)num_threads);
 
     // Loop to launch threads
-    for(int i = 0; i < num_threads; i++)
+    for(int tid = 0; tid < num_threads; tid++)
     {
         // Compute thread range
-        templ.params.min_z = (min_z + i * thread_inc);
-        templ.params.max_z = min_z + (i+1) * thread_inc;
+        templ.params.min_yaw = (min_yaw + tid * thread_inc);
+        templ.params.max_yaw = min_yaw + (tid+1) * thread_inc;
 
         //Round to correct decimal place (this rounds to 2 places, only works 
         // For increments of 2 decimal place as well)
-        templ.params.min_z = (float)((int) (templ.params.min_z*100+0.5))/100;
-        templ.params.max_z = (float)((int) (templ.params.max_z*100+0.5))/100;
+        templ.params.min_yaw = (float)((int) (templ.params.min_yaw*100+0.5))/100;
+        templ.params.max_yaw = (float)((int) (templ.params.max_yaw*100+0.5))/100;
 
         // Except first, shift range to avoid overlap
-        if(i != 0){
-            templ.params.min_z += z_inc;
+        if(tid != 0){
+            templ.params.min_yaw += yaw_inc;
         }
 
         // Launch thread and collect future
         futures.push_back(std::async(launch::async, match, img, templ));
+        // cout << "launched: " << tid << "range: " << templ.params.min_yaw << ", " << templ.params.max_yaw << endl;
     }
 
     // Extract matches from futures

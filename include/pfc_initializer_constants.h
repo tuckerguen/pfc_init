@@ -51,7 +51,8 @@ namespace pfc {
     struct match_params{
         // Template Match Rotation Parameters
         // TODO: Change to not use range (is meant to be used as range of matrices)
-        cv::Range yaw_range;
+        double min_yaw;
+        double max_yaw;
         double yaw_inc;
         cv::Range pitch_range;
         double pitch_inc;

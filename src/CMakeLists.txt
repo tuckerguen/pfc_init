@@ -2,29 +2,26 @@ cmake_minimum_required(VERSION 2.8)
 project( PFC_INIT )
 set (CMAKE_CXX_STANDARD 11)
 
-set(OpenCV_INCLUDE_DIRS
-  /usr/local/include
-  /usr/local/include/opencv2
+find_package(OpenCV 3 REQUIRED
+COMPONENTS
+    opencv_core
+    opencv_highgui
+    opencv_imgproc
+    opencv_imgcodecs
+    opencv_cudaarithm
+    opencv_cudaimgproc
+    opencv_cudafilters
+    opencv_sfm
+  PATHS /usr/local
+  NO_DEFAULT_PATH
+  CONFIG
 )
 
-set(OpenCV_LIB_DIR
-  /usr/local/lib
+include_directories(
+  "../include/"
+  ${OpenCV_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
 )
-
-set(OpenCV_LIBS
-  opencv_core
-  opencv_highgui
-  opencv_imgcodecs
-  opencv_imgproc
-  opencv_features2d
-  opencv_cudaimgproc
-  opencv_sfm
-)
-
-
-include_directories("../include/")
-include_directories(${OpenCV_INCLUDE_DIRS})
-link_directories(${OpenCV_LIB_DIR})
 
 find_package (Threads)
 
@@ -39,10 +36,4 @@ add_executable(main main.cpp
   matcher.cpp
 )
 
-add_executable(NeedleGenerator NeedleGeneration/NeedleGenerator.cpp)
-
-target_link_libraries(main ${OpenCV_LIBS})
-target_link_libraries (main Threads::Threads)
-
-target_link_libraries(NeedleGenerator ${OpenCV_LIBS})
-
+target_link_libraries(main ${OpenCV_LIBS} Threads::Threads)

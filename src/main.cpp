@@ -80,11 +80,11 @@ vector<vector<string>> runForPoseAndType(int pose_id, string img_type, bool chea
     string right_img_path = "../imgs/raw/" + std::to_string(pose_id) + "_r_c_" + img_type + ".png";
 
     pfc::match_params params = {
-        cv::Range(0,360), 10, //yaw
-        cv::Range(0,80), 20, //pitch
-        cv::Range(0,80), 20, //roll
+        0, 360, 10, //yaw
+        cv::Range(0,90), 10, //pitch
+        cv::Range(0,90), 10, //roll
         0.09, 0.18, 0.01, //z
-        10, // # candidate points to return
+        5, // # candidate points to return
         10, // # points in needle line
     };
 

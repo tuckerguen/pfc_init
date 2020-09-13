@@ -35,19 +35,19 @@ void NeedleImage::filterRaw()
 {
     cv::Mat detected_edges;
     // Blur the image before edge detection
-    cv::blur( raw, detected_edges, gauss_filter_size );
-    // Run canny edge detection
-    cv::Canny( detected_edges, image, low_threshold, max_low_threshold, kernel_size);
-    // cv::Mat img_HSV;
-    // // convert to HSV
-    // cv::cvtColor(raw, img_HSV, cv::COLOR_BGR2HSV);
-    // // filter by HSV values 
-    // cv::inRange(img_HSV, cv::Scalar(pfc::low_h, pfc::low_s, pfc::low_v), cv::Scalar(pfc::high_h, pfc::high_s, pfc::high_v), image);
+    // cv::blur( raw, detected_edges, gauss_filter_size );
+    // // Run canny edge detection
+    // cv::Canny( detected_edges, image, low_threshold, max_low_threshold, kernel_size);
+    cv::Mat img_HSV;
+    // convert to HSV
+    cv::cvtColor(raw, img_HSV, cv::COLOR_BGR2HSV);
+    // filter by HSV values 
+    cv::inRange(img_HSV, cv::Scalar(pfc::low_h, pfc::low_s, pfc::low_v), cv::Scalar(pfc::high_h, pfc::high_s, pfc::high_v), image);
 
     // Display image for debugging
-    cv::namedWindow("edge detected");
-    cv::imshow("edge detected",image);
-    cv::waitKey(0);
+    // cv::namedWindow("edge detected");
+    // cv::imshow("edge detected",image);
+    // cv::waitKey(0);
 }
 
 //TODO: Make this a member function
